@@ -1,18 +1,20 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import NavBar from "../src/component/NavBar";
-import { Button } from "@material-ui/core";
+import NavBarVutton from "../src/component/NavBarVutton";
 storiesOf("NavBar", module)
-  .add("logged", () => (
-    <NavBar title="conduit">
-      <Button>SETTINGS</Button>
-      <Button>MY FEEDS</Button>
-      <Button>USER NAME</Button>
-    </NavBar>
-  ))
   .add("not logged", () => (
     <NavBar title="conduit">
-      <Button>SIGN UP</Button>
-      <Button>SIGN IN</Button>
+      <NavBarVutton title="Home" />
+      <NavBarVutton title="Sign Up" />
+      <NavBarVutton title="Sign In" />
+    </NavBar>
+  ))
+  .add("logged", () => (
+    <NavBar title="conduit">
+      <NavBarVutton title="Home" />
+      <NavBarVutton title="New Post" />
+      <NavBarVutton title="Settings" />
+      <NavBarVutton title="User" />
     </NavBar>
   ));
