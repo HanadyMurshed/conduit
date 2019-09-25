@@ -1,22 +1,27 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
-import { colors } from "../urils";
 import { Button } from "@material-ui/core";
+import Index, { style as buttonStyle } from "./ButtonIndex";
 
 interface Props {
   PageCount: number;
   active: number;
 }
 
-const style = makeStyles(() => ({
-  defualt: {
-    width: 20,
-    height: 30,
-    color: colors.PrimaryColor,
-    border: "1 solid" + colors.PrimaryColor
+export default ({ PageCount, active }: Props) => {
+  const bottonClasses = buttonStyle();
+  {
+    console.log(Array(PageCount).keys());
   }
-}));
-const creatButton = (pageNumber: number) => <Button>pageNumber</Button>;
-export default (props: Props) => {
-  return <h1>dsa</h1>;
+
+  return (
+    <div>
+      {Array.from(Array(PageCount).keys()).map(e => (
+        <Index
+          propStyle={active == e ? bottonClasses.active : bottonClasses.defualt}
+          index={e}
+        />
+      ))}
+    </div>
+  );
 };

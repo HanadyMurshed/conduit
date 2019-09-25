@@ -7,6 +7,8 @@ export const style = makeStyles(() => ({
   defualt: {
     width: "auto",
     minWidth: "40px",
+    paddingLeft: 10,
+    paddingRight: 10,
     fontSize: fontSize.small,
     color: colors.PrimaryColor,
     border: "1px solid" + colors.TextSecondayColor
@@ -14,6 +16,8 @@ export const style = makeStyles(() => ({
   active: {
     width: "auto",
     minWidth: "40px",
+    paddingLeft: 10,
+    paddingRight: 10,
     fontSize: fontSize.small,
     color: "white",
     background: colors.PrimaryColor,
@@ -27,10 +31,12 @@ export const style = makeStyles(() => ({
 
 interface Props {
   index: number;
-  style?: string;
+  propStyle?: string;
 }
-export default ({ index }: Props) => {
+export default ({ index, propStyle }: Props) => {
   const classes = style();
 
-  return <Button className={classes.active}>{index}</Button>;
+  return (
+    <Button className={propStyle ? propStyle : classes.defualt}>{index}</Button>
+  );
 };
