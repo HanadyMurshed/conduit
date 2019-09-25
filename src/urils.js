@@ -18,3 +18,9 @@ export const colors = {
 export const dims = {
   pageMargie: 100
 };
+
+export const fontSize = {
+  large: 28,
+  normal: 20,
+  small: 16
+};

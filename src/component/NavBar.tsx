@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
-import { colors, dims } from "../urils";
+import { colors, dims, fontSize } from "../urils";
 
 export interface IProps {
   title: string;
@@ -12,7 +12,7 @@ export interface IProps {
 
 const style = makeStyles({
   appBar: {
-    fontSize: 16,
+    fontSize: fontSize.normal,
     border: 0,
     boxShadow: "0",
     outline: 0,
@@ -20,7 +20,7 @@ const style = makeStyles({
     color: colors.TextSecondayColor
   },
   title: {
-    fontSize: 26,
+    fontSize: fontSize.large,
     marginLeft: dims.pageMargie,
     flexGrow: 1,
     pointerEvent: "none",

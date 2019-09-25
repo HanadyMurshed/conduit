@@ -1,6 +1,6 @@
 import * as React from "react";
 import Avatar from "@material-ui/core/Avatar";
-import { colors } from "../urils";
+import { colors, fontSize } from "../urils";
 import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
@@ -18,6 +18,7 @@ interface Props {
 const style = makeStyles(() => ({
   mediaCaption: {
     color: colors.PrimaryColor,
+    fontSize: fontSize.normal,
     lineHeight: 1,
     "&:hover": {
       textDecoration: ""
@@ -54,16 +55,32 @@ const style = makeStyles(() => ({
   },
   shareDate: {
     color: colors.TextSecondayColor,
+    fontSize: fontSize.normal,
     lineHeight: 1
   },
   like: {
     width: 18,
     height: 14,
     transition: "0.1s",
-    fontSize: 18,
+    fontSize: fontSize.normal,
     margin: "0",
     padding: 0,
     color: colors.PrimaryColor
+  },
+  bodyTitle: {
+    fontSize: fontSize.large,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 5
+  },
+  bodyText: {
+    fontSize: fontSize.normal,
+    color: colors.TextSecondayColor,
+    marginBottom: 15
+  },
+  showExtra: {
+    fontSize: fontSize.small,
+    color: colors.TextSecondayColor
   }
 }));
 
@@ -111,9 +128,9 @@ export default ({
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <div>{FeedHeader}</div>
-          <div>{FeedBody}</div>
-          <div>Read more...</div>
+          <div className={classes.bodyTitle}>{FeedHeader}</div>
+          <div className={classes.bodyText}>{FeedBody}</div>
+          <div className={classes.showExtra}>Read more...</div>
         </Grid>
       </Grid>
     </div>
