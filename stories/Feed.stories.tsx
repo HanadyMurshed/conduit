@@ -5,9 +5,9 @@ import Feed from "../src/component/Feed";
 storiesOf("Feed", module).add("postedFeed", () => (
   <Feed
     UserName="Hanady Murshed"
-    ShareDate="Tuesday 2 /25"
+    ShareDate="Wed Sep 25 2019"
     FeedBodyText="Hello word"
-    FeedBodyTitle="Hello word"
+    FeedBodyTitle="sadsadsadsa"
     LikesCount={0}
   />
 ));

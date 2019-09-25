@@ -18,10 +18,12 @@ interface Props {
 const style = makeStyles(() => ({
   mediaCaption: {
     color: colors.PrimaryColor,
-    fontSize: fontSize.normal,
+    fontSize: fontSize.small,
     lineHeight: 1,
+    cursor: "pointer",
     "&:hover": {
-      textDecoration: ""
+      color: colors.PrimaryDark,
+      textDecoration: "underline"
     }
   },
   VerticalCentreAlign: {
@@ -53,9 +55,10 @@ const style = makeStyles(() => ({
     position: "relative",
     width: "80%"
   },
-  shareDate: {
+  mediaDhareDate: {
     color: colors.TextSecondayColor,
-    fontSize: fontSize.normal,
+    fontSize: fontSize.smaller,
+    opacity: 0.8,
     lineHeight: 1
   },
   like: {
@@ -68,19 +71,23 @@ const style = makeStyles(() => ({
     color: colors.PrimaryColor
   },
   bodyTitle: {
+    cursor: "pointer",
     fontSize: fontSize.large,
     fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 5
+    marginTop: 12,
+    marginBottom: 2
   },
   bodyText: {
+    cursor: "pointer",
     fontSize: fontSize.normal,
     color: colors.TextSecondayColor,
-    marginBottom: 15
+    marginBottom: 24
   },
   showExtra: {
-    fontSize: fontSize.small,
-    color: colors.TextSecondayColor
+    cursor: "pointer",
+    fontSize: fontSize.smaller,
+    color: colors.TextSecondayColor,
+    opacity: 0.8
   }
 }));
 
@@ -93,6 +100,7 @@ export default ({
   FeedBodyText: FeedBody
 }: Props) => {
   const classes = style();
+  if (!img) img = "https://static.productionready.io/images/smiley-cyrus.jpg";
   return (
     <div>
       <Grid container spacing={1}>
@@ -106,7 +114,7 @@ export default ({
                 <Typography variant="h6" className={classes.mediaCaption}>
                   {UserName}
                 </Typography>
-                <Typography variant="h6" className={classes.shareDate}>
+                <Typography variant="h6" className={classes.mediaDhareDate}>
                   {ShareDate}
                 </Typography>
               </div>

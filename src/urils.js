@@ -9,6 +9,7 @@
 
 export const colors = {
   PrimaryColor: "#5cb85c",
+  PrimaryDark: "#458545",
   TextPrimaryColor: "#373a42",
   TextSecondayColor: "#c9c9c9",
   TagBackgroundColor: "#818a91",
@@ -22,5 +23,6 @@ export const dims = {
 export const fontSize = {
   large: 28,
   normal: 20,
-  small: 16
+  small: 18,
+  smaller: 16
 };
