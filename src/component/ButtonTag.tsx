@@ -17,7 +17,6 @@ const style = makeStyles(() => ({
     border: 0,
     verticalAlign: "middle",
     borderRadius: 15,
-    textAlign: "center",
     paddingLeft: 10,
     paddingRight: 10,
     minWidth: "20px"

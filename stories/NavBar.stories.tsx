@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import NavBar from "../src/component/NavBar";
-import NavBarVutton from "../src/component/NavBarVutton";
+import NavBarVutton from "../src/component/ButtonNavBar";
 storiesOf("Navigation Bar", module)
   .add("not logged", () => (
     <NavBar title="conduit">
