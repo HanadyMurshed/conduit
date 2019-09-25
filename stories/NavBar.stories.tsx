@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import NavBar from "../src/component/NavBar";
 import NavBarVutton from "../src/component/NavBarVutton";
-storiesOf("NavBar", module)
+storiesOf("Navigation Bar", module)
   .add("not logged", () => (
     <NavBar title="conduit">
       <NavBarVutton title="Home" />
@@ -15,6 +15,6 @@ storiesOf("NavBar", module)
       <NavBarVutton title="Home" />
       <NavBarVutton title="New Post" />
       <NavBarVutton title="Settings" />
-      <NavBarVutton title="User" />
+      <NavBarVutton title="baby" />
     </NavBar>
   ));
