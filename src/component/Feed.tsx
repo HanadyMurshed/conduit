@@ -30,10 +30,23 @@ const style = makeStyles(() => ({
   },
   Containor: {
     position: "relative",
-    height: "100%",
+    height: "80%",
+    marginTop: "10%",
+    marginButtom: "10%",
     width: "100%",
     border: "1px solid" + colors.PrimaryColor,
-    borderRadius: 5
+    cursor: "pointer",
+    transition: "0.1s",
+    borderRadius: 5,
+    "&:hover": {
+      background: colors.PrimaryColor
+    },
+    "&:hover FavoriteIcon": {
+      color: colors.TagBackgroundColor
+    },
+    "&:hover span": {
+      color: "white"
+    }
   },
   FeedHeaderCaption: {
     position: "relative",
@@ -46,6 +59,7 @@ const style = makeStyles(() => ({
   like: {
     width: 18,
     height: 14,
+    transition: "0.1s",
     fontSize: 18,
     margin: "0",
     padding: 0,
