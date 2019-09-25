@@ -12,6 +12,7 @@ interface Props {
   LikesCount: number;
   FeedBodyTitle: string;
   FeedBodyText: string;
+  img?: string;
 }
 
 const style = makeStyles(() => ({
@@ -22,18 +23,18 @@ const style = makeStyles(() => ({
       textDecoration: ""
     }
   },
-  VerticalCentreAlignCaption: {
+  VerticalCentreAlign: {
     position: "absolute",
     top: "50%",
     transform: "translateY(-50%)"
   },
-  VerticalCentreAlignLikes: {
-    background: "red",
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(+50%)"
+  Containor: {
+    position: "relative",
+    height: "100%",
+    width: "100%",
+    border: "1px solid" + colors.PrimaryColor,
+    borderRadius: 5
   },
-  Containor: { position: "relative" },
   FeedHeaderCaption: {
     position: "relative",
     width: "80%"
@@ -44,8 +45,8 @@ const style = makeStyles(() => ({
   },
   like: {
     width: 18,
-    height: 20,
-    fontSize: 20,
+    height: 14,
+    fontSize: 18,
     margin: "0",
     padding: 0,
     color: colors.PrimaryColor
@@ -54,6 +55,7 @@ const style = makeStyles(() => ({
 
 export default ({
   UserName,
+  img,
   ShareDate,
   LikesCount,
   FeedBodyTitle: FeedHeader,
@@ -66,10 +68,10 @@ export default ({
         <Grid item xs={11}>
           <Grid container spacing={1}>
             <Grid item>
-              <Avatar />
+              <Avatar src={img} />
             </Grid>
             <Grid item className={classes.FeedHeaderCaption}>
-              <div className={classes.VerticalCentreAlignCaption}>
+              <div className={classes.VerticalCentreAlign}>
                 <Typography variant="h6" className={classes.mediaCaption}>
                   {UserName}
                 </Typography>
@@ -81,8 +83,14 @@ export default ({
           </Grid>
         </Grid>
         <Grid item xs={1}>
-          <Grid item container spacing={2} className={classes.Containor}>
-            <div className={classes.VerticalCentreAlignLikes}>
+          <Grid
+            item
+            container
+            justify="center"
+            spacing={2}
+            className={classes.Containor}
+          >
+            <div className={classes.VerticalCentreAlign}>
               <FavoriteIcon className={classes.like} />
               <span className={classes.like}>{LikesCount}</span>
             </div>
@@ -91,6 +99,7 @@ export default ({
         <Grid item xs={12}>
           <div>{FeedHeader}</div>
           <div>{FeedBody}</div>
+          <div>Read more...</div>
         </Grid>
       </Grid>
     </div>
