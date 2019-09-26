@@ -21,8 +21,13 @@ export const dims = {
 };
 
 export const fontSize = {
+  larger: 52,
   large: 28,
   normal: 20,
   small: 18,
   smaller: 16
+};
+export const strings = {
+  websiteName: "conduit",
+  HeaderWelcomeMessage: "A place to share your knowledge"
 };

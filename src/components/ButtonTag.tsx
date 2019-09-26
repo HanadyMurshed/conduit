@@ -1,6 +1,6 @@
 import * as React from "react";
 import Button from "@material-ui/core/Button";
-import { colors, fontSize } from "../urils";
+import { colors, fontSize } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 interface Props {
   title: string;

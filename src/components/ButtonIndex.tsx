@@ -1,6 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
-import { colors, fontSize } from "../urils";
+import { colors, fontSize } from "../SystemVariables";
 import { Button } from "@material-ui/core";
 
 export const style = makeStyles(() => ({

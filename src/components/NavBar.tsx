@@ -3,10 +3,9 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
-import { colors, dims, fontSize } from "../urils";
+import { colors, dims, fontSize, strings } from "../SystemVariables";
 
 export interface IProps {
-  title: string;
   children?: JSX.Element[] | JSX.Element;
 }
 
@@ -35,13 +34,13 @@ const style = makeStyles({
   }
 });
 
-export default ({ title, children }: IProps) => {
+export default ({ children }: IProps) => {
   const classes = style();
   return (
     <AppBar color="inherit">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          {title}
+          {strings.websiteName}
         </Typography>
         <div className={classes.rightBlock}>{children}</div>
       </Toolbar>
