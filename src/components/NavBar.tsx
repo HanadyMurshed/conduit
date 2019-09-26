@@ -14,13 +14,13 @@ const style = makeStyles({
     fontSize: fontSize.normal,
     border: 0,
     boxShadow: "0",
-    outline: 0,
-    paddingLeft: "50px",
+    height: "55px",
+    MINPAD: dims.pageMargie,
+    paddingLeft: dims.pageMargie,
     color: colors.TextSecondayColor
   },
   title: {
     fontSize: fontSize.large,
-    marginLeft: dims.pageMargie,
     flexGrow: 1,
     pointerEvent: "none",
     fontWeight: "bold",
@@ -29,20 +29,20 @@ const style = makeStyles({
       cursor: "pointer"
     }
   },
-  rightBlock: {
-    marginRight: dims.pageMargie
+  toolbar: {
+    minHeight: "55px"
   }
 });
 
 export default ({ children }: IProps) => {
   const classes = style();
   return (
-    <AppBar color="inherit">
-      <Toolbar>
+    <AppBar className={classes.appBar} position="static" color="inherit">
+      <Toolbar className={classes.toolbar}>
         <Typography variant="h6" className={classes.title}>
           {strings.websiteName}
         </Typography>
-        <div className={classes.rightBlock}>{children}</div>
+        {children}
       </Toolbar>
     </AppBar>
   );

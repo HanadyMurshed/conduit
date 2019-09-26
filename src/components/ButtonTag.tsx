@@ -19,7 +19,10 @@ const style = makeStyles(() => ({
     borderRadius: 15,
     paddingLeft: 10,
     paddingRight: 10,
-    minWidth: "20px"
+    minWidth: "20px",
+    "&:hover": {
+      background: colors.TagDarkerColor
+    }
   }
 }));
 

@@ -7,14 +7,14 @@ import Typography from "@material-ui/core/Typography";
 const style = makeStyles({
   headerContainor: {
     background: colors.PrimaryColor,
-    height: "400px",
+    height: "180px",
     textAlign: "center"
   },
 
   title: {
     color: "white",
     lineHeight: "80%",
-    textShadow: "10px",
+    textShadow: "0.5 1px" + colors.TextPrimaryColor,
     fontWeight: "bold",
     fontSize: fontSize.larger,
     paddingTop: 50
@@ -23,7 +23,9 @@ const style = makeStyles({
     color: "white",
     lineHeight: "80%",
     fontWeight: "lighter",
-    paddingTop: 20,
+    letterSpacing: "2px",
+    opacity: 0.8,
+    paddingTop: 25,
     fontSize: fontSize.large
   }
 });

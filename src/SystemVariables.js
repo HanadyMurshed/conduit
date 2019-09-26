@@ -13,19 +13,20 @@ export const colors = {
   TextPrimaryColor: "#373a42",
   TextSecondayColor: "#c9c9c9",
   TagBackgroundColor: "#818a91",
+  TagDarkerColor: "#464b50",
   BackgroundColor: "#FFFFFF"
 };
 
 export const dims = {
-  pageMargie: 100
+  pageMargie: "20%"
 };
 
 export const fontSize = {
-  larger: 52,
-  large: 28,
-  normal: 20,
-  small: 18,
-  smaller: 16
+  larger: 46,
+  large: 20,
+  normal: 18,
+  small: 16,
+  smaller: 12
 };
 export const strings = {
   websiteName: "conduit",

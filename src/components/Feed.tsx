@@ -31,12 +31,17 @@ const style = makeStyles(() => ({
     top: "50%",
     transform: "translateY(-50%)"
   },
+  VerticalCentreAlignLike: {
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)"
+  },
   Containor: {
     position: "relative",
     height: "80%",
     marginTop: "10%",
     marginButtom: "10%",
-    width: "100%",
+    width: "50px",
     border: "1px solid" + colors.PrimaryColor,
     cursor: "pointer",
     transition: "0.1s",
@@ -74,14 +79,14 @@ const style = makeStyles(() => ({
     cursor: "pointer",
     fontSize: fontSize.large,
     fontWeight: "bold",
-    marginTop: 12,
-    marginBottom: 2
+    marginTop: 12
   },
   bodyText: {
     cursor: "pointer",
-    fontSize: fontSize.normal,
+    fontSize: fontSize.small,
     color: colors.TextSecondayColor,
-    marginBottom: 24
+    marginBottom: 20,
+    lineHeight: 1
   },
   showExtra: {
     cursor: "pointer",
@@ -129,16 +134,16 @@ export default ({
             spacing={2}
             className={classes.Containor}
           >
-            <div className={classes.VerticalCentreAlign}>
+            <div className={classes.VerticalCentreAlignLike}>
               <FavoriteIcon className={classes.like} />
               <span className={classes.like}>{LikesCount}</span>
             </div>
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <div className={classes.bodyTitle}>{FeedHeader}</div>
-          <div className={classes.bodyText}>{FeedBody}</div>
-          <div className={classes.showExtra}>Read more...</div>
+          <Typography className={classes.bodyTitle}>{FeedHeader}</Typography>
+          <Typography className={classes.bodyText}>{FeedBody}</Typography>
+          <Typography className={classes.showExtra}>Read more...</Typography>
         </Grid>
       </Grid>
     </div>

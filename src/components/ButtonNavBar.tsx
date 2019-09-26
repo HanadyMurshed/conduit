@@ -1,6 +1,6 @@
 import * as React from "react";
 import Button from "@material-ui/core/Button";
-import { colors } from "../SystemVariables";
+import { colors, fontSize } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 interface Props {
   title: string;
@@ -9,12 +9,11 @@ interface Props {
 const style = makeStyles(() => ({
   button: {
     background: "inherit",
-    fontSize: "inherit",
+    fontSize: fontSize.normal,
     color: colors.TextPrimaryColor,
     transition: "0.1s",
-    opacity: 0.6,
-
-    // textTransform: "lowercase",
+    opacity: 0.3,
+    textTransform: "lowercase",
     "&:hover": {
       background: "inherit",
       opacity: 1
