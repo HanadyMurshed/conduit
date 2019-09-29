@@ -1,17 +1,17 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { ButtonNavBar as NavBarVutton } from "../src/components/ButtonNavBar";
-import { ButtonTag as Tag } from "../src/components/ButtonTag";
+import { ButtonNavBar } from "../src/components/ButtonNavBar";
+import { ButtonTag } from "../src/components/ButtonTag";
 import { Index } from "../src/components/ButtonIndex";
 
 storiesOf("Button Navigation", module).add("default", () => (
-  <NavBarVutton title="Home" />
+  <ButtonNavBar title="Home" />
 ));
 
-storiesOf("Button Tag", module)
-  .add("default", () => <Tag title="as" />)
-  .add("flowers", () => <Tag title="flowers" />)
-  .add("happy", () => <Tag title="happy" />);
+storiesOf("Button ButtonTag", module)
+  .add("default", () => <ButtonTag title="as" />)
+  .add("flowers", () => <ButtonTag title="flowers" />)
+  .add("happy", () => <ButtonTag title="happy" />);
 
 storiesOf("Button Pages indexer", module).add("default", () => (
   <Index index={1} />
