@@ -5,24 +5,28 @@ import { colors } from "../SystemVariables";
 
 const useStyle = makeStyles({
   input: {
+    display: "block",
     border: "1px solid " + colors.TextSecondayColor,
     paddingLeft: 10,
-    "&:hover": { borderColor: "blue" },
     "&:focus": {
-      backgroundColor: "blue",
       color: "white"
     }
+  },
+  focused: {
+    borderColor: colors.blue
   }
 });
-export const TextField: React.FC<{}> = () => {
+export const MyInput: React.FC<{
+  className?: string;
+  placeholder?: string;
+}> = ({ placeholder = "", className = "" }) => {
   const classes = useStyle();
   return (
     <Input
-      placeholder="dsdsadk"
+      placeholder={placeholder}
+      classes={{ focused: classes.focused }}
       disableUnderline={true}
-      className={classes.input}
-    >
-      hey
-    </Input>
+      className={(classes.input + " " + className).trim()}
+    />
   );
 };

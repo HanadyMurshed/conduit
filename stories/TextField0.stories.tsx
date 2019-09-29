@@ -1,5 +1,5 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { TextField } from "../src/components/TesxtFiels";
+import { MyInput } from "../src/components/Input";
 
-storiesOf("TextFied", module).add("ok", () => <TextField />);
+storiesOf("Input", module).add("ok", () => <MyInput />);

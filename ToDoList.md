@@ -1,0 +1,3 @@
+-button capitlize first letter -text transform-
+-placeholder color
+-remove little top and left margin

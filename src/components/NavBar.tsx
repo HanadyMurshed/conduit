@@ -14,7 +14,8 @@ const useStyle = makeStyles({
     height: "55px",
     MINPAD: dims.pageMargie,
     paddingLeft: dims.pageMargie,
-    color: colors.TextSecondayColor
+    color: colors.TextSecondayColor,
+    minWidth: "50px"
   },
   title: {
     fontSize: fontSize.large,
@@ -32,7 +33,8 @@ const useStyle = makeStyles({
     transform: "translateX(-50%)",
     minHeight: "55px",
     width: dims.pageWidth,
-    margin: "auto"
+    margin: "auto",
+    minWidth: "50px"
   }
 });
 
@@ -44,7 +46,6 @@ export const NavBar: React.FC<{}> = ({ children }) => {
         <Typography variant="h6" className={classes.title}>
           {strings.websiteName}
         </Typography>
-
         {children}
       </Toolbar>
     </AppBar>

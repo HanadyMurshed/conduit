@@ -15,7 +15,8 @@ export const colors = {
   TagBackgroundColor: "#818a91",
   TagDarkerColor: "#737a80",
   BackgroundColor: "#FFFFFF",
-  lightGray: "#efefef"
+  lightGray: "#efefef",
+  blue: "#66afe9"
 };
 
 export const dims = {

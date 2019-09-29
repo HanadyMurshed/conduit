@@ -40,10 +40,7 @@ const style = makeStyles(() => ({
     "&:hover": {
       background: colors.PrimaryColor
     },
-    "&:hover FavoriteIcon": {
-      color: colors.TagBackgroundColor
-    },
-    "&:hover span": {
+    "&:hover $like": {
       color: "white"
     }
   },
