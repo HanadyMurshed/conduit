@@ -35,9 +35,16 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1
   },
+  tabs: {
+    minHeight: 40
+  },
   tab: {
     fontSize: fontSize.small,
-    textTransform: "lowercase"
+    textTransform: "lowercase",
+    width: "auto",
+    minWidth: 50,
+    lineHeight: "inherit",
+    minHeight: "inherit"
   },
   indicator: { background: colors.PrimaryColor },
   selected: {
@@ -60,6 +67,7 @@ export const MyTab: React.FC<{
     <div className={classes.root}>
       <div>
         <Tabs
+          className={classes.tabs}
           classes={{
             indicator: classes.indicator
           }}

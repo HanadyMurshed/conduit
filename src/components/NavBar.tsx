@@ -7,6 +7,7 @@ import { colors, dims, fontSize, strings } from "../SystemVariables";
 
 const useStyle = makeStyles({
   appBar: {
+    position: "relative",
     fontSize: fontSize.normal,
     border: 0,
     boxShadow: "0",
@@ -26,11 +27,16 @@ const useStyle = makeStyles({
     }
   },
   toolbar: {
-    minHeight: "55px"
+    position: "absolute",
+    left: "50%",
+    transform: "translateX(-50%)",
+    minHeight: "55px",
+    width: dims.pageWidth,
+    margin: "auto"
   }
 });
 
-export const NavBar: React.FC<{}> = () => {
+export const NavBar: React.FC<{}> = ({ children }) => {
   const classes = useStyle();
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -38,8 +44,8 @@ export const NavBar: React.FC<{}> = () => {
         <Typography variant="h6" className={classes.title}>
           {strings.websiteName}
         </Typography>
-        {/* how to access children useing React.FC */}
-        {/* {this.children} */}
+
+        {children}
       </Toolbar>
     </AppBar>
   );

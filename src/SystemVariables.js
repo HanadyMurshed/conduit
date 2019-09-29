@@ -13,12 +13,14 @@ export const colors = {
   TextPrimaryColor: "#373a42",
   TextSecondayColor: "#c9c9c9",
   TagBackgroundColor: "#818a91",
-  TagDarkerColor: "#464b50",
-  BackgroundColor: "#FFFFFF"
+  TagDarkerColor: "#737a80",
+  BackgroundColor: "#FFFFFF",
+  lightGray: "#efefef"
 };
 
 export const dims = {
-  pageMargie: "20%"
+  pageMargie: "20%",
+  pageWidth: 1150
 };
 
 export const fontSize = {
