@@ -38,11 +38,18 @@ const useStyles = makeStyles(() => ({
   tab: {
     fontSize: fontSize.small,
     textTransform: "lowercase"
+  },
+  indicator: { background: colors.PrimaryColor },
+  selected: {
+    color: colors.PrimaryColor
   }
 }));
 // const MyComonent :React.FC<>;
 // MyComonent.defaultProps
-export default () => {
+export const MyTab: React.FC<{
+  globalFeed: JSX.Element;
+  YouFeed: JSX.Element;
+}> = ({ globalFeed, YouFeed }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(1);
 
@@ -52,16 +59,36 @@ export default () => {
   return (
     <div className={classes.root}>
       <div>
-        <Tabs value={value} onChange={handleChange}>
-          <Tab className={classes.tab} label="Your Feed" {...a11yProps(1)} />
-          <Tab className={classes.tab} label="Gobal Feed" {...a11yProps(0)} />
+        <Tabs
+          classes={{
+            indicator: classes.indicator
+          }}
+          value={value}
+          onChange={handleChange}
+        >
+          <Tab
+            classes={{
+              selected: classes.selected
+            }}
+            className={classes.tab}
+            label="Your Feed"
+            {...a11yProps(1)}
+          />
+          <Tab
+            classes={{
+              selected: classes.selected
+            }}
+            className={classes.tab}
+            label="Gobal Feed"
+            {...a11yProps(0)}
+          />
         </Tabs>
       </div>
       <TabPanel value={value} index={0}>
-        Global Feed
+        {YouFeed}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Your feed
+        {globalFeed}
       </TabPanel>
     </div>
   );

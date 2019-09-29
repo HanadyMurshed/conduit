@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import { colors, fontSize } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 
-const style = makeStyles(() => ({
+const useStyle = makeStyles(() => ({
   button: {
     background: "inherit",
     fontSize: fontSize.normal,
@@ -16,16 +16,16 @@ const style = makeStyles(() => ({
       opacity: 1
 
       //   textTransform: "uppercase"
+    },
+    "&::first-letter": {
+      textTransform: "uppercase"
     }
-    // "&::first-letter": {
-    //   textTransform: "uppercase"
-    // }
   }
 }));
 
 export const ButtonNavBar: React.FC<{
   title: string;
 }> = ({ title }) => {
-  const classes = style();
+  const classes = useStyle();
   return <Button className={classes.button}>{title}</Button>;
 };

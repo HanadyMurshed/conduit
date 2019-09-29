@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
 import { colors, dims, fontSize, strings } from "../SystemVariables";
 
-const style = makeStyles({
+const useStyle = makeStyles({
   appBar: {
     fontSize: fontSize.normal,
     border: 0,
@@ -31,14 +31,15 @@ const style = makeStyles({
 });
 
 export const NavBar: React.FC<{}> = () => {
-  const classes = style();
+  const classes = useStyle();
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <Toolbar className={classes.toolbar}>
         <Typography variant="h6" className={classes.title}>
           {strings.websiteName}
         </Typography>
-        {React.Children}
+        {/* how to access children useing React.FC */}
+        {/* {this.children} */}
       </Toolbar>
     </AppBar>
   );
