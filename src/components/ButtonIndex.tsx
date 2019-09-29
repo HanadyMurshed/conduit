@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 import { colors, fontSize } from "../SystemVariables";
 import { Button } from "@material-ui/core";
 
-export const style = makeStyles(() => ({
+export const useStyle = makeStyles(() => ({
   defualt: {
     width: "auto",
     minWidth: "40px",
@@ -33,7 +33,7 @@ export const Index: React.FC<{ index: number; propStyle?: string }> = ({
   index,
   propStyle
 }) => {
-  const classes = style();
+  const classes = useStyle();
   return (
     <Button className={propStyle ? propStyle : classes.defualt}>{index}</Button>
   );

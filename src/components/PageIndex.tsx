@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Index, useStyle as buttonStyle } from "./ButtonIndex";
+import { Index, useStyle } from "./ButtonIndex";
 
 export const PageIndex: React.FC<{
   PageCount: number;
   active: number;
 }> = ({ PageCount, active }) => {
-  const bottonClasses = buttonStyle();
+  const bottonClasses = useStyle();
 
   return (
     <div>

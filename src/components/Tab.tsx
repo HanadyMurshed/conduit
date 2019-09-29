@@ -31,17 +31,17 @@ function a11yProps(index: number) {
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    flexGrow: 1
   },
   tab: {
     fontSize: fontSize.small,
     textTransform: "lowercase"
   }
 }));
-
+// const MyComonent :React.FC<>;
+// MyComonent.defaultProps
 export default () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(1);
@@ -52,20 +52,16 @@ export default () => {
   return (
     <div className={classes.root}>
       <div>
-        <Tabs
-          selected={{ background: "red" }}
-          value={value}
-          onChange={handleChange}
-        >
+        <Tabs value={value} onChange={handleChange}>
           <Tab className={classes.tab} label="Your Feed" {...a11yProps(1)} />
           <Tab className={classes.tab} label="Gobal Feed" {...a11yProps(0)} />
         </Tabs>
       </div>
       <TabPanel value={value} index={0}>
-        Item One
+        Global Feed
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        Your feed
       </TabPanel>
     </div>
   );
