@@ -1,8 +1,8 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import NavBarVutton from "../src/components/ButtonNavBar";
-import Tag from "../src/components/ButtonTag";
-import Index from "../src/components/ButtonIndex";
+import { ButtonNavBar as NavBarVutton } from "../src/components/ButtonNavBar";
+import { ButtonTag as Tag } from "../src/components/ButtonTag";
+import { Index } from "../src/components/ButtonIndex";
 
 storiesOf("Button Navigation", module).add("default", () => (
   <NavBarVutton title="Home" />

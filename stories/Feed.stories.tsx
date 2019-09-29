@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import Feed from "../src/components/Feed";
+import { Feed } from "../src/components/Feed";
 
 storiesOf("Feed", module).add("postedFeed", () => (
   <Feed

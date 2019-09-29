@@ -29,13 +29,11 @@ export const style = makeStyles(() => ({
   }
 }));
 
-interface Props {
-  index: number;
-  propStyle?: string;
-}
-export default ({ index, propStyle }: Props) => {
+export const Index: React.FC<{ index: number; propStyle?: string }> = ({
+  index,
+  propStyle
+}) => {
   const classes = style();
-
   return (
     <Button className={propStyle ? propStyle : classes.defualt}>{index}</Button>
   );

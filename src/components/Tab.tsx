@@ -5,7 +5,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { fontSize } from "../SystemVariables";
+import { fontSize, colors } from "../SystemVariables";
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -52,7 +52,11 @@ export default () => {
   return (
     <div className={classes.root}>
       <div>
-        <Tabs value={value} onChange={handleChange}>
+        <Tabs
+          selected={{ background: "red" }}
+          value={value}
+          onChange={handleChange}
+        >
           <Tab className={classes.tab} label="Your Feed" {...a11yProps(1)} />
           <Tab className={classes.tab} label="Gobal Feed" {...a11yProps(0)} />
         </Tabs>

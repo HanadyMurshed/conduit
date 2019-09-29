@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 import Input from "@material-ui/core/Input";
 import { colors } from "../SystemVariables";
 
-const style = makeStyles({
+const useStyle = makeStyles({
   input: {
     border: "1px solid " + colors.TextSecondayColor,
     paddingLeft: 10,
@@ -14,8 +14,8 @@ const style = makeStyles({
     }
   }
 });
-export default () => {
-  const classes = style();
+export const TextField: React.FC<{}> = () => {
+  const classes = useStyle();
   return (
     <Input
       placeholder="dsdsadk"

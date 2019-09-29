@@ -2,9 +2,6 @@ import * as React from "react";
 import Button from "@material-ui/core/Button";
 import { colors, fontSize } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
-interface Props {
-  title: string;
-}
 const style = makeStyles(() => ({
   tag: {
     background: colors.TagBackgroundColor,
@@ -26,7 +23,7 @@ const style = makeStyles(() => ({
   }
 }));
 
-export default ({ title }: Props) => {
+export const ButtonTag: React.FC<{ title: string }> = ({ title }) => {
   const classes = style();
   return <Button className={classes.tag}>{title}</Button>;
 };

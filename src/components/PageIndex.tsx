@@ -1,12 +1,10 @@
 import * as React from "react";
-import Index, { style as buttonStyle } from "./ButtonIndex";
+import { Index, useStyle as buttonStyle } from "./ButtonIndex";
 
-interface Props {
+export const PageIndex: React.FC<{
   PageCount: number;
   active: number;
-}
-
-export default ({ PageCount, active }: Props) => {
+}> = ({ PageCount, active }) => {
   const bottonClasses = buttonStyle();
 
   return (

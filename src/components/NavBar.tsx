@@ -5,10 +5,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
 import { colors, dims, fontSize, strings } from "../SystemVariables";
 
-export interface IProps {
-  children?: JSX.Element[] | JSX.Element;
-}
-
 const style = makeStyles({
   appBar: {
     fontSize: fontSize.normal,
@@ -34,7 +30,7 @@ const style = makeStyles({
   }
 });
 
-export default ({ children }: IProps) => {
+export const NavBar: React.FC<{}> = () => {
   const classes = style();
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -42,7 +38,7 @@ export default ({ children }: IProps) => {
         <Typography variant="h6" className={classes.title}>
           {strings.websiteName}
         </Typography>
-        {children}
+        {React.Children}
       </Toolbar>
     </AppBar>
   );

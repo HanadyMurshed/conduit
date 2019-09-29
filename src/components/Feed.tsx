@@ -6,15 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-interface Props {
-  UserName: string;
-  ShareDate: string;
-  LikesCount: number;
-  FeedBodyTitle: string;
-  FeedBodyText: string;
-  img?: string;
-}
-
 const style = makeStyles(() => ({
   mediaCaption: {
     color: colors.PrimaryColor,
@@ -96,16 +87,22 @@ const style = makeStyles(() => ({
   }
 }));
 
-export default ({
+export const Feed: React.FC<{
+  UserName: string;
+  ShareDate: string;
+  LikesCount: number;
+  FeedBodyTitle: string;
+  FeedBodyText: string;
+  img?: string;
+}> = ({
   UserName,
-  img,
+  img = "https://static.productionready.io/images/smiley-cyrus.jpg",
   ShareDate,
   LikesCount,
   FeedBodyTitle: FeedHeader,
   FeedBodyText: FeedBody
-}: Props) => {
+}) => {
   const classes = style();
-  if (!img) img = "https://static.productionready.io/images/smiley-cyrus.jpg";
   return (
     <div>
       <Grid container spacing={1}>

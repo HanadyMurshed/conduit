@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 // import { Typography } from "@material-ui/core";
 
-const style = makeStyles({
+const useStyle = makeStyles({
   headerContainor: {
     background: colors.PrimaryColor,
     height: "180px",
@@ -29,8 +29,8 @@ const style = makeStyles({
     fontSize: fontSize.large
   }
 });
-export default () => {
-  const classes = style();
+export const Header = () => {
+  const classes = useStyle();
   return (
     <div className={classes.headerContainor}>
       <Typography className={classes.title}>{strings.websiteName}</Typography>
