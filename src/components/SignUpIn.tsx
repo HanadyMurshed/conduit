@@ -41,6 +41,8 @@ const useStyle = makeStyles({
     }
   },
   button: {
+    textTransform: "none",
+
     color: "white",
     fontSize: fontSize.normal,
     background: colors.PrimaryColor,

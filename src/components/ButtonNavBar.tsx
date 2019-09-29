@@ -10,7 +10,7 @@ const useStyle = makeStyles(() => ({
     color: colors.TextPrimaryColor,
     transition: "0.1s",
     opacity: 0.3,
-    textTransform: "lowercase",
+    textTransform: "none",
     "&:hover": {
       background: "inherit",
       opacity: 1

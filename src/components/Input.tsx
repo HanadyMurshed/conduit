@@ -17,16 +17,30 @@ const useStyle = makeStyles({
   }
 });
 export const MyInput: React.FC<{
+  multiline?: Boolean;
+  rows?: string;
   className?: string;
   placeholder?: string;
-}> = ({ placeholder = "", className = "" }) => {
+}> = ({ placeholder = "", className = "", multiline = false, rows = 1 }) => {
   const classes = useStyle();
-  return (
-    <Input
-      placeholder={placeholder}
-      classes={{ focused: classes.focused }}
-      disableUnderline={true}
-      className={(classes.input + " " + className).trim()}
-    />
-  );
+  if (multiline)
+    return (
+      <Input
+        multiline
+        rows={rows}
+        placeholder={placeholder}
+        classes={{ focused: classes.focused }}
+        disableUnderline={true}
+        className={(classes.input + " " + className).trim()}
+      />
+    );
+  else
+    return (
+      <Input
+        placeholder={placeholder}
+        classes={{ focused: classes.focused }}
+        disableUnderline={true}
+        className={(classes.input + " " + className).trim()}
+      />
+    );
 };

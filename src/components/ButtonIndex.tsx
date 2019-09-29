@@ -5,6 +5,8 @@ import { Button } from "@material-ui/core";
 
 export const useStyle = makeStyles(() => ({
   defualt: {
+    textTransform: "none",
+
     width: "auto",
     minWidth: "40px",
     paddingLeft: 10,
@@ -14,6 +16,8 @@ export const useStyle = makeStyles(() => ({
     border: "1px solid" + colors.TextSecondayColor
   },
   active: {
+    textTransform: "none",
+
     width: "auto",
     minWidth: "40px",
     paddingLeft: 10,
