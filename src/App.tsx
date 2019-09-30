@@ -10,6 +10,7 @@ import { dims, colors } from "./SystemVariables";
 import { ButtonTag } from "./components/ButtonTag";
 import { Typography } from "@material-ui/core";
 import { ButtonNavBar } from "./components/ButtonNavBar";
+import { Router, Link } from "@reach/router";
 
 const styles = {
   page: {

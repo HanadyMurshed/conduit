@@ -4,15 +4,7 @@ import { ButtonNavBar } from "../src/components/ButtonNavBar";
 import { ButtonTag } from "../src/components/ButtonTag";
 import { Index } from "../src/components/ButtonIndex";
 
-storiesOf("Button Navigation", module).add("default", () => (
-  <ButtonNavBar title="Home" />
-));
-
-storiesOf("Button ButtonTag", module)
-  .add("default", () => <ButtonTag title="as" />)
-  .add("flowers", () => <ButtonTag title="flowers" />)
-  .add("happy", () => <ButtonTag title="happy" />);
-
-storiesOf("Button Pages indexer", module).add("default", () => (
-  <Index index={1} />
-));
+storiesOf("Buttons", module)
+  .add("Tag Button", () => <ButtonTag title="as" />)
+  .add("NavBar Button", () => <ButtonNavBar title="Home" />)
+  .add("Pager Button", () => <Index index={1} />);
