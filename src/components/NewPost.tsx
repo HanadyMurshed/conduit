@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Typography, Button } from "@material-ui/core";
 import { fontSize, colors } from "../SystemVariables";
@@ -52,18 +53,33 @@ const useStyle = makeStyles({
 });
 export const NewPost = () => {
   const classes = useStyle();
+
+  const [title, setTitle] = useState("");
+  const [about, setAbout] = useState("");
+  const [body, setBody] = useState("");
+  const [tags, setTgas] = useState("");
+
+  const handleChangeEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.currentTarget.value);
+  };
   return (
     <form className={classes.form}>
       <div>
         <MyInput
+          value={title}
+          onChange={handleChangeEvent}
           className={classes.input + " " + classes.title}
           placeholder="Artical Title"
         />
         <MyInput
+          value={about}
+          onChange={handleChangeEvent}
           className={classes.input}
           placeholder="What's this artical about?"
         />
         <MyInput
+          value={body}
+          onChange={handleChangeEvent}
           multiline
           rows="8"
           className={
@@ -72,6 +88,8 @@ export const NewPost = () => {
           placeholder="Write you're artical (in markdown)"
         />
         <MyInput
+          value={tags}
+          onChange={handleChangeEvent}
           className={classes.input + " " + classes.small}
           placeholder="Enter tags"
         />

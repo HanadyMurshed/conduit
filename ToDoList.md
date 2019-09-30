@@ -1,3 +1,3 @@
--button capitlize first letter -text transform-
 -placeholder color
 -remove little top and left margin
+-string selectors doesn;t work with withstyle + makestyle hook doen;t work inside of a class componenet

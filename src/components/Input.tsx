@@ -21,26 +21,39 @@ export const MyInput: React.FC<{
   rows?: string;
   className?: string;
   placeholder?: string;
-}> = ({ placeholder = "", className = "", multiline = false, rows = 1 }) => {
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}> = ({
+  placeholder = "",
+  className = "",
+  multiline = false,
+  rows = 1,
+  value = "",
+  onChange = () => {}
+}) => {
   const classes = useStyle();
   if (multiline)
     return (
       <Input
         multiline
+        value={value}
         rows={rows}
         placeholder={placeholder}
         classes={{ focused: classes.focused }}
         disableUnderline={true}
         className={(classes.input + " " + className).trim()}
+        onChange={onChange}
       />
     );
   else
     return (
       <Input
+        value={value}
         placeholder={placeholder}
         classes={{ focused: classes.focused }}
         disableUnderline={true}
         className={(classes.input + " " + className).trim()}
+        onChange={onChange}
       />
     );
 };
