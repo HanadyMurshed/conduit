@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@material-ui/core";
 import { fontSize, colors } from "../SystemVariables";
@@ -47,44 +46,45 @@ const useStyle = makeStyles({
     height: "auto"
   }
 });
-export const NewPost = () => {
+export const NewPost: React.FC<{
+  title?: string;
+  about?: string;
+  body?: string;
+  tags?: string;
+}> = ({ title = "", about = "", body = "", tags = "" }) => {
   const classes = useStyle();
 
-  const [title, setTitle] = useState("");
-  const [about, setAbout] = useState("");
-  const [body, setBody] = useState("");
-  const [tags, setTags] = useState("");
-
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.currentTarget.value);
-  };
-  const handleAboutChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAbout(event.currentTarget.value);
-  };
-  const handleBodyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBody(event.currentTarget.value);
-  };
-  const handleTagsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTags(event.currentTarget.value);
-  };
+  // These will be used in the parant
+  // const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setTitle(event.currentTarget.value);
+  // };
+  // const handleAboutChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setAbout(event.currentTarget.value);
+  // };
+  // const handleBodyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setBody(event.currentTarget.value);
+  // };
+  // const handleTagsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setTags(event.currentTarget.value);
+  // };
   return (
     <form className={classes.form}>
       <div>
         <MyInput
           value={title}
-          onChange={handleTitleChange}
+          // onChange={handleTitleChange}
           className={classes.input + " " + classes.title}
           placeholder="Artical Title"
         />
         <MyInput
           value={about}
-          onChange={handleAboutChange}
+          // onChange={handleAboutChange}
           className={classes.input}
           placeholder="What's this artical about?"
         />
         <MyInput
           value={body}
-          onChange={handleBodyChange}
+          // onChange={handleBodyChange}
           multiline
           rows="8"
           className={classes.input + " " + classes.multiline}
@@ -92,7 +92,7 @@ export const NewPost = () => {
         />
         <MyInput
           value={tags}
-          onChange={handleTagsChange}
+          // onChange={handleTagsChange}
           className={classes.input}
           placeholder="Enter tags"
         />
