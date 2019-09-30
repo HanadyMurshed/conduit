@@ -64,32 +64,39 @@ const useStyle = makeStyles({
     height: "auto"
   }
 });
-export const Settings = () => {
+export const Settings: React.FC<{
+  url?: string;
+  userName: string;
+  bio?: string;
+  email: string;
+}> = ({ url = "", userName = "", bio = "", email = "" }) => {
   const classes = useStyle();
   return (
     <form className={classes.form}>
       <div>
         <Typography className={classes.title}>Your Settings</Typography>
         <MyInput
+          value={url}
           className={classes.input + classes.url}
           placeholder="URL of profile picture"
         />
-        <MyInput className={classes.input} placeholder="UserName" />
+        <MyInput
+          value={userName}
+          className={classes.input}
+          placeholder="UserName"
+        />
         <MyInput
           multiline
           rows="8"
+          value={bio}
           className={classes.input + " " + classes.multiline}
           placeholder="Short bio about you"
         />
-        <MyInput className={classes.input} placeholder="email" />
+        <MyInput value={email} className={classes.input} placeholder="email" />
         <MyInput className={classes.input} placeholder="new Password" />
       </div>
-      <Button className={classes.button} disableRipple>
-        Update Setting
-      </Button>
-      <Button className={classes.RedButton} disableRipple>
-        Or click here to logout.
-      </Button>
+      <Button className={classes.button}>Update Setting</Button>
+      <Button className={classes.RedButton}>Or click here to logout.</Button>
     </form>
   );
 };
