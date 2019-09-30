@@ -35,8 +35,8 @@ const useStyle = makeStyles({
     background: colors.PrimaryColor,
     marginTop: 16,
     height: 50,
-    width: 180,
-    marginLeft: 320,
+    width: 160,
+    marginLeft: 740,
     "&:hover": {
       background: colors.PrimaryDark
     }
