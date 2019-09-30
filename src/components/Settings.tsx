@@ -59,6 +59,9 @@ const useStyle = makeStyles({
   },
   url: {
     fontSize: 14
+  },
+  multiline: {
+    height: "auto"
   }
 });
 export const Settings = () => {
@@ -74,8 +77,8 @@ export const Settings = () => {
         <MyInput className={classes.input} placeholder="UserName" />
         <MyInput
           multiline
-          rows="4"
-          className={classes.input}
+          rows="8"
+          className={classes.input + " " + classes.multiline}
           placeholder="Short bio about you"
         />
         <MyInput className={classes.input} placeholder="email" />
