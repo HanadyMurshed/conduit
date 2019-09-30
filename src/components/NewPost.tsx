@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Typography, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { fontSize, colors } from "../SystemVariables";
 import { MyInput } from "./Input";
 // import MyInput from "./Input";
@@ -42,10 +42,6 @@ const useStyle = makeStyles({
       background: colors.PrimaryDark
     }
   },
-  small: {
-    paddingLeft: 10,
-    fontSize: 14
-  },
 
   multiline: {
     height: "auto"
@@ -57,44 +53,51 @@ export const NewPost = () => {
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
   const [body, setBody] = useState("");
-  const [tags, setTgas] = useState("");
+  const [tags, setTags] = useState("");
 
-  const handleChangeEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value);
+  };
+  const handleAboutChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAbout(event.currentTarget.value);
+  };
+  const handleBodyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setBody(event.currentTarget.value);
+  };
+  const handleTagsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTags(event.currentTarget.value);
   };
   return (
     <form className={classes.form}>
       <div>
         <MyInput
           value={title}
-          onChange={handleChangeEvent}
+          onChange={handleTitleChange}
           className={classes.input + " " + classes.title}
           placeholder="Artical Title"
         />
         <MyInput
           value={about}
-          onChange={handleChangeEvent}
+          onChange={handleAboutChange}
           className={classes.input}
           placeholder="What's this artical about?"
         />
         <MyInput
           value={body}
-          onChange={handleChangeEvent}
+          onChange={handleBodyChange}
           multiline
           rows="8"
-          className={
-            classes.input + " " + classes.multiline + " " + classes.small
-          }
+          className={classes.input + " " + classes.multiline}
           placeholder="Write you're artical (in markdown)"
         />
         <MyInput
           value={tags}
-          onChange={handleChangeEvent}
-          className={classes.input + " " + classes.small}
+          onChange={handleTagsChange}
+          className={classes.input}
           placeholder="Enter tags"
         />
       </div>
-      <Button className={classes.button + " " + classes.small} disableRipple>
+      <Button className={classes.button} disableRipple>
         Publish Artical
       </Button>
     </form>
