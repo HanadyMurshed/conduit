@@ -10,7 +10,7 @@ const useStyle = makeStyles({
     fontSize: fontSize.normal,
     height: "50px",
     color: colors.TextSecondayColor,
-    maxWidth: dims.pageWidth,
+    maxWidth: dims.pageWidth + 40,
     margin: "auto",
     width: "100%"
   },

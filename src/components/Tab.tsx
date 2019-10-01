@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
   },
   tab: {
     fontSize: fontSize.small,
-    textTransform: "lowercase",
+    textTransform: "none",
     width: "auto",
     minWidth: 50,
     lineHeight: "inherit",
