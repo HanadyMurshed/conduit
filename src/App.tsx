@@ -8,6 +8,7 @@ import { withStyles } from "@material-ui/styles";
 import Home from "./Home";
 import SignUpPage from "./SignUp";
 import SignInPage from "./SignIn";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 const logged = false;
 const style = {
@@ -19,10 +20,10 @@ class App extends React.Component<{ classes: any }> {
     if (logged)
       return (
         <div>
-          {/*       
           <ButtonNavBar to="/" title="Homge" />
-          <ButtonNavBar to="signup" title="Sign Up" />
-          <ButtonNavBar to="signin" title="Sign In" /> */}
+          <ButtonNavBar to="signup" title="New Post" />
+          <ButtonNavBar to="signin" title="Setting" icon={<SettingsIcon />} />
+          <ButtonNavBar to="signin" title="UserName" />
         </div>
       );
     else

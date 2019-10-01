@@ -1,6 +1,6 @@
 import * as React from "react";
 import Avatar from "@material-ui/core/Avatar";
-import { colors, fontSize } from "../SystemVariables";
+import { colors, fontSize, defaultValues } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
@@ -93,7 +93,7 @@ export const Feed: React.FC<{
   img?: string;
 }> = ({
   UserName,
-  img = "https://static.productionready.io/images/smiley-cyrus.jpg",
+  img = defaultValues.avatar,
   ShareDate,
   LikesCount,
   FeedBodyTitle: FeedHeader,

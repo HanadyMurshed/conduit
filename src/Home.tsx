@@ -4,7 +4,7 @@ import { MyTab } from "./components/Tab";
 import { colors, dims } from "./SystemVariables";
 import { ButtonTag } from "./components/ButtonTag";
 import { RouteComponentProps } from "@reach/router";
-import { Header } from "./components/HeaderUser";
+import { Header } from "./components/Header";
 const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
 const styles = {

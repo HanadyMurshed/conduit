@@ -36,3 +36,6 @@ export const strings = {
   websiteName: "conduit",
   HeaderWelcomeMessage: "A place to share your knowledge"
 };
+export const defaultValues = {
+  avatar: "https://static.productionready.io/images/smiley-cyrus.jpg"
+};

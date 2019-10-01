@@ -29,12 +29,16 @@ const useStyle = makeStyles(() => ({
 
 export const ButtonNavBar: React.FC<{
   title: string;
-  to: string;
-}> = ({ title, to }) => {
+  to?: string;
+  icon?: JSX.Element;
+}> = ({ title, to = "/", icon }) => {
   const classes = useStyle();
   return (
     <Link className={classes.link} to={to}>
-      <Button className={classes.button}>{title}</Button>
+      <Button className={classes.button}>
+        {icon}
+        {title}
+      </Button>
     </Link>
   );
 };
