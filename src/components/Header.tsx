@@ -7,8 +7,9 @@ import Typography from "@material-ui/core/Typography";
 const useStyle = makeStyles({
   headerContainor: {
     background: colors.PrimaryColor,
-    height: "180px",
-    textAlign: "center"
+    height: "170px",
+    textAlign: "center",
+    boxShadow: "inset 0px 0px 5px 1px rgba(0,0,0,0.42)"
   },
 
   title: {
@@ -17,7 +18,7 @@ const useStyle = makeStyles({
     textShadow: "0.5 1px" + colors.TextPrimaryColor,
     fontWeight: "bold",
     fontSize: fontSize.larger,
-    paddingTop: 50
+    paddingTop: 45
   },
   welcomeMsg: {
     color: "white",

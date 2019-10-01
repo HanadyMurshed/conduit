@@ -10,8 +10,8 @@
 export const colors = {
   PrimaryColor: "#5cb85c",
   PrimaryDark: "#458545",
-  TextPrimaryColor: "#373a42",
-  TextSecondayColor: "#c9c9c9",
+  TextPrimaryColor: "#666666",
+  TextSecondayColor: "#b2b2b2",
   TagBackgroundColor: "#818a91",
   TagDarkerColor: "#737a80",
   BackgroundColor: "#FFFFFF",
@@ -22,13 +22,13 @@ export const colors = {
 
 export const dims = {
   pageMargie: "20%",
-  pageWidth: 1150
+  pageWidth: 1120
 };
 
 export const fontSize = {
-  larger: 46,
+  larger: 54,
   large: 20,
-  normal: 18,
+  normal: 14,
   small: 16,
   smaller: 12
 };

@@ -11,13 +11,12 @@ const useStyle = makeStyles(() => ({
   button: {
     background: "inherit",
     fontSize: fontSize.normal,
-    color: colors.TextPrimaryColor,
+    color: colors.TextSecondayColor,
     transition: "0.1s",
-    opacity: 0.3,
     textTransform: "none",
     "&:hover": {
       background: "inherit",
-      opacity: 1
+      color: colors.TextPrimaryColor
 
       //   textTransform: "uppercase"
     },

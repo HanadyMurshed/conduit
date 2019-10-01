@@ -11,7 +11,7 @@ const useStyle = makeStyles({
     fontSize: fontSize.normal,
     border: 0,
     boxShadow: "0",
-    height: "55px",
+    height: "50px",
     paddingLeft: dims.pageMargie,
     color: colors.TextSecondayColor,
     minWidth: "50px"
@@ -30,9 +30,9 @@ const useStyle = makeStyles({
     position: "absolute",
     left: "50%",
     transform: "translateX(-50%)",
-    minHeight: "55px",
+    minHeight: "40px",
+    height: "50px",
     width: dims.pageWidth,
-    margin: "auto",
     minWidth: "50px",
     boxShadow: "none"
   }

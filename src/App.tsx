@@ -1,6 +1,5 @@
 import React from "react";
 import { Router } from "@reach/router";
-import "./App.css";
 import Grid from "@material-ui/core/Grid";
 import { NavBar } from "./components/NavBar";
 import { ButtonNavBar } from "./components/ButtonNavBar";
