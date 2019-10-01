@@ -9,6 +9,7 @@ import Home from "./Home";
 import SignUpPage from "./SignUp";
 import SignInPage from "./SignIn";
 import SettingsIcon from "@material-ui/icons/Settings";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 
 const logged = false;
 const style = {
@@ -21,9 +22,17 @@ class App extends React.Component<{ classes: any }> {
       return (
         <div>
           <ButtonNavBar to="/" title="Homge" />
-          <ButtonNavBar to="signup" title="New Post" />
-          <ButtonNavBar to="signin" title="Setting" icon={<SettingsIcon />} />
-          <ButtonNavBar to="signin" title="UserName" />
+          <ButtonNavBar
+            to="/"
+            title="New Post"
+            icon={<OpenInNewIcon style={{ fontSize: 18, paddingRight: 8 }} />}
+          />
+          <ButtonNavBar
+            to="/"
+            title="Setting"
+            icon={<SettingsIcon style={{ fontSize: 18, paddingRight: 8 }} />}
+          />
+          <ButtonNavBar to="/" title="UserName" />
         </div>
       );
     else
