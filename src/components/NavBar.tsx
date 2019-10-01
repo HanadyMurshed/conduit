@@ -12,7 +12,6 @@ const useStyle = makeStyles({
     border: 0,
     boxShadow: "0",
     height: "55px",
-    MINPAD: dims.pageMargie,
     paddingLeft: dims.pageMargie,
     color: colors.TextSecondayColor,
     minWidth: "50px"
@@ -34,14 +33,20 @@ const useStyle = makeStyles({
     minHeight: "55px",
     width: dims.pageWidth,
     margin: "auto",
-    minWidth: "50px"
+    minWidth: "50px",
+    boxShadow: "none"
   }
 });
 
 export const NavBar: React.FC<{}> = ({ children }) => {
   const classes = useStyle();
   return (
-    <AppBar className={classes.appBar} position="static" color="inherit">
+    <AppBar
+      elevation={0}
+      className={classes.appBar}
+      position="static"
+      color="inherit"
+    >
       <Toolbar className={classes.toolbar}>
         <Typography variant="h6" className={classes.title}>
           {strings.websiteName}

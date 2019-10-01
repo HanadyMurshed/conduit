@@ -1,15 +1,10 @@
 .App {
   display: "block";
-  padding: 0;
+  padding: 50;
   margin: 0;
   width: 100%;
 }
-html {
-  padding: 0;
-  width: 100%;
-}
-
-body {
+html body {
   padding: 0;
   width: 100%;
 }

@@ -7,6 +7,7 @@ import { MyInput } from "./Input";
 
 const useStyle = makeStyles({
   form: {
+    margin: "auto",
     width: "500px",
     "& div": {
       textAlign: "center"
@@ -42,7 +43,6 @@ const useStyle = makeStyles({
   },
   button: {
     textTransform: "none",
-
     color: "white",
     fontSize: fontSize.normal,
     background: colors.PrimaryColor,
