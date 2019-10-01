@@ -7,7 +7,8 @@ import { MyInput } from "./Input";
 
 const useStyle = makeStyles({
   form: {
-    width: "500px",
+    margin: "auto",
+    width: 900,
     "& div": {
       textAlign: "center"
     }

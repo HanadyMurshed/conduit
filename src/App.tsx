@@ -4,13 +4,15 @@ import Grid from "@material-ui/core/Grid";
 import { NavBar } from "./components/NavBar";
 import { ButtonNavBar } from "./components/ButtonNavBar";
 import { withStyles } from "@material-ui/styles";
-import Home from "./Home";
-import SignUpPage from "./SignUp";
-import SignInPage from "./SignIn";
+import Home from "./PageHome";
+import SignUpPage from "./PageSignUp";
+import SignInPage from "./PageSignIn";
+import NewPostPage from "./PageNewPost";
+
 import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 
-const logged = false;
+const logged = true;
 const style = {
   router: { width: "100%" }
 };
@@ -20,26 +22,26 @@ class App extends React.Component<{ classes: any }> {
     if (logged)
       return (
         <div>
-          <ButtonNavBar to="/" title="Homge" />
+          <ButtonNavBar to="/" title="Home" />
           <ButtonNavBar
-            to="/"
+            to="/new-post"
             title="New Post"
-            icon={<OpenInNewIcon style={{ fontSize: 18, paddingRight: 8 }} />}
+            icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
           <ButtonNavBar
             to="/"
-            title="Setting"
-            icon={<SettingsIcon style={{ fontSize: 18, paddingRight: 8 }} />}
+            title="Settings"
+            icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
-          <ButtonNavBar to="/" title="UserName" />
+          <ButtonNavBar to="/" title="Hanady" />
         </div>
       );
     else
       return (
         <div>
           <ButtonNavBar to="/" title="Home" />
-          <ButtonNavBar to="signup" title="Sign Up" />
-          <ButtonNavBar to="signin" title="Sign In" />
+          <ButtonNavBar to="sign-up" title="Sign Up" />
+          <ButtonNavBar to="sign-in" title="Sign In" />
         </div>
       );
   }
@@ -52,8 +54,9 @@ class App extends React.Component<{ classes: any }> {
         </Grid>
         <Router className={classes.router}>
           <Home path="/" />
-          <SignUpPage path="/signup" />
-          <SignInPage path="/signin" />
+          <SignUpPage path="/sign-up" />
+          <SignInPage path="/sign-in" />
+          <NewPostPage path="/new-post" />
         </Router>
       </Grid>
     );
