@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Link } from "@reach/router";
+import { Router } from "@reach/router";
 import "./App.css";
 import Grid from "@material-ui/core/Grid";
 import { NavBar } from "./components/NavBar";
@@ -9,7 +9,7 @@ import Home from "./Home";
 import SignUpPage from "./SignUp";
 import SignInPage from "./SignIn";
 
-const logged = true;
+const logged = false;
 const style = {
   router: { width: "100%" }
 };
@@ -19,18 +19,18 @@ class App extends React.Component<{ classes: any }> {
     if (logged)
       return (
         <div>
-          <ButtonNavBar title="Home" />
-          <ButtonNavBar title="Sign Up" />
-          <ButtonNavBar title="Sign In" />
+          {/*       
+          <ButtonNavBar to="/" title="Homge" />
+          <ButtonNavBar to="signup" title="Sign Up" />
+          <ButtonNavBar to="signin" title="Sign In" /> */}
         </div>
       );
     else
       return (
         <div>
-          )
-          <ButtonNavBar title="Home" />
-          <ButtonNavBar title="Sign Up" />
-          <ButtonNavBar title="Sign In" />
+          <ButtonNavBar to="/" title="Home" />
+          <ButtonNavBar to="signup" title="Sign Up" />
+          <ButtonNavBar to="signin" title="Sign In" />
         </div>
       );
   }
