@@ -7,14 +7,12 @@ import { colors, dims, fontSize, strings } from "../SystemVariables";
 
 const useStyle = makeStyles({
   appBar: {
-    position: "relative",
     fontSize: fontSize.normal,
-    border: 0,
-    boxShadow: "0",
     height: "50px",
-    paddingLeft: dims.pageMargie,
     color: colors.TextSecondayColor,
-    minWidth: "50px"
+    maxWidth: dims.pageWidth,
+    margin: "auto",
+    width: "100%"
   },
   title: {
     fontSize: fontSize.large,
@@ -27,14 +25,8 @@ const useStyle = makeStyles({
     }
   },
   toolbar: {
-    position: "absolute",
-    left: "50%",
-    transform: "translateX(-50%)",
     minHeight: "40px",
-    height: "50px",
-    width: dims.pageWidth,
-    minWidth: "50px",
-    boxShadow: "none"
+    height: "50px"
   }
 });
 

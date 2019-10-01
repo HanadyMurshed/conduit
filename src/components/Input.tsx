@@ -50,7 +50,7 @@ export const MyInput: React.FC<{
       <Input
         value={value}
         placeholder={placeholder}
-        classes={{ focused: classes.focused }}
+        classes={{ focused: classes.focused + "input" }}
         disableUnderline={true}
         className={(classes.input + " " + className).trim()}
         onChange={onChange}

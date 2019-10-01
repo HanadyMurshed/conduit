@@ -8,9 +8,11 @@ import Home from "./PageHome";
 import SignUpPage from "./PageSignUp";
 import SignInPage from "./PageSignIn";
 import NewPostPage from "./PageNewPost";
+import SettingsPage from "./PageSettings";
 
 import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
+import PageSettings from "./PageSettings";
 
 const logged = true;
 const style = {
@@ -29,7 +31,7 @@ class App extends React.Component<{ classes: any }> {
             icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
           <ButtonNavBar
-            to="/"
+            to="/settings"
             title="Settings"
             icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
@@ -57,6 +59,7 @@ class App extends React.Component<{ classes: any }> {
           <SignUpPage path="/sign-up" />
           <SignInPage path="/sign-in" />
           <NewPostPage path="/new-post" />
+          <SettingsPage path="/settings" />
         </Router>
       </Grid>
     );
