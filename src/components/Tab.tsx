@@ -36,19 +36,26 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1
   },
   tabs: {
-    minHeight: 40
+    minHeight: 20,
+    height: 45
   },
   tab: {
-    fontSize: fontSize.small,
+    fontSize: fontSize.normal,
     textTransform: "none",
     width: "auto",
+    height: "auto",
     minWidth: 50,
-    lineHeight: "inherit",
-    minHeight: "inherit"
+    color: colors.TextSecondayColor,
+    "&:hover": {
+      color: colors.TextPrimaryColor
+    }
   },
-  indicator: { background: colors.PrimaryColor },
+  indicator: { background: colors.PrimaryColor, height: 3 },
   selected: {
-    color: colors.PrimaryColor
+    color: colors.PrimaryColor,
+    "&:hover": {
+      color: colors.PrimaryColor
+    }
   }
 }));
 // const MyComonent :React.FC<>;

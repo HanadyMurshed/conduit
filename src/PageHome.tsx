@@ -9,8 +9,10 @@ const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
 const styles = {
   page: {
-    width: dims.pageWidth,
+    width: dims.pageWidth + 40,
     margin: "auto",
+    paddingLeft: 20,
+    paddingRight: 20,
     minWidth: 500,
     marginTop: 20
   },
