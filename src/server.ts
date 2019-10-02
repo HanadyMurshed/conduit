@@ -25,7 +25,7 @@ function login(email: string, password: string) {
   if (!email || !password || email == "" || password == "") return;
   axios
     .post(
-      baseUrl + "/users/login",
+      `${baseUrl}/users/login`,
       {
         user: {
           email: email,
@@ -67,7 +67,7 @@ function register(email: string, username: string, password: string) {
     return;
   axios
     .post(
-      baseUrl + "/users",
+      `${baseUrl}/users`,
       {
         user: {
           username: username,
@@ -102,9 +102,9 @@ function register(email: string, username: string, password: string) {
 function getCurrentUser(token: string) {
   if (!token || token == "")
     axios
-      .get(baseUrl + "/user", {
+      .get(`${baseUrl}/user`, {
         headers: {
-          Authorization: "Token " + token,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json; charset=utf-8"
         }
       })
@@ -130,13 +130,13 @@ function updateUser(body: any, token: string) {
   if (!body || body == {} || !token || token == "") return;
   axios
     .put(
-      baseUrl + "/user",
+      `${baseUrl}/user`,
       {
         user: body
       },
       {
         headers: {
-          Authorization: "Token " + token,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json; charset=utf-8"
         }
       }
@@ -158,11 +158,12 @@ function updateUser(body: any, token: string) {
 function getProfile(username: string, token?: string) {
   if (!username || username == "") return;
   const headers: { [key: string]: string } = {};
-  if (token) headers["Authorization"] = "Token " + token;
-  headers["Content-Type"] = "application/json; charset=utf-8";
+  if (token)
+    (headers["Authorization"] = `Token ${token}`),
+      (headers["Content-Type"] = "application/json; charset=utf-8");
 
   axios
-    .get(baseUrl + "/profiles/" + username, {
+    .get(`${baseUrl}/profiles/${username}`, {
       headers: headers
     })
     .then((response: any) => {
@@ -184,11 +185,11 @@ function followUser(username: string, token: string) {
   if (!username || username == "" || !token || token == "") return;
   axios
     .post(
-      baseUrl + "/profiles/" + username + "/follow",
+      `${baseUrl}/profiles/${username}/follow`,
       {},
       {
         headers: {
-          Authorization: "Token " + token,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json; charset=utf-8"
         }
       }
@@ -211,9 +212,9 @@ function followUser(username: string, token: string) {
 function unFollowUser(username: string, token: string) {
   if (!username || !token || username == "" || token == "") return;
   axios
-    .delete(baseUrl + "/profiles/" + username + "/follow", {
+    .delete(`${baseUrl}/profiles/${username}/follow`, {
       headers: {
-        Authorization: "Token " + token,
+        Authorization: `Token ${token}`,
         "Content-Type": "application/json; charset=utf-8"
       }
     })
@@ -237,10 +238,11 @@ function unFollowUser(username: string, token: string) {
 function listArticles(paramaeters: { [key: string]: any }, token?: string) {
   if (!paramaeters) paramaeters = {};
   const myHeaders: { [key: string]: string } = {};
-  if (token && token != "") myHeaders["Authorization"] = "Token " + token;
-  myHeaders["Content-Type"] = "application/json; charset=utf-8";
+  if (token && token != "")
+    (myHeaders["Authorization"] = `Token ${token}`),
+      (myHeaders["Content-Type"] = "application/json; charset=utf-8");
   axios
-    .get(baseUrl + "/articles/", { headers: myHeaders, params: paramaeters })
+    .get(`${baseUrl}/articles/`, { headers: myHeaders, params: paramaeters })
     .then((response: any) => {
       console.log(response.data);
     })
@@ -261,10 +263,10 @@ function getArticleFeed(token: string, paramaeters?: any) {
   if (!token || token == "") return;
   if (!paramaeters) paramaeters = {};
   axios
-    .get(baseUrl + "/articles/feed", {
+    .get(`${baseUrl}/articles/feed`, {
       params: paramaeters,
       headers: {
-        Authorization: "Token " + token,
+        Authorization: `Token ${token}`,
         "Content-Type": "application/json; charset=utf-8"
       }
     })
@@ -284,7 +286,7 @@ function getArticleFeed(token: string, paramaeters?: any) {
 function getAnArticle(slug: string) {
   if (!slug || slug == "") return;
   axios
-    .get(baseUrl + "/articles/slug")
+    .get(`${baseUrl}/articles/${slug}`)
     .then((response: any) => {
       console.log(response);
     })
@@ -322,7 +324,7 @@ function createArticle(
   if (!tagList) tagList = [];
   axios
     .post(
-      baseUrl + "/articles",
+      `${baseUrl}/articles`,
       {
         article: {
           title: title,
@@ -333,7 +335,7 @@ function createArticle(
       },
       {
         headers: {
-          Authorization: "Token " + token,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json; charset=utf-8"
         }
       }
@@ -357,13 +359,13 @@ function updateArticle(slug: string, body: any) {
   if (!body || body == {} || slug || slug == "") return;
   axios
     .put(
-      baseUrl + "/articles/" + slug,
+      `${baseUrl}/articles/${slug}`,
       {
         article: body
       },
       {
         headers: {
-          Authorization: "Token " + token,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json; charset=utf-8"
         }
       }
@@ -385,9 +387,9 @@ function updateArticle(slug: string, body: any) {
 function deleteArticle(slug: string) {
   if (!slug || slug == "") return;
   axios
-    .delete(baseUrl + "/articles/" + slug, {
+    .delete(`${baseUrl}/articles/${slug}`, {
       headers: {
-        Authorization: "Token " + token,
+        Authorization: `Token ${token}`,
         "Content-Type": "application/json; charset=utf-8"
       }
     })
@@ -412,13 +414,13 @@ function addCommentToArticle(comment: string, slug: string, token: string) {
     return;
   axios
     .post(
-      baseUrl + "/articles/" + slug + "/comments",
+      `${baseUrl}/articles/${slug} /comments`,
       {
         comment: { body: comment }
       },
       {
         headers: {
-          Authorization: "Token " + token,
+          Authorization: `Token ${token}`,
           "Content-Type": "application/json; charset=utf-8"
         }
       }
@@ -441,10 +443,11 @@ function addCommentToArticle(comment: string, slug: string, token: string) {
 function getCommentsByArticles(slug: string, token?: string) {
   if (!slug || slug == "") return;
   const myHeaders: { [key: string]: string } = {};
-  if (token && token != "") myHeaders["Authorization"] = "Token " + token;
-  myHeaders["Content-Type"] = "application/json; charset=utf-8";
+  if (token && token != "")
+    (myHeaders["Authorization"] = `Token ${token}`),
+      (myHeaders["Content-Type"] = "application/json; charset=utf-8");
   axios
-    .get(baseUrl + "/articles/" + slug + "/comments", {
+    .get(`${baseUrl}/articles/${slug}/comments`, {
       headers: myHeaders
     })
     .then((Response: any) => {
@@ -463,9 +466,9 @@ function getCommentsByArticles(slug: string, token?: string) {
 function deleteComment(slug: string, id: string, token: string) {
   if (!slug || slug == "" || !id || id == "" || !token || token == "") return;
   axios
-    .delete(baseUrl + "/articles/" + slug + "/comments/" + id, {
+    .delete(`${baseUrl}/articles/${slug}/comments/ ${id}`, {
       headers: {
-        Authorization: "Token " + token,
+        Authorization: `Token ${token}`,
         "Content-Type": "application/json; charset=utf-8"
       }
     })
