@@ -9,16 +9,26 @@ import SignUpPage from "./PageSignUp";
 import SignInPage from "./PageSignIn";
 import NewPostPage from "./PageNewPost";
 import SettingsPage from "./PageSettings";
-
 import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
-import PageSettings from "./PageSettings";
-
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 const logged = false;
 const style = {
   router: { width: "100%" }
 };
-
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      "Titillium Web",
+      "Nunito",
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif"
+    ].join(",")
+  }
+});
 class App extends React.Component<{ classes: any }> {
   getNavBarButtons() {
     if (logged)
@@ -50,18 +60,20 @@ class App extends React.Component<{ classes: any }> {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <NavBar>{this.getNavBarButtons()}</NavBar>
-        </Grid>
-        <Router className={classes.router}>
-          <Home path="/" />
-          <SignUpPage path="/sign-up" />
-          <SignInPage path="/sign-in" />
-          <NewPostPage path="/new-post" />
-          <SettingsPage path="/settings" />
-        </Router>
-      </Grid>
+      <ThemeProvider theme={theme}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <NavBar>{this.getNavBarButtons()}</NavBar>
+          </Grid>
+          <Router className={classes.router}>
+            <Home path="/" />
+            <SignUpPage path="/sign-up" />
+            <SignInPage path="/sign-in" />
+            <NewPostPage path="/new-post" />
+            <SettingsPage path="/settings" />
+          </Router>
+        </Grid>{" "}
+      </ThemeProvider>
     );
   }
 }
