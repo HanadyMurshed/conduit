@@ -255,7 +255,7 @@ function listArticles(paramaeters: { [key: string]: any }, token?: string) {
   axios
     .get(baseUrl + "/articles/", { headers: myHeaders, params: paramaeters })
     .then((response: any) => {
-      console.log(response);
+      console.log(response.data);
     })
     .catch((error: any) => {
       console.log(error);
@@ -281,6 +281,23 @@ function getArticleFeed(token: string, paramaeters?: any) {
       }
     })
     .then((response: any) => {
+      console.log(response.data);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+}
+
+/**
+ * GET
+ * /articles/{slug}
+ * Returns an article
+ */
+function getAnArticle(slug: string) {
+  if (!slug) return;
+  axios
+    .get(baseUrl + "/articles/slug")
+    .then((response: any) => {
       console.log(response);
     })
     .catch((error: any) => {
@@ -288,4 +305,45 @@ function getArticleFeed(token: string, paramaeters?: any) {
     });
 }
 
-followUser("adam1234io", token);
+/**
+ * post
+ * /articles
+ * Required fields: title, description, body
+ * optional: tagList
+ */
+function createArticle(
+  title: string,
+  description: string,
+  body: string,
+  token: string,
+  tagList?: string
+) {
+  if (!title && !description && !body) return;
+  if (!tagList) tagList = "";
+  axios
+    .post(
+      baseUrl + "/articles",
+      {
+        article: {
+          title: title,
+          description: description,
+          body: body,
+          tagList: tagList
+        }
+      },
+      {
+        headers: {
+          Authorization: "Token " + token,
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      }
+    )
+    .then((response: any) => {
+      console.log(response);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+}
+
+createArticle("anime", "I love to watch", "One Piece", "", token);
