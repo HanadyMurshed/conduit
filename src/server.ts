@@ -4,7 +4,7 @@
  *403 for Forbidden requests, when a request may be valid but the user doesn't have permissions to perform the action
  *404 for Not found requests, when a resource can't be found to fulfill the request
  */
-
+class server {}
 const baseUrl = "https://conduit.productionready.io/api";
 
 const axios = require("axios").default;
@@ -21,7 +21,7 @@ const token =
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, password
  */
-function login(email: string, password: string) {
+export function login(email: string, password: string) {
   if (!email || !password || email == "" || password == "") return;
   axios
     .post(
@@ -55,7 +55,7 @@ function login(email: string, password: string) {
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, username, password
  */
-function register(email: string, username: string, password: string) {
+export function register(email: string, username: string, password: string) {
   if (
     !email ||
     !username ||
@@ -99,7 +99,7 @@ function register(email: string, username: string, password: string) {
  * -------: 401 :UNAUTHRIZED
  * -------: 422 :UNEXPECTED ERROR
  */
-function getCurrentUser(token: string) {
+export function getCurrentUser(token: string) {
   if (!token || token == "")
     axios
       .get(`${baseUrl}/user`, {
@@ -126,7 +126,7 @@ function getCurrentUser(token: string) {
  * -------: 422 :UNEXPECTED ERROR
  * Accepted fields: email, username, password, image, bio
  */
-function updateUser(body: any, token: string) {
+export function updateUser(body: any, token: string) {
   if (!body || body == {} || !token || token == "") return;
   axios
     .put(
@@ -155,7 +155,7 @@ function updateUser(body: any, token: string) {
  * Authentication:optional
  * Required: username
  */
-function getProfile(username: string, token?: string) {
+export function getProfile(username: string, token?: string) {
   if (!username || username == "") return;
   const headers: { [key: string]: string } = {};
   if (token)
@@ -181,7 +181,7 @@ function getProfile(username: string, token?: string) {
  * Required:username
  * not working
  */
-function followUser(username: string, token: string) {
+export function followUser(username: string, token: string) {
   if (!username || username == "" || !token || token == "") return;
   axios
     .post(
@@ -209,7 +209,7 @@ function followUser(username: string, token: string) {
  * Required:username
  * not working
  */
-function unFollowUser(username: string, token: string) {
+export function unFollowUser(username: string, token: string) {
   if (!username || !token || username == "" || token == "") return;
   axios
     .delete(`${baseUrl}/profiles/${username}/follow`, {
@@ -235,7 +235,10 @@ function unFollowUser(username: string, token: string) {
  * optional offset/skip default 20
  * Returns most recent articles globally by default
  */
-function listArticles(paramaeters: { [key: string]: any }, token?: string) {
+export function listArticles(
+  paramaeters: { [key: string]: any },
+  token?: string
+) {
   if (!paramaeters) paramaeters = {};
   const myHeaders: { [key: string]: string } = {};
   if (token && token != "")
@@ -259,7 +262,7 @@ function listArticles(paramaeters: { [key: string]: any }, token?: string) {
  * optional offset/skip default 20
  * Returns most recent articles you follow
  */
-function getArticleFeed(token: string, paramaeters?: any) {
+export function getArticleFeed(token: string, paramaeters?: any) {
   if (!token || token == "") return;
   if (!paramaeters) paramaeters = {};
   axios
@@ -283,7 +286,7 @@ function getArticleFeed(token: string, paramaeters?: any) {
  * /articles/{slug}
  * Returns an article
  */
-function getAnArticle(slug: string) {
+export function getAnArticle(slug: string) {
   if (!slug || slug == "") return;
   axios
     .get(`${baseUrl}/articles/${slug}`)
@@ -303,7 +306,7 @@ function getAnArticle(slug: string) {
  * Authentication
  * will return an Article
  */
-function createArticle(
+export function createArticle(
   title: string,
   description: string,
   body: string,
@@ -355,7 +358,7 @@ function createArticle(
  * Authentication
  * will return an Article
  */
-function updateArticle(slug: string, body: any) {
+export function updateArticle(slug: string, body: any) {
   if (!body || body == {} || slug || slug == "") return;
   axios
     .put(
@@ -384,7 +387,7 @@ function updateArticle(slug: string, body: any) {
  * Authentication
  * will return an Article
  */
-function deleteArticle(slug: string) {
+export function deleteArticle(slug: string) {
   if (!slug || slug == "") return;
   axios
     .delete(`${baseUrl}/articles/${slug}`, {
@@ -409,7 +412,11 @@ function deleteArticle(slug: string) {
  * slug=this-is-article-title-e011lz
  */
 
-function addCommentToArticle(comment: string, slug: string, token: string) {
+export function addCommentToArticle(
+  comment: string,
+  slug: string,
+  token: string
+) {
   if (!comment || comment == "" || !slug || slug == "" || !token || token == "")
     return;
   axios
@@ -440,7 +447,7 @@ function addCommentToArticle(comment: string, slug: string, token: string) {
  * slug=this-is-article-title-e011lz
  */
 
-function getCommentsByArticles(slug: string, token?: string) {
+export function getCommentsByArticles(slug: string, token?: string) {
   if (!slug || slug == "") return;
   const myHeaders: { [key: string]: string } = {};
   if (token && token != "")
@@ -463,7 +470,7 @@ function getCommentsByArticles(slug: string, token?: string) {
  * /articles/{slug}/comments/{id}
  * authentication
  */
-function deleteComment(slug: string, id: string, token: string) {
+export function deleteComment(slug: string, id: string, token: string) {
   if (!slug || slug == "" || !id || id == "" || !token || token == "") return;
   axios
     .delete(`${baseUrl}/articles/${slug}/comments/ ${id}`, {
@@ -485,7 +492,7 @@ function deleteComment(slug: string, id: string, token: string) {
  * /articles/:slug/favorite
  * authintication
  */
-function FavoriteArticle(slug: string, token: string) {
+export function FavoriteArticle(slug: string, token: string) {
   if (!slug || slug == "" || token == "" || token == "") return;
   axios
     .post(
@@ -511,7 +518,7 @@ function FavoriteArticle(slug: string, token: string) {
  * /articles/:slug/favorite
  * authintication
  */
-function unFavoriteArticle(slug: string, token: string) {
+export function unFavoriteArticle(slug: string, token: string) {
   if (!slug || slug == "" || token == "" || token == "") return;
   axios
     .delete(`${baseUrl}/articles/${slug}/favorite`, {
@@ -532,7 +539,7 @@ function unFavoriteArticle(slug: string, token: string) {
  * get
  * /tags
  */
-function getTags() {
+export function getTags() {
   axios
     .get(`${baseUrl}/tags`)
     .then((response: any) => {
