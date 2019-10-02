@@ -2,6 +2,7 @@ import * as React from "react";
 import { colors, strings, fontSize } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
+import { Theme } from "@material-ui/core";
 // import { Typography } from "@material-ui/core";
 
 const useStyle = makeStyles({
@@ -13,21 +14,21 @@ const useStyle = makeStyles({
   },
 
   title: {
+    fontFamily: "Titillium Web",
     color: "white",
     lineHeight: "80%",
-    textShadow: "0.5 1px" + colors.TextPrimaryColor,
+    textShadow: "2px 2px 2px rgba(0,0,0,0.2)",
     fontWeight: "bold",
     fontSize: fontSize.larger,
     paddingTop: 45
   },
   welcomeMsg: {
+    fontSize: fontSize.large,
     color: "white",
     lineHeight: "80%",
-    fontWeight: "lighter",
-    letterSpacing: "2px",
+    fontWeight: 100,
     opacity: 0.8,
-    paddingTop: 25,
-    fontSize: fontSize.large
+    paddingTop: 25
   }
 });
 export const Header = () => {

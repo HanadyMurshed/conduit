@@ -26,7 +26,7 @@ export const dims = {
 };
 
 export const fontSize = {
-  larger: 54,
+  larger: 56,
   large: 20,
   normal: 14,
   small: 16,

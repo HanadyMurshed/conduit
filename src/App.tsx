@@ -19,14 +19,9 @@ const style = {
 };
 const theme = createMuiTheme({
   typography: {
-    fontFamily: [
-      "Titillium Web",
-      "Nunito",
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif"
-    ].join(",")
+    fontFamily: ["Merriweather Sans", "Titillium Web", "Source Serif Pro"].join(
+      ","
+    )
   }
 });
 class App extends React.Component<{ classes: any }> {
