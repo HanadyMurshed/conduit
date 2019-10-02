@@ -5,6 +5,8 @@
  *404 for Not found requests, when a resource can't be found to fulfill the request
  */
 
+//I am going to change the function decleration to return the promise first
+
 const baseUrl = "https://conduit.productionready.io/api";
 
 const axios = require("axios").default;
@@ -44,7 +46,7 @@ const token =
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, password
  */
-async function login(user: { email: string; password: string }) {
+function login(user: { email: string; password: string }) {
   if (!user || !user.email || !user.password) return;
   axios
     .post(
@@ -75,11 +77,7 @@ async function login(user: { email: string; password: string }) {
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, username, password
  */
-async function register(user: {
-  email: string;
-  username: string;
-  password: string;
-}) {
+function register(user: { email: string; username: string; password: string }) {
   if (!user || !user.email || !user.username || !user.password) return;
   axios
     .post(
@@ -115,7 +113,7 @@ async function register(user: {
  * -------: 401 :UNAUTHRIZED
  * -------: 422 :UNEXPECTED ERROR
  */
-async function getCurrentUser() {
+function getCurrentUser(token: string) {
   axios
     .get(baseUrl + "/user", {
       headers: {
@@ -141,7 +139,7 @@ async function getCurrentUser() {
  * -------: 422 :UNEXPECTED ERROR
  * Accepted fields: email, username, password, image, bio
  */
-async function updateUser(body: any) {
+function updateUser(body: any, token: string) {
   if (!body || body == {}) return;
   axios
     .put(
@@ -164,4 +162,55 @@ async function updateUser(body: any) {
     });
 }
 
-updateUser({ username: "Hana" });
+/**
+ * Get
+ * /profiles/:username
+ * Authentication:optional
+ * Required: username
+ */
+function getProfile(username: string, token?: string) {
+  if (!username) return;
+  const headers: { [key: string]: string } = {};
+  if (token) headers["Authorization"] = "Token " + token;
+  headers["Content-Type"] = "application/json; charset=utf-8";
+
+  axios
+    .get(baseUrl + "/profiles/" + username, {
+      headers: headers
+    })
+    .then((response: any) => {
+      console.log(response);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+}
+
+/**
+ * post
+ * /profiles/:username/follow
+ * Authentication
+ * Required:username
+ */
+function followUser(username: string, token: string) {
+  if (!username) return;
+  axios
+    .post(
+      baseUrl + "/profiles/@" + username + "follow",
+      {},
+      {
+        headers: {
+          Authorization: "Token " + token,
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      }
+    )
+    .then((response: any) => {
+      console.log(response.data);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+}
+
+followUser("kien977777", token);
