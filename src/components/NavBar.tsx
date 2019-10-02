@@ -16,7 +16,6 @@ const useStyle = makeStyles({
   },
   title: {
     fontFamily: "Titillium Web",
-
     fontSize: fontSize.large,
     flexGrow: 1,
     pointerEvent: "none",

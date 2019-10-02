@@ -15,7 +15,7 @@ const token =
 /**
  * Post
  * /users/login
- * Respons:
+ * Respons:git
  * -------: 200 :OK
  * -------: 401 :UNAUTHRIZED
  * -------: 422 :UNEXPECTED ERROR
