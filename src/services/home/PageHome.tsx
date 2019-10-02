@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Grid, Typography, withStyles } from "@material-ui/core";
-import { MyTab } from "./components/Tab";
-import { colors, dims } from "./SystemVariables";
-import { ButtonTag } from "./components/ButtonTag";
+import { MyTab } from "../../components/Tab";
+import { colors, dims } from "../../SystemVariables";
+import { ButtonTag } from "../../components/ButtonTag";
 import { RouteComponentProps } from "@reach/router";
-import { Header } from "./components/Header";
+import { Header } from "../../components/Header";
 const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
 const styles = {
