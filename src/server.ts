@@ -191,6 +191,7 @@ function getProfile(username: string, token?: string) {
  * /profiles/:username/follow
  * Authentication
  * Required:username
+ * not working
  */
 function followUser(username: string, token: string) {
   if (!username) return;
@@ -213,4 +214,30 @@ function followUser(username: string, token: string) {
     });
 }
 
-followUser("kien977777", token);
+/**
+ * delete
+ * /profiles/:username/follow
+ * Authentication
+ * Required:username
+ * not working
+ */
+function unFollowUser(username: string, token: string) {
+  if (!username) return;
+  axios
+    .delete(
+      baseUrl + "/profiles/@" + username + "follow",
+      {},
+      {
+        headers: {
+          Authorization: "Token " + token,
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      }
+    )
+    .then((response: any) => {
+      console.log(response.data);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+}
