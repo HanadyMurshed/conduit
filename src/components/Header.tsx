@@ -2,7 +2,6 @@ import * as React from "react";
 import { colors, strings, fontSize } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
-import { Theme } from "@material-ui/core";
 // import { Typography } from "@material-ui/core";
 
 const useStyle = makeStyles({

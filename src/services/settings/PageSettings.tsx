@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
-import { Settings } from "./components/Settings";
+import { Settings } from "../../components/Settings";
 
 const styles = {
   page: {
