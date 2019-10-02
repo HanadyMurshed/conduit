@@ -197,7 +197,7 @@ function followUser(username: string, token: string) {
   if (!username) return;
   axios
     .post(
-      baseUrl + "/profiles/@" + username + "follow",
+      baseUrl + "/profiles/" + username + "follow",
       {},
       {
         headers: {
@@ -225,7 +225,7 @@ function unFollowUser(username: string, token: string) {
   if (!username) return;
   axios
     .delete(
-      baseUrl + "/profiles/@" + username + "follow",
+      baseUrl + "/profiles/" + username + "follow",
       {},
       {
         headers: {
@@ -241,3 +241,30 @@ function unFollowUser(username: string, token: string) {
       console.log(error);
     });
 }
+
+/**
+ * GET
+ * /articles/
+ * Authentication:optional
+ * optional paramaeters: tag, author or favorited
+ * optional limit default 20
+ * optional offset/skip default 20
+ * Returns most recent articles globally by default
+ */
+function listArticles(paramaeters?: any, token?: string) {
+  if (!paramaeters) paramaeters = {};
+  const headers: { [key: string]: string } = {};
+  if (token) headers["Authorization"] = "Token " + token;
+  headers["Content-Type"] = "application/json; charset=utf-8";
+
+  axios
+    .get(baseUrl + "/articles/", { params: paramaeters }, { headers: headers })
+    .then((response: any) => {
+      console.log(response.data);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+}
+
+listArticles({ limit: 1 });
