@@ -197,7 +197,7 @@ function followUser(username: string, token: string) {
   if (!username) return;
   axios
     .post(
-      baseUrl + "/profiles/" + username + "follow",
+      baseUrl + "/profiles/" + username + "/follow",
       {},
       {
         headers: {
@@ -224,16 +224,12 @@ function followUser(username: string, token: string) {
 function unFollowUser(username: string, token: string) {
   if (!username) return;
   axios
-    .delete(
-      baseUrl + "/profiles/" + username + "follow",
-      {},
-      {
-        headers: {
-          Authorization: "Token " + token,
-          "Content-Type": "application/json; charset=utf-8"
-        }
+    .delete(baseUrl + "/profiles/" + username + "/follow", {
+      headers: {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json; charset=utf-8"
       }
-    )
+    })
     .then((response: any) => {
       console.log(response.data);
     })
@@ -251,20 +247,45 @@ function unFollowUser(username: string, token: string) {
  * optional offset/skip default 20
  * Returns most recent articles globally by default
  */
-function listArticles(paramaeters?: any, token?: string) {
+function listArticles(paramaeters: { [key: string]: any }, token?: string) {
   if (!paramaeters) paramaeters = {};
-  const headers: { [key: string]: string } = {};
-  if (token) headers["Authorization"] = "Token " + token;
-  headers["Content-Type"] = "application/json; charset=utf-8";
-
+  const myHeaders: { [key: string]: string } = {};
+  if (token) myHeaders["Authorization"] = "Token " + token;
+  myHeaders["Content-Type"] = "application/json; charset=utf-8";
   axios
-    .get(baseUrl + "/articles/", { params: paramaeters }, { headers: headers })
+    .get(baseUrl + "/articles/", { headers: myHeaders, params: paramaeters })
     .then((response: any) => {
-      console.log(response.data);
+      console.log(response);
     })
     .catch((error: any) => {
       console.log(error);
     });
 }
 
-listArticles({ limit: 1 });
+/**
+ * GET
+ * /articles/feed
+ * Authentication
+ * optional limit default 20
+ * optional offset/skip default 20
+ * Returns most recent articles you follow
+ */
+function getArticleFeed(token: string, paramaeters?: any) {
+  if (!paramaeters) paramaeters = {};
+  axios
+    .get(baseUrl + "/articles/feed", {
+      params: paramaeters,
+      headers: {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    })
+    .then((response: any) => {
+      console.log(response);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+}
+
+followUser("adam1234io", token);
