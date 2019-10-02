@@ -6,10 +6,14 @@ import { colors } from "../SystemVariables";
 const useStyle = makeStyles({
   input: {
     display: "block",
-    border: "1px solid " + colors.TextSecondayColor,
-    paddingLeft: 10,
+    border: "1px solid #d9d9d9",
+    borderRadius: 3,
+    color: colors.TextPrimaryColor,
     "&:focus": {
       color: "white"
+    },
+    "&::placeholder": {
+      color: "red"
     }
   },
   focused: {
@@ -41,7 +45,7 @@ export const MyInput: React.FC<{
         placeholder={placeholder}
         classes={{ focused: classes.focused }}
         disableUnderline={true}
-        className={(classes.input + " " + className).trim()}
+        className={(classes.input + " red " + className).trim()}
         onChange={onChange}
       />
     );

@@ -14,7 +14,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import PageSettings from "./PageSettings";
 
-const logged = true;
+const logged = false;
 const style = {
   router: { width: "100%" }
 };

@@ -79,7 +79,7 @@ export const SignIn = () => {
     <form className={classes.form}>
       <div>
         <Typography className={classes.title}>Sign In</Typography>
-        <Typography className={classes.a}>Don't have an account?</Typography>
+        <Typography className={classes.a}>Need an account?</Typography>
         <MyInput className={classes.input} placeholder="Email" />
         <MyInput className={classes.input} placeholder="Password" />
       </div>

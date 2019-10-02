@@ -19,7 +19,8 @@ const useStyle = makeStyles({
     fontSize: 18
   },
   input: {
-    width: 900,
+    maxHeidth: 900,
+    width: "100%",
     margin: "auto",
     marginTop: 16,
     display: "flex",
