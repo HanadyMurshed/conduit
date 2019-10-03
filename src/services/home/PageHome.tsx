@@ -7,7 +7,7 @@ import { RouteComponentProps } from "@reach/router";
 import { Header } from "../../components/Header";
 import { listArticles } from "../../server";
 import { IArticle } from "../../types/conduit.types";
-import { Feed } from "../../components/Feed";
+import { Article } from "../../components/Article";
 
 const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
@@ -62,7 +62,7 @@ class Home extends React.Component<
               globalFeed={
                 <div>
                   {articles.map(e => (
-                    <Feed />
+                    <Article />
                   ))}
                 </div>
               }

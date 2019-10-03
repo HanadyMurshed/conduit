@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { IArticle, IAuther } from "../types/conduit.types";
+import { IArticle } from "../types/conduit.types";
 import { string } from "prop-types";
 
 const style = makeStyles(() => ({
@@ -90,17 +90,19 @@ interface g {
   d: string;
 }
 
-export const Feed: React.FC<IArticle> = ({
-  slug,
-  title,
-  description,
-  body,
-  tagList,
-  createdAt,
-  updatedAt,
-  favorited,
-  favoritesCount,
-  author: { email, username, bio, image = defaultValues.avatar }
+export const Article: React.FC<{ article: IArticle }> = ({
+  article: {
+    slug,
+    title,
+    description,
+    body,
+    tagList,
+    createdAt,
+    updatedAt,
+    favorited,
+    favoritesCount,
+    author: { email, username, bio, image = defaultValues.avatar }
+  }
 }) => {
   const classes = style();
   return (
