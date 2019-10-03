@@ -44,6 +44,9 @@ const useStyles = makeStyles(() => ({
     textTransform: "none",
     width: "auto",
     height: "auto",
+    paddingLeft: 15,
+    paddingRight: 15,
+    fontWeight: 500,
     minWidth: 50,
     color: colors.TextSecondayColor,
     "&:hover": {
@@ -62,10 +65,10 @@ const useStyles = makeStyles(() => ({
 // MyComonent.defaultProps
 export const MyTab: React.FC<{
   globalFeed: JSX.Element;
-  YouFeed: JSX.Element;
+  YouFeed?: JSX.Element;
 }> = ({ globalFeed, YouFeed }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(YouFeed ? 1 : 0);
 
   const handleChange = (event: ChangeEvent<{}>, newValue: any) => {
     setValue(newValue);
@@ -81,27 +84,31 @@ export const MyTab: React.FC<{
           value={value}
           onChange={handleChange}
         >
+          {YouFeed ? (
+            <Tab
+              classes={{
+                selected: classes.selected
+              }}
+              className={classes.tab}
+              label="Your Feed"
+              {...a11yProps(1)}
+            />
+          ) : null}
           <Tab
             classes={{
               selected: classes.selected
             }}
             className={classes.tab}
-            label="Your Feed"
-            {...a11yProps(1)}
-          />
-          <Tab
-            classes={{
-              selected: classes.selected
-            }}
-            className={classes.tab}
-            label="Gobal Feed"
+            label="Global Feed"
             {...a11yProps(0)}
           />
         </Tabs>
       </div>
-      <TabPanel value={value} index={0}>
-        {YouFeed}
-      </TabPanel>
+      {YouFeed ? (
+        <TabPanel value={value} index={0}>
+          {YouFeed}
+        </TabPanel>
+      ) : null}
       <TabPanel value={value} index={1}>
         {globalFeed}
       </TabPanel>

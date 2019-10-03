@@ -5,6 +5,7 @@ import { colors, dims } from "../../SystemVariables";
 import { ButtonTag } from "../../components/ButtonTag";
 import { RouteComponentProps } from "@reach/router";
 import { Header } from "../../components/Header";
+import { listArticles } from "../../server";
 const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
 const styles = {
@@ -14,17 +15,16 @@ const styles = {
     paddingLeft: 20,
     paddingRight: 20,
     minWidth: 500,
-    marginTop: 20
+    marginTop: 30
   },
   tagPanel: {
     background: colors.lightGray,
-    padding: "10px 8px 10px 8px",
-    "& .body": {
-      paddingTop: 3
-    },
+    padding: "8px 5px 8px 5px",
+
     "& .title": {
       color: colors.TextPrimaryColor,
-      opacity: 0.7
+      fontSize: 14,
+      padding: 0
     }
   }
 };
@@ -44,10 +44,7 @@ class Home extends React.Component<{ classes: any } & RouteComponentProps> {
         </Grid>
         <Grid container className={classes.page}>
           <Grid item xs={12} md={9}>
-            <MyTab
-              globalFeed={this.getYourFeed()}
-              YouFeed={this.getYourFeed()}
-            ></MyTab>
+            <MyTab globalFeed={this.getYourFeed()}></MyTab>
           </Grid>
           <Grid item xs={12} md={3}>
             <div className={classes.tagPanel}>

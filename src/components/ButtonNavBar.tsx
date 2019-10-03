@@ -13,6 +13,7 @@ const useStyle = makeStyles(() => ({
     fontSize: fontSize.normal,
     color: colors.TextSecondayColor,
     transition: "0.1s",
+    fontWeight: 300,
     textTransform: "none",
     "&:hover": {
       background: "inherit",
