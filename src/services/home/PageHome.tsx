@@ -6,6 +6,8 @@ import { ButtonTag } from "../../components/ButtonTag";
 import { RouteComponentProps } from "@reach/router";
 import { Header } from "../../components/Header";
 import { listArticles } from "../../server";
+import { IArticle } from "../../types/conduit.types";
+
 const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
 const styles = {
@@ -28,7 +30,16 @@ const styles = {
     }
   }
 };
-class Home extends React.Component<{ classes: any } & RouteComponentProps> {
+class Home extends React.Component<
+  { classes: any } & RouteComponentProps,
+  { articles: IArticle[] }
+> {
+  state: { articles: IArticle[] } = { articles: [] };
+  componentDidMount() {
+    listArticles({}).then((response: any) => {
+      console.log(response.data);
+    });
+  }
   getGlobalFeed = (): JSX.Element => {
     return <p>still not calculated</p>;
   };
@@ -37,6 +48,7 @@ class Home extends React.Component<{ classes: any } & RouteComponentProps> {
   };
   render() {
     const { classes } = this.props;
+    const { articles } = this.state;
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -44,14 +56,14 @@ class Home extends React.Component<{ classes: any } & RouteComponentProps> {
         </Grid>
         <Grid container className={classes.page}>
           <Grid item xs={12} md={9}>
-            <MyTab globalFeed={this.getYourFeed()}></MyTab>
+            <MyTab globalFeed={<div>articles</div>}></MyTab>
           </Grid>
           <Grid item xs={12} md={3}>
             <div className={classes.tagPanel}>
               <Typography className="title">Populer Tags</Typography>
               <div className="body">
                 {tags.map(e => (
-                  <ButtonTag title={e} />
+                  <ButtonTag key={e} title={e} />
                 ))}
               </div>
             </div>
