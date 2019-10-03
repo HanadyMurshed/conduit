@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { IArticle } from "../types/conduit.types";
-import { string } from "prop-types";
 
 const style = makeStyles(() => ({
   mediaCaption: {
@@ -85,10 +84,6 @@ const style = makeStyles(() => ({
     opacity: 0.8
   }
 }));
-interface g {
-  x: string;
-  d: string;
-}
 
 export const Article: React.FC<{ article: IArticle }> = ({
   article: {
@@ -106,7 +101,7 @@ export const Article: React.FC<{ article: IArticle }> = ({
 }) => {
   const classes = style();
   return (
-    <div key={slug}>
+    <div>
       <Grid container spacing={1}>
         <Grid item xs={11}>
           <Grid container spacing={1}>

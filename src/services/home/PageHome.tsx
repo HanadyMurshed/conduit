@@ -36,18 +36,21 @@ class Home extends React.Component<
   { articles: IArticle[]; count: number }
 > {
   state = { articles: [], count: 0 };
+
   componentDidMount() {
     this.getGlobalFeed();
   }
+
   getGlobalFeed = () => {
     listArticles({}).then((response: any) => {
-      const articles: IArticle[] = response.data.articles;
-      console.log(articles);
+      this.setState({ articles: response.data.articles });
     });
   };
+
   getYourFeed = (): JSX.Element => {
     return <p>still not calculated</p>;
   };
+
   render() {
     const { classes } = this.props;
     const { articles } = this.state;
@@ -61,8 +64,8 @@ class Home extends React.Component<
             <MyTab
               globalFeed={
                 <div>
-                  {articles.map(e => (
-                    <Article article={e} />
+                  {articles.map((e: IArticle) => (
+                    <Article key={e.slug} article={e} />
                   ))}
                 </div>
               }
@@ -83,4 +86,5 @@ class Home extends React.Component<
     );
   }
 }
+
 export default withStyles(styles)(Home);

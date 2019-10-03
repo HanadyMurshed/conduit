@@ -109,7 +109,7 @@ export const MyTab: React.FC<{
           {YouFeed}
         </TabPanel>
       ) : null}
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={YouFeed ? 1 : 0}>
         {globalFeed}
       </TabPanel>
     </div>
