@@ -62,7 +62,7 @@ class Home extends React.Component<
               globalFeed={
                 <div>
                   {articles.map(e => (
-                    <Article />
+                    <Article article={e} />
                   ))}
                 </div>
               }
