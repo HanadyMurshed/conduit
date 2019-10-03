@@ -4,11 +4,11 @@ import Grid from "@material-ui/core/Grid";
 import { NavBar } from "./components/NavBar";
 import { ButtonNavBar } from "./components/ButtonNavBar";
 import { withStyles } from "@material-ui/styles";
-import Home from "./services/home/PageHome";
-import SignUpPage from "./services/signup/PageSignUp";
-import SignInPage from "./services/login/PageSignIn";
-import NewPostPage from "./services/newPost/PageNewPost";
-import SettingsPage from "./services/settings/PageSettings";
+import Home from "./pages/home/PageHome";
+import SignUpPage from "./pages/signup/PageSignUp";
+import SignInPage from "./pages/login/PageSignIn";
+import NewPostPage from "./pages/newPost/PageNewPost";
+import SettingsPage from "./pages/settings/PageSettings";
 import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -19,9 +19,7 @@ const style = {
 };
 const theme = createMuiTheme({
   typography: {
-    fontFamily: ["Merriweather Sans", "Titillium Web", "Source Serif Pro"].join(
-      ","
-    )
+    fontFamily: ["Merriweather Sans", "Titillium Web"].join(",")
   }
 });
 class App extends React.Component<{ classes: any }> {

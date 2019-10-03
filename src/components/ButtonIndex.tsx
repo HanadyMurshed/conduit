@@ -13,7 +13,7 @@ export const useStyle = makeStyles(() => ({
     paddingRight: 10,
     fontSize: fontSize.small,
     color: colors.PrimaryColor,
-    border: "1px solid" + colors.TextSecondayColor
+    border: "1px solid" + colors.lightGray
   },
   active: {
     textTransform: "none",
@@ -33,12 +33,18 @@ export const useStyle = makeStyles(() => ({
   }
 }));
 
-export const Index: React.FC<{ index: number; propStyle?: string }> = ({
-  index,
-  propStyle
-}) => {
+export const Index: React.FC<{
+  index: number;
+  propStyle?: string;
+  onClick?: (index: number) => void;
+}> = ({ index, propStyle, onClick = () => {} }) => {
   const classes = useStyle();
   return (
-    <Button className={propStyle ? propStyle : classes.defualt}>{index}</Button>
+    <Button
+      onClick={() => onClick(index - 1)}
+      className={propStyle ? propStyle : classes.defualt}
+    >
+      {index}
+    </Button>
   );
 };

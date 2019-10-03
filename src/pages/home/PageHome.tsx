@@ -8,6 +8,7 @@ import { Header } from "../../components/Header";
 import { listArticles, getTags } from "../../server";
 import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/Article";
+import { PageIndex } from "../../components/PageIndex";
 
 const styles = {
   page: {
@@ -34,21 +35,31 @@ interface IState {
   articles: IArticle[];
   count: number;
   tags: string[];
+  currentPage: number;
+  pageCount: number;
 }
 class Home extends React.Component<
   { classes: any } & RouteComponentProps,
   IState
 > {
-  state: IState = { articles: [], count: 0, tags: [] };
+  state: IState = {
+    articles: [],
+    count: 0,
+    tags: [],
+    currentPage: 0,
+    pageCount: 0
+  };
 
   componentDidMount() {
-    this.getGlobalFeed();
+    this.getGlobalFeed(0);
     this.getTags();
   }
 
-  getGlobalFeed = () => {
-    listArticles({}).then((response: any) => {
-      this.setState({ articles: response.data.articles });
+  getGlobalFeed = (offset: number) => {
+    listArticles({ limit: 10, offset: offset }).then((response: any) => {
+      const count = Math.ceil(response.data.articlesCount / 10);
+      console.log(response.data);
+      this.setState({ articles: response.data.articles, pageCount: count });
     });
   };
 
@@ -63,11 +74,18 @@ class Home extends React.Component<
     return <p>still not calculated</p>;
   };
 
+  handleIndexClickEvent = (index: number) => {
+    this.setState({
+      currentPage: index
+    });
+    this.getGlobalFeed(index * 10);
+  };
+
   render() {
     const { classes } = this.props;
-    const { articles, tags } = this.state;
+    const { articles, tags, currentPage, pageCount } = this.state;
     return (
-      <Grid container>
+      <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>
           <Header />
         </Grid>
@@ -82,6 +100,14 @@ class Home extends React.Component<
                 </div>
               }
             ></MyTab>
+            {pageCount ? (
+              <PageIndex
+                onClick={this.handleIndexClickEvent}
+                style={{ marginTop: 20 }}
+                active={currentPage}
+                PageCount={pageCount}
+              />
+            ) : null}
           </Grid>
           <Grid item xs={12} md={3}>
             <div className={classes.tagPanel}>

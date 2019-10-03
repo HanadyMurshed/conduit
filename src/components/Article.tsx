@@ -10,7 +10,8 @@ import { IArticle } from "../types/conduit.types";
 const style = makeStyles(() => ({
   containor: {
     borderBottom: "solid 1px" + colors.lightGray,
-    paddingTop: 20
+    paddingTop: 20,
+    paddingBottom: 20
   },
   mediaCaption: {
     color: colors.PrimaryColor,
@@ -72,7 +73,7 @@ const style = makeStyles(() => ({
   bodyTitle: {
     cursor: "pointer",
     fontSize: fontSize.large,
-    marginTop: 12
+    marginTop: 9
   },
   bodyText: {
     cursor: "pointer",
@@ -129,7 +130,7 @@ export const Article: React.FC<{ article: IArticle }> = ({
             item
             container
             justify="center"
-            spacing={2}
+            style={{ width: 40 }}
             className={classes.Containor}
           >
             <div className={classes.VerticalCentreAlignLike}>
@@ -140,7 +141,7 @@ export const Article: React.FC<{ article: IArticle }> = ({
         </Grid>
         <Grid item xs={12}>
           <Typography className={classes.bodyTitle}>{title}</Typography>
-          <Typography className={classes.bodyText}>{body}</Typography>
+          <Typography className={classes.bodyText}>{description}</Typography>
           <Typography className={classes.showExtra}>Read more...</Typography>
         </Grid>
       </Grid>
