@@ -12,6 +12,7 @@ function TabPanel(props: any) {
 
   return (
     <Typography
+      style={{ padding: 0, borderTop: "solid 1px" + colors.lightGray }}
       component="div"
       role="tabpanel"
       hidden={value !== index}
@@ -19,7 +20,7 @@ function TabPanel(props: any) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      <Box p={3}>{children}</Box>
+      <Box>{children}</Box>
     </Typography>
   );
 }
@@ -35,17 +36,11 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1
   },
-  tabs: {
-    minHeight: 20,
-    height: 45
-  },
   tab: {
     fontSize: fontSize.normal,
     textTransform: "none",
     width: "auto",
     height: "auto",
-    paddingLeft: 15,
-    paddingRight: 15,
     fontWeight: 500,
     minWidth: 50,
     color: colors.TextSecondayColor,
@@ -77,7 +72,6 @@ export const MyTab: React.FC<{
     <div className={classes.root}>
       <div>
         <Tabs
-          className={classes.tabs}
           classes={{
             indicator: classes.indicator
           }}

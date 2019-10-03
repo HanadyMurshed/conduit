@@ -8,6 +8,10 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { IArticle } from "../types/conduit.types";
 
 const style = makeStyles(() => ({
+  containor: {
+    borderBottom: "solid 1px" + colors.lightGray,
+    paddingTop: 20
+  },
   mediaCaption: {
     color: colors.PrimaryColor,
     fontSize: fontSize.small,
@@ -64,10 +68,10 @@ const style = makeStyles(() => ({
     padding: 0,
     color: colors.PrimaryColor
   },
+  avatar: { width: 30, height: 30 },
   bodyTitle: {
     cursor: "pointer",
     fontSize: fontSize.large,
-    fontWeight: "bold",
     marginTop: 12
   },
   bodyText: {
@@ -102,11 +106,11 @@ export const Article: React.FC<{ article: IArticle }> = ({
   const classes = style();
   return (
     <div>
-      <Grid container spacing={1}>
+      <Grid className={classes.containor} container spacing={1}>
         <Grid item xs={11}>
           <Grid container spacing={1}>
             <Grid item>
-              <Avatar src={image} />
+              <Avatar className={classes.avatar} src={image} />
             </Grid>
             <Grid item className={classes.FeedHeaderCaption}>
               <div className={classes.VerticalCentreAlign}>
