@@ -80,7 +80,7 @@ class Home extends React.Component<
     });
     this.getGlobalFeed(index * 10);
   };
-
+  handleTagClickEvent = (tag: string) => {};
   render() {
     const { classes } = this.props;
     const { articles, tags, currentPage, pageCount } = this.state;
@@ -89,6 +89,7 @@ class Home extends React.Component<
         <Grid item xs={12}>
           <Header />
         </Grid>
+
         <Grid container className={classes.page}>
           <Grid item xs={12} md={9}>
             <MyTab
@@ -109,12 +110,17 @@ class Home extends React.Component<
               />
             ) : null}
           </Grid>
+
           <Grid item xs={12} md={3}>
             <div className={classes.tagPanel}>
               <Typography className="title">Populer Tags</Typography>
               <div className="body">
                 {tags.map(e => (
-                  <ButtonTag key={e} title={e} />
+                  <ButtonTag
+                    onClick={this.handleTagClickEvent}
+                    key={e}
+                    title={e}
+                  />
                 ))}
               </div>
             </div>

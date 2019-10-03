@@ -21,7 +21,19 @@ const useStyle = makeStyles(() => ({
   }
 }));
 
-export const ButtonTag: React.FC<{ title: string }> = ({ title }) => {
+export const ButtonTag: React.FC<{
+  title: string;
+  onClick?: (tag: string) => void;
+}> = ({ title, onClick = () => {} }) => {
   const classes = useStyle();
-  return <Button className={classes.tag}>{title}</Button>;
+  return (
+    <Button
+      onClick={() => {
+        onClick(title);
+      }}
+      className={classes.tag}
+    >
+      {title}
+    </Button>
+  );
 };
