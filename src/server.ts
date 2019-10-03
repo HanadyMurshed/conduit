@@ -544,12 +544,5 @@ export function unFavoriteArticle(slug: string, token: string) {
  * /tags
  */
 export function getTags() {
-  axios
-    .get(`${baseUrl}/tags`)
-    .then((response: any) => {
-      console.log(response.data);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.get(`${baseUrl}/tags`);
 }

@@ -5,11 +5,9 @@ import { colors, dims } from "../../SystemVariables";
 import { ButtonTag } from "../../components/ButtonTag";
 import { RouteComponentProps } from "@reach/router";
 import { Header } from "../../components/Header";
-import { listArticles } from "../../server";
+import { listArticles, getTags } from "../../server";
 import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/Article";
-
-const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
 const styles = {
   page: {
@@ -31,19 +29,33 @@ const styles = {
     }
   }
 };
+
+interface IState {
+  articles: IArticle[];
+  count: number;
+  tags: string[];
+}
 class Home extends React.Component<
   { classes: any } & RouteComponentProps,
-  { articles: IArticle[]; count: number }
+  IState
 > {
-  state = { articles: [], count: 0 };
+  state: IState = { articles: [], count: 0, tags: [] };
 
   componentDidMount() {
     this.getGlobalFeed();
+    this.getTags();
   }
 
   getGlobalFeed = () => {
     listArticles({}).then((response: any) => {
       this.setState({ articles: response.data.articles });
+    });
+  };
+
+  getTags = () => {
+    getTags().then((response: any) => {
+      console.log(response.data);
+      this.setState({ tags: response.data.tags });
     });
   };
 
@@ -53,7 +65,7 @@ class Home extends React.Component<
 
   render() {
     const { classes } = this.props;
-    const { articles } = this.state;
+    const { articles, tags } = this.state;
     return (
       <Grid container>
         <Grid item xs={12}>
