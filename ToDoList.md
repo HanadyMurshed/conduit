@@ -1,2 +1,13 @@
+##styling to do
 -placeholder color
--string selectors doesn't work with withstyle + makestyle hook doen't work inside of a class componenet
+
+##to read
+-js utilites
+-js loadsh
+-object + array
+
+---
+
+##to do
+-intercepting the header
+-local storage browser session
