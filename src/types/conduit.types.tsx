@@ -14,7 +14,7 @@ export interface IAuther {
   email: string;
   username: string;
   bio: string;
-  image: string | null;
+  image: string;
 }
 
 export interface IUser extends IAuther {

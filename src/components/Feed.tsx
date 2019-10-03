@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { IArticle, IAuther } from "../types/conduit.types";
+import { string } from "prop-types";
 
 const style = makeStyles(() => ({
   mediaCaption: {
@@ -83,38 +85,39 @@ const style = makeStyles(() => ({
     opacity: 0.8
   }
 }));
+interface g {
+  x: string;
+  d: string;
+}
 
-export const Feed: React.FC<{
-  UserName: string;
-  ShareDate: string;
-  LikesCount: number;
-  FeedBodyTitle: string;
-  FeedBodyText: string;
-  img?: string;
-}> = ({
-  UserName,
-  img = defaultValues.avatar,
-  ShareDate,
-  LikesCount,
-  FeedBodyTitle: FeedHeader,
-  FeedBodyText: FeedBody
+export const Feed: React.FC<IArticle> = ({
+  slug,
+  title,
+  description,
+  body,
+  tagList,
+  createdAt,
+  updatedAt,
+  favorited,
+  favoritesCount,
+  author: { email, username, bio, image = defaultValues.avatar }
 }) => {
   const classes = style();
   return (
-    <div>
+    <div key={slug}>
       <Grid container spacing={1}>
         <Grid item xs={11}>
           <Grid container spacing={1}>
             <Grid item>
-              <Avatar src={img} />
+              <Avatar src={image} />
             </Grid>
             <Grid item className={classes.FeedHeaderCaption}>
               <div className={classes.VerticalCentreAlign}>
                 <Typography variant="h6" className={classes.mediaCaption}>
-                  {UserName}
+                  {username}
                 </Typography>
                 <Typography variant="h6" className={classes.mediaDhareDate}>
-                  {ShareDate}
+                  {createdAt}
                 </Typography>
               </div>
             </Grid>
@@ -130,13 +133,13 @@ export const Feed: React.FC<{
           >
             <div className={classes.VerticalCentreAlignLike}>
               <FavoriteIcon className={classes.like} />
-              <span className={classes.like}>{LikesCount}</span>
+              <span className={classes.like}>{favoritesCount}</span>
             </div>
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography className={classes.bodyTitle}>{FeedHeader}</Typography>
-          <Typography className={classes.bodyText}>{FeedBody}</Typography>
+          <Typography className={classes.bodyTitle}>{title}</Typography>
+          <Typography className={classes.bodyText}>{body}</Typography>
           <Typography className={classes.showExtra}>Read more...</Typography>
         </Grid>
       </Grid>

@@ -7,6 +7,7 @@ import { RouteComponentProps } from "@reach/router";
 import { Header } from "../../components/Header";
 import { listArticles } from "../../server";
 import { IArticle } from "../../types/conduit.types";
+import { Feed } from "../../components/Feed";
 
 const tags = ["art", "science", "action", "anime", "games", "whatever"];
 
@@ -32,16 +33,17 @@ const styles = {
 };
 class Home extends React.Component<
   { classes: any } & RouteComponentProps,
-  { articles: IArticle[] }
+  { articles: IArticle[]; count: number }
 > {
-  state: { articles: IArticle[] } = { articles: [] };
+  state = { articles: [], count: 0 };
   componentDidMount() {
-    listArticles({}).then((response: any) => {
-      console.log(response.data);
-    });
+    this.getGlobalFeed();
   }
-  getGlobalFeed = (): JSX.Element => {
-    return <p>still not calculated</p>;
+  getGlobalFeed = () => {
+    listArticles({}).then((response: any) => {
+      const articles: IArticle[] = response.data.articles;
+      console.log(articles);
+    });
   };
   getYourFeed = (): JSX.Element => {
     return <p>still not calculated</p>;
@@ -56,7 +58,15 @@ class Home extends React.Component<
         </Grid>
         <Grid container className={classes.page}>
           <Grid item xs={12} md={9}>
-            <MyTab globalFeed={<div>articles</div>}></MyTab>
+            <MyTab
+              globalFeed={
+                <div>
+                  {articles.map(e => (
+                    <Feed />
+                  ))}
+                </div>
+              }
+            ></MyTab>
           </Grid>
           <Grid item xs={12} md={3}>
             <div className={classes.tagPanel}>
