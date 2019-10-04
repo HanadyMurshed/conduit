@@ -92,7 +92,7 @@ class Home extends React.Component<
 
         <Grid container className={classes.page}>
           <Grid item xs={12} md={9}>
-            <MyTab
+            {/* <MyTab
               globalFeed={
                 <div>
                   {articles.map((e: IArticle) => (
@@ -108,7 +108,7 @@ class Home extends React.Component<
                 active={currentPage}
                 PageCount={pageCount}
               />
-            ) : null}
+            ) : null} */}
           </Grid>
 
           <Grid item xs={12} md={3}>

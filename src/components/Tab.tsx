@@ -58,12 +58,12 @@ const useStyles = makeStyles(() => ({
 }));
 // const MyComonent :React.FC<>;
 // MyComonent.defaultProps
-export const MyTab: React.FC<{
-  globalFeed: JSX.Element;
-  YouFeed?: JSX.Element;
-}> = ({ globalFeed, YouFeed }) => {
+export const MyTab: React.FC<{ tabs: string[] }> = ({
+  tabs = [],
+  children
+}) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(YouFeed ? 1 : 0);
+  const [value, setValue] = React.useState(tabs.length === 2 ? 1 : 0);
 
   const handleChange = (event: ChangeEvent<{}>, newValue: any) => {
     setValue(newValue);
@@ -78,34 +78,29 @@ export const MyTab: React.FC<{
           value={value}
           onChange={handleChange}
         >
-          {YouFeed ? (
+          {tabs.map(e => (
             <Tab
               classes={{
                 selected: classes.selected
               }}
               className={classes.tab}
-              label="Your Feed"
-              {...a11yProps(1)}
+              label={e}
+              {...a11yProps(0)}
             />
-          ) : null}
-          <Tab
-            classes={{
-              selected: classes.selected
-            }}
-            className={classes.tab}
-            label="Global Feed"
-            {...a11yProps(0)}
-          />
+          ))}
         </Tabs>
       </div>
-      {YouFeed ? (
+      {children && Array.isArray(children) ? (
+        children.map((child, index) => (
+          <TabPanel value={value} index={index}>
+            {child}
+          </TabPanel>
+        ))
+      ) : (
         <TabPanel value={value} index={0}>
-          {YouFeed}
+          {children}
         </TabPanel>
-      ) : null}
-      <TabPanel value={value} index={YouFeed ? 1 : 0}>
-        {globalFeed}
-      </TabPanel>
+      )}
     </div>
   );
 };

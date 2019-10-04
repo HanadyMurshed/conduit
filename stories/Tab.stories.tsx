@@ -3,5 +3,8 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 storiesOf("Tab", module).add("Not logged in", () => (
-  <MyTab globalFeed={<h3>ok</h3>} YouFeed={<h1>fdsfs</h1>} />
+  <MyTab tabs={["global feed", "your feed"]}>
+    <h1>hey</h1>
+    <h1>ok</h1>
+  </MyTab>
 ));
