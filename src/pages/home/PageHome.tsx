@@ -37,6 +37,7 @@ interface IState {
   tags: string[];
   currentPage: number;
   pageCount: number;
+  tabs: string[];
 }
 class Home extends React.Component<
   { classes: any } & RouteComponentProps,
@@ -47,7 +48,8 @@ class Home extends React.Component<
     count: 0,
     tags: [],
     currentPage: 0,
-    pageCount: 0
+    pageCount: 0,
+    tabs: ["Global feed"]
   };
 
   componentDidMount() {
@@ -83,7 +85,7 @@ class Home extends React.Component<
   handleTagClickEvent = (tag: string) => {};
   render() {
     const { classes } = this.props;
-    const { articles, tags, currentPage, pageCount } = this.state;
+    const { articles, tags, currentPage, pageCount, tabs } = this.state;
     return (
       <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>
@@ -92,15 +94,13 @@ class Home extends React.Component<
 
         <Grid container className={classes.page}>
           <Grid item xs={12} md={9}>
-            {/* <MyTab
-              globalFeed={
-                <div>
-                  {articles.map((e: IArticle) => (
-                    <Article key={e.slug} article={e} />
-                  ))}
-                </div>
-              }
-            ></MyTab>
+            <MyTab tabs={tabs}>
+              <div>
+                {articles.map((e: IArticle) => (
+                  <Article key={e.slug} article={e} />
+                ))}
+              </div>
+            </MyTab>
             {pageCount ? (
               <PageIndex
                 onClick={this.handleIndexClickEvent}
@@ -108,7 +108,7 @@ class Home extends React.Component<
                 active={currentPage}
                 PageCount={pageCount}
               />
-            ) : null} */}
+            ) : null}
           </Grid>
 
           <Grid item xs={12} md={3}>
