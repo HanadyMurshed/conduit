@@ -58,16 +58,13 @@ const useStyles = makeStyles(() => ({
 }));
 // const MyComonent :React.FC<>;
 // MyComonent.defaultProps
-export const MyTab: React.FC<{ tabs: string[] }> = ({
-  tabs = [],
-  children
-}) => {
+export const MyTab: React.FC<{
+  tabs: string[];
+  value: number;
+  onChange?: (event: React.ChangeEvent<{}>, value: any) => void;
+}> = ({ tabs = [], value = 0, children, onChange = () => {} }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(tabs.length === 2 ? 1 : 0);
 
-  const handleChange = (event: ChangeEvent<{}>, newValue: any) => {
-    setValue(newValue);
-  };
   return (
     <div className={classes.root}>
       <div>
@@ -76,18 +73,21 @@ export const MyTab: React.FC<{ tabs: string[] }> = ({
             indicator: classes.indicator
           }}
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
         >
-          {tabs.map(e => (
-            <Tab
-              classes={{
-                selected: classes.selected
-              }}
-              className={classes.tab}
-              label={e}
-              {...a11yProps(0)}
-            />
-          ))}
+          {tabs.map(e => {
+            if (e !== "")
+              return (
+                <Tab
+                  classes={{
+                    selected: classes.selected
+                  }}
+                  className={classes.tab}
+                  label={e}
+                  {...a11yProps(0)}
+                />
+              );
+          })}
         </Tabs>
       </div>
       {children && Array.isArray(children) ? (
@@ -97,9 +97,7 @@ export const MyTab: React.FC<{ tabs: string[] }> = ({
           </TabPanel>
         ))
       ) : (
-        <TabPanel value={value} index={0}>
-          {children}
-        </TabPanel>
+        <TabPanel>{children}</TabPanel>
       )}
     </div>
   );

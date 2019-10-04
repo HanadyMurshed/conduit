@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Grid, Typography, withStyles } from "@material-ui/core";
+import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { colors, dims } from "../../SystemVariables";
-import { ButtonTag } from "../../components/ButtonTag";
 import { RouteComponentProps } from "@reach/router";
 import { Header } from "../../components/Header";
 import { listArticles, getTags } from "../../server";
@@ -56,14 +55,13 @@ class Home extends React.Component<
   };
 
   componentDidMount() {
-    this.getGlobalFeed(0);
+    this.getGlobalFeed({ limit: 10 });
     this.getTags();
   }
 
-  getGlobalFeed = (offset: number) => {
-    listArticles({ limit: 10, offset: offset }).then((response: any) => {
+  getGlobalFeed = (queryparams: any) => {
+    listArticles(queryparams).then((response: any) => {
       const count = Math.ceil(response.data.articlesCount / 10);
-      console.log(response.data);
       this.setState({ articles: response.data.articles, pageCount: count });
     });
   };
@@ -76,13 +74,37 @@ class Home extends React.Component<
   };
 
   handleIndexClickEvent = (index: number) => {
-    this.setState({
-      currentPage: index
-    });
-    this.getGlobalFeed(index * 10);
+    this.setState(
+      {
+        currentPage: index
+      },
+      () =>
+        this.getGlobalFeed(
+          this.state.currentTag !== ""
+            ? { limit: 10, offset: index * 10, tag: this.state.currentTag }
+            : { limit: 10, offset: index * 10 }
+        )
+    );
   };
 
-  handleTagClickEvent = (tag: string) => {};
+  handleTagClickEvent = (tag: string) => {
+    this.setState(
+      {
+        currentTag: tag
+      },
+      () => this.getGlobalFeed({ limit: 10, tag: tag })
+    );
+  };
+
+  handleTabChangeEvent = (event: React.ChangeEvent<{}>, value: any) => {
+    if (value == 0)
+      this.setState(
+        {
+          currentTag: ""
+        },
+        () => this.getGlobalFeed({ limit: 10 })
+      );
+  };
 
   render() {
     const { classes } = this.props;
@@ -103,7 +125,11 @@ class Home extends React.Component<
 
         <Grid container className={classes.page}>
           <Grid item xs={12} md={9}>
-            <MyTab tabs={tabs}>
+            <MyTab
+              onChange={this.handleTabChangeEvent}
+              tabs={currentTag !== "" ? [...tabs, `#${currentTag}`] : tabs}
+              value={currentTag !== "" ? 1 : 0}
+            >
               <div>
                 {articles.map((e: IArticle) => (
                   <Article key={e.slug} article={e} />
@@ -121,7 +147,11 @@ class Home extends React.Component<
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <TagsPanel tags={tags} active={currentTag} />
+            <TagsPanel
+              onClick={this.handleTagClickEvent}
+              tags={tags}
+              active={currentTag}
+            />
           </Grid>
         </Grid>
       </Grid>
