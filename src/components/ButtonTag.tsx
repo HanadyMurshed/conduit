@@ -18,20 +18,25 @@ const useStyle = makeStyles(() => ({
       background: colors.TagDarkerColor
     },
     margin: "5px 3px 0px 0px"
+  },
+  active: {
+    background: colors.TagDarkerColor,
+    textDecoration: "underline"
   }
 }));
 
 export const ButtonTag: React.FC<{
   title: string;
+  active?: boolean;
   onClick?: (tag: string) => void;
-}> = ({ title, onClick = () => {} }) => {
+}> = ({ title, active = false, onClick = () => {} }) => {
   const classes = useStyle();
   return (
     <Button
       onClick={() => {
         onClick(title);
       }}
-      className={classes.tag}
+      className={classes.tag + active ? classes.active : ""}
     >
       {title}
     </Button>
