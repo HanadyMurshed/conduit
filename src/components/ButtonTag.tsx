@@ -31,12 +31,13 @@ export const ButtonTag: React.FC<{
   onClick?: (tag: string) => void;
 }> = ({ title, active = false, onClick = () => {} }) => {
   const classes = useStyle();
+
   return (
     <Button
       onClick={() => {
         onClick(title);
       }}
-      className={classes.tag + active ? classes.active : ""}
+      className={`${classes.tag} ${active ? classes.active : ""}`.trim()}
     >
       {title}
     </Button>
