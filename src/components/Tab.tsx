@@ -82,6 +82,7 @@ export const MyTab: React.FC<{
                   classes={{
                     selected: classes.selected
                   }}
+                  key={e}
                   className={classes.tab}
                   label={e}
                   {...a11yProps(0)}
@@ -92,7 +93,7 @@ export const MyTab: React.FC<{
       </div>
       {children && Array.isArray(children) ? (
         children.map((child, index) => (
-          <TabPanel value={value} index={index}>
+          <TabPanel key={index} value={value} index={index}>
             {child}
           </TabPanel>
         ))
