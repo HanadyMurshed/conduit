@@ -76,7 +76,7 @@ export const MyTab: React.FC<{
           onChange={onChange}
         >
           {tabs.map(e => {
-            if (e !== "")
+            if (e !== "") {
               return (
                 <Tab
                   classes={{
@@ -88,6 +88,7 @@ export const MyTab: React.FC<{
                   {...a11yProps(0)}
                 />
               );
+            } else return null;
           })}
         </Tabs>
       </div>

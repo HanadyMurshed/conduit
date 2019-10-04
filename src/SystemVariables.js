@@ -17,7 +17,8 @@ export const colors = {
   BackgroundColor: "#FFFFFF",
   lightGray: "#efefef",
   blue: "#66afe9",
-  darkRed: "#b85c5c"
+  darkRed: "#b85c5c",
+  darkHeader: "#333333"
 };
 
 export const dims = {

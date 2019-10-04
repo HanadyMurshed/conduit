@@ -2,6 +2,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { Header } from "../src/components/Header";
 import { UserHeader } from "../src/components/HeaderUser";
+import { HeaderArticle } from "../src/components/HeaderArticle";
+
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 const theme = createMuiTheme({
@@ -19,4 +21,5 @@ storiesOf("Header", module)
   ))
   .add("User Header", () => (
     <UserHeader username="Hanady" ButtonText="Edit Profile Setting" />
-  ));
+  ))
+  .add("Article Header", () => <HeaderArticle title="Aakash ki shaadi" />);
