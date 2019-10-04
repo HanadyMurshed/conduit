@@ -9,6 +9,7 @@ import { listArticles, getTags } from "../../server";
 import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/Article";
 import { PageIndex } from "../../components/PageIndex";
+import { TagsPanel } from "../../components/TagPanel";
 
 const styles = {
   page: {
@@ -38,6 +39,7 @@ interface IState {
   currentPage: number;
   pageCount: number;
   tabs: string[];
+  currentTag: string;
 }
 class Home extends React.Component<
   { classes: any } & RouteComponentProps,
@@ -49,7 +51,8 @@ class Home extends React.Component<
     tags: [],
     currentPage: 0,
     pageCount: 0,
-    tabs: ["Global feed"]
+    tabs: ["Global feed"],
+    currentTag: ""
   };
 
   componentDidMount() {
@@ -72,20 +75,26 @@ class Home extends React.Component<
     });
   };
 
-  getYourFeed = (): JSX.Element => {
-    return <p>still not calculated</p>;
-  };
-
   handleIndexClickEvent = (index: number) => {
     this.setState({
       currentPage: index
     });
     this.getGlobalFeed(index * 10);
   };
+
   handleTagClickEvent = (tag: string) => {};
+
   render() {
     const { classes } = this.props;
-    const { articles, tags, currentPage, pageCount, tabs } = this.state;
+    const {
+      articles,
+      tags,
+      currentPage,
+      pageCount,
+      tabs,
+      currentTag
+    } = this.state;
+
     return (
       <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>
@@ -112,18 +121,7 @@ class Home extends React.Component<
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <div className={classes.tagPanel}>
-              <Typography className="title">Populer Tags</Typography>
-              <div className="body">
-                {tags.map(e => (
-                  <ButtonTag
-                    onClick={this.handleTagClickEvent}
-                    key={e}
-                    title={e}
-                  />
-                ))}
-              </div>
-            </div>
+            <TagsPanel tags={tags} active={currentTag} />
           </Grid>
         </Grid>
       </Grid>
