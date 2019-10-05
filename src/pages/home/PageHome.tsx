@@ -97,7 +97,7 @@ class Home extends React.Component<
   };
 
   handleTabChangeEvent = (event: React.ChangeEvent<{}>, value: any) => {
-    if (value == 0)
+    if (value === 0)
       this.setState(
         {
           currentTag: ""

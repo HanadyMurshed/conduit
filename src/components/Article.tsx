@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { Typography, IconButton } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { IArticle } from "../types/conduit.types";
+import { navigate } from "@reach/router";
 
 const style = makeStyles(() => ({
   root: {
@@ -101,6 +102,10 @@ export const Article: React.FC<{ article: IArticle }> = ({
     author: { email, username, bio, image = defaultValues.avatar }
   }
 }) => {
+  const handleClickArticle = (slug: string) => {
+    navigate(`/Article/${slug}`);
+  };
+
   const classes = style();
   return (
     <Grid className={classes.root} container spacing={1}>
@@ -131,9 +136,24 @@ export const Article: React.FC<{ article: IArticle }> = ({
       </Grid>
 
       <Grid item xs={12}>
-        <Typography className={classes.bodyTitle}>{title}</Typography>
-        <Typography className={classes.bodyText}>{description}</Typography>
-        <Typography className={classes.showExtra}>Read more...</Typography>
+        <Typography
+          onClick={() => handleClickArticle(slug)}
+          className={classes.bodyTitle}
+        >
+          {title}
+        </Typography>
+        <Typography
+          onClick={() => handleClickArticle(slug)}
+          className={classes.bodyText}
+        >
+          {description}
+        </Typography>
+        <Typography
+          onClick={() => handleClickArticle(slug)}
+          className={classes.showExtra}
+        >
+          Read more...
+        </Typography>
       </Grid>
     </Grid>
   );

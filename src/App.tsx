@@ -9,6 +9,7 @@ import SignUpPage from "./pages/signup/PageSignUp";
 import SignInPage from "./pages/login/PageSignIn";
 import NewPostPage from "./pages/newPost/PageNewPost";
 import SettingsPage from "./pages/settings/PageSettings";
+import ArticlePage from "./pages/article/PageArticle";
 import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -64,6 +65,7 @@ class App extends React.Component<{ classes: any }> {
             <SignInPage path="/sign-in" />
             <NewPostPage path="/new-post" />
             <SettingsPage path="/settings" />
+            <ArticlePage path="/Article/:slug" />
           </Router>
         </Grid>{" "}
       </ThemeProvider>

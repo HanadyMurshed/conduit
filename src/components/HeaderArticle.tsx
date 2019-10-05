@@ -1,8 +1,7 @@
 import * as React from "react";
-import { colors, fontSize, dims } from "../SystemVariables";
+import { colors, fontSize, dims, defaultValues } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
 import { CardHeader, Avatar } from "@material-ui/core";
 // import { Typography } from "@material-ui/core";
 
@@ -43,7 +42,7 @@ export const HeaderArticle: React.FC<{
   image?: string;
   username?: string;
   createdAt?: string;
-}> = ({ title, createdAt }) => {
+}> = ({ title, username, createdAt, image = defaultValues.avatar }) => {
   const classes = useStyle();
   return (
     <div className={classes.root}>
@@ -57,12 +56,14 @@ export const HeaderArticle: React.FC<{
             avatar: classes.cardContainorAvatar
           }}
           avatar={
-            <Avatar aria-label="recipe" className={classes.cardAvatar}>
-              R
-            </Avatar>
+            <Avatar
+              aria-label="recipe"
+              className={classes.cardAvatar}
+              src={image}
+            />
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={username}
+          subheader={createdAt}
         />
       </div>
     </div>

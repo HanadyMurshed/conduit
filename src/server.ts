@@ -285,14 +285,7 @@ export function getArticleFeed(token: string, paramaeters?: any) {
  */
 export function getAnArticle(slug: string) {
   if (!slug || slug === "") return;
-  axios
-    .get(`${baseUrl}/articles/${slug}`)
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.get(`${baseUrl}/articles/${slug}`);
 }
 
 /**
@@ -544,7 +537,5 @@ export function unFavoriteArticle(slug: string, token: string) {
  * /tags
  */
 export function getTags() {
-  let url = `${baseUrl}/tags`;
-
   return axios.get(`${baseUrl}/tags`);
 }
