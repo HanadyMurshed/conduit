@@ -20,9 +20,6 @@ const useStyle = makeStyles(() => ({
       color: colors.TextPrimaryColor
 
       //   textTransform: "uppercase"
-    },
-    "&::first-letter": {
-      textTransform: "uppercase"
     }
   }
 }));

@@ -3,17 +3,18 @@ import Avatar from "@material-ui/core/Avatar";
 import { colors, fontSize, defaultValues } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
-import { Typography } from "@material-ui/core";
+import { Typography, IconButton } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { IArticle } from "../types/conduit.types";
 
 const style = makeStyles(() => ({
-  containor: {
+  root: {
     borderBottom: "solid 1px" + colors.lightGray,
     paddingTop: 20,
     paddingBottom: 20
   },
-  mediaCaption: {
+  headerAvatar: { width: 30, height: 30 },
+  headerTitle: {
     color: colors.PrimaryColor,
     fontSize: fontSize.small,
     lineHeight: 1,
@@ -23,53 +24,49 @@ const style = makeStyles(() => ({
       textDecoration: "underline"
     }
   },
-  VerticalCentreAlign: {
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)"
-  },
-  VerticalCentreAlignLike: {
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)"
-  },
-  Containor: {
-    position: "relative",
-    height: "80%",
-    marginTop: "10%",
-    marginButtom: "10%",
-    width: "50px",
-    border: "1px solid" + colors.PrimaryColor,
-    cursor: "pointer",
-    transition: "0.1s",
-    borderRadius: 5,
-    "&:hover": {
-      background: colors.PrimaryColor
-    },
-    "&:hover $like": {
-      color: "white"
-    }
-  },
-  FeedHeaderCaption: {
-    position: "relative",
-    width: "80%"
-  },
-  mediaDhareDate: {
+  headerSubTitle: {
     color: colors.TextSecondayColor,
     fontSize: fontSize.smaller,
     opacity: 0.8,
     lineHeight: 1
   },
-  like: {
+  VerticalCentreAlign: {
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)"
+  },
+  headerCaption: {
+    position: "relative",
+    width: "80%"
+  },
+  favoriteButton: {
+    borderRadius: 5,
+    height: "30px",
+    width: "40px",
+    border: "1px solid" + colors.PrimaryColor,
+    cursor: "pointer",
+    transition: "0.1s",
+    "&:hover": {
+      background: colors.PrimaryColor
+    },
+    "&:hover $like": {
+      color: "white"
+    },
+    display: "inline-flex",
+    verticalAlign: "middle"
+  },
+  favoriteContent: {
+    position: "relative",
+    top: "50%",
+    transform: "translateY(-20%)",
     width: 18,
     height: 14,
     transition: "0.1s",
     fontSize: fontSize.normal,
-    margin: "0",
-    padding: 0,
+    marginBottom: 10,
+    paddingBottom: 10,
     color: colors.PrimaryColor
   },
-  avatar: { width: 30, height: 30 },
   bodyTitle: {
     cursor: "pointer",
     fontSize: fontSize.large,
@@ -106,45 +103,38 @@ export const Article: React.FC<{ article: IArticle }> = ({
 }) => {
   const classes = style();
   return (
-    <div>
-      <Grid className={classes.containor} container spacing={1}>
-        <Grid item xs={11}>
-          <Grid container spacing={1}>
-            <Grid item>
-              <Avatar className={classes.avatar} src={image} />
-            </Grid>
-            <Grid item className={classes.FeedHeaderCaption}>
-              <div className={classes.VerticalCentreAlign}>
-                <Typography variant="h6" className={classes.mediaCaption}>
-                  {username}
-                </Typography>
-                <Typography variant="h6" className={classes.mediaDhareDate}>
-                  {createdAt}
-                </Typography>
-              </div>
-            </Grid>
+    <Grid className={classes.root} container spacing={1}>
+      <Grid item xs={11}>
+        <Grid container spacing={1}>
+          <Grid item>
+            <Avatar className={classes.headerAvatar} src={image} />
           </Grid>
-        </Grid>
-        <Grid item xs={1}>
-          <Grid
-            item
-            container
-            justify="center"
-            style={{ width: 40 }}
-            className={classes.Containor}
-          >
-            <div className={classes.VerticalCentreAlignLike}>
-              <FavoriteIcon className={classes.like} />
-              <span className={classes.like}>{favoritesCount}</span>
+
+          <Grid item className={classes.headerCaption}>
+            <div className={classes.VerticalCentreAlign}>
+              <Typography variant="h6" className={classes.headerTitle}>
+                {username}
+              </Typography>
+              <Typography variant="h6" className={classes.headerSubTitle}>
+                {createdAt}
+              </Typography>
             </div>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.bodyTitle}>{title}</Typography>
-          <Typography className={classes.bodyText}>{description}</Typography>
-          <Typography className={classes.showExtra}>Read more...</Typography>
-        </Grid>
       </Grid>
-    </div>
+
+      <Grid item xs={1}>
+        <IconButton className={classes.favoriteButton}>
+          <FavoriteIcon className={classes.favoriteContent} />
+          <span className={classes.favoriteContent}>{favoritesCount}</span>
+        </IconButton>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Typography className={classes.bodyTitle}>{title}</Typography>
+        <Typography className={classes.bodyText}>{description}</Typography>
+        <Typography className={classes.showExtra}>Read more...</Typography>
+      </Grid>
+    </Grid>
   );
 };
