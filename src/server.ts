@@ -11,9 +11,6 @@ const baseUrl = "https://conduit.productionready.io/api";
 
 const axios = require("axios").default;
 
-const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Njc0MDEsInVzZXJuYW1lIjoiSGFuYWR5IiwiZXhwIjoxNTc1MTc5MDk0fQ.TRk6avBRx0eU0liOQ_7ROlYisjuR5lBRzJx6q9kQE30"; //get tags
-
 /**
  * Post
  * /users/login
@@ -23,23 +20,35 @@ const token =
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, password
  */
+function getAccessToken() {
+  return "";
+  // return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Njc0MDEsInVzZXJuYW1lIjoiSGFuYWR5IiwiZXhwIjoxNTc1MTc5MDk0fQ.TRk6avBRx0eU0liOQ_7ROlYisjuR5lBRzJx6q9kQE30"; //get tags
+}
+
+axios.interceptors.request.use(
+  (config: any) => {
+    const token = getAccessToken();
+    if (token !== "") {
+      config.headers["Authorization"] = "Token " + token;
+    }
+    // config.headers['Content-Type'] = 'application/json';
+    return config;
+  },
+  (error: any) => {
+    Promise.reject(error);
+  }
+);
+
 export function login(email: string, password: string) {
   if (!email || !password || email === "" || password === "") return;
+  const url = `${baseUrl}/users/login`;
   axios
-    .post(
-      `${baseUrl}/users/login`,
-      {
-        user: {
-          email: email,
-          password: password
-        }
-      },
-      {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        }
+    .post(url, {
+      user: {
+        email: email,
+        password: password
       }
-    )
+    })
     .then((response: any) => {
       console.log(response);
     })
@@ -67,22 +76,16 @@ export function register(email: string, username: string, password: string) {
     password === ""
   )
     return;
+
+  const url = `${baseUrl}/users`;
   axios
-    .post(
-      `${baseUrl}/users`,
-      {
-        user: {
-          username: username,
-          email: email,
-          password: password
-        }
-      },
-      {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        }
+    .post(url, {
+      user: {
+        username: username,
+        email: email,
+        password: password
       }
-    )
+    })
     .then((response: any) => {
       console.log(response);
     })
@@ -102,20 +105,16 @@ export function register(email: string, username: string, password: string) {
  * -------: 422 :UNEXPECTED ERROR
  */
 export function getCurrentUser(token: string) {
-  if (!token || token === "")
-    axios
-      .get(`${baseUrl}/user`, {
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json; charset=utf-8"
-        }
-      })
-      .then((response: any) => {
-        console.log(response);
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
+  if (!token || token === "") return;
+  const url = `${baseUrl}/user`;
+  axios
+    .get(url)
+    .then((response: any) => {
+      console.log(response);
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
 }
 
 /**
@@ -130,19 +129,11 @@ export function getCurrentUser(token: string) {
  */
 export function updateUser(body: any, token: string) {
   if (!body || body === {} || !token || token === "") return;
+  const url = `${baseUrl}/user`;
   axios
-    .put(
-      `${baseUrl}/user`,
-      {
-        user: body
-      },
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json; charset=utf-8"
-        }
-      }
-    )
+    .put(url, {
+      user: body
+    })
     .then((response: any) => {
       console.log(response);
     })
@@ -159,12 +150,13 @@ export function updateUser(body: any, token: string) {
  */
 export function getProfile(username: string, token?: string) {
   if (!username || username === "") return;
+  const url = `${baseUrl}/profiles/${username}`;
   const headers: { [key: string]: string } = {};
   if (token) headers["Authorization"] = `Token ${token}`;
   headers["Content-Type"] = "application/json; charset=utf-8";
 
   axios
-    .get(`${baseUrl}/profiles/${username}`, {
+    .get(url, {
       headers: headers
     })
     .then((response: any) => {
@@ -184,17 +176,9 @@ export function getProfile(username: string, token?: string) {
  */
 export function followUser(username: string, token: string) {
   if (!username || username === "" || !token || token === "") return;
+  const url = `${baseUrl}/profiles/${username}/follow`;
   axios
-    .post(
-      `${baseUrl}/profiles/${username}/follow`,
-      {},
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json; charset=utf-8"
-        }
-      }
-    )
+    .post(url, {})
     .then((response: any) => {
       console.log(response.data);
     })
@@ -212,13 +196,9 @@ export function followUser(username: string, token: string) {
  */
 export function unFollowUser(username: string, token: string) {
   if (!username || !token || username === "" || token === "") return;
+  const url = `${baseUrl}/profiles/${username}/follow`;
   axios
-    .delete(`${baseUrl}/profiles/${username}/follow`, {
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    })
+    .delete(url)
     .then((response: any) => {
       console.log(response.data);
     })
@@ -245,7 +225,10 @@ export function listArticles(
   if (token) myHeaders["Authorization"] = `Token ${token}`;
 
   myHeaders["Content-Type"] = "application/json; charset=utf-8";
-  return axios.get(`${baseUrl}/articles/`, {
+
+  const url = `${baseUrl}/articles/`;
+
+  return axios.get(url, {
     headers: myHeaders,
     params: paramaeters
   });
@@ -262,8 +245,9 @@ export function listArticles(
 export function getArticleFeed(token: string, paramaeters?: any) {
   if (!token || token === "") return;
   if (!paramaeters) paramaeters = {};
+  const url = `${baseUrl}/articles/feed`;
   axios
-    .get(`${baseUrl}/articles/feed`, {
+    .get(url, {
       params: paramaeters,
       headers: {
         Authorization: `Token ${token}`,
@@ -285,7 +269,8 @@ export function getArticleFeed(token: string, paramaeters?: any) {
  */
 export function getAnArticle(slug: string) {
   if (!slug || slug === "") return;
-  return axios.get(`${baseUrl}/articles/${slug}`);
+  const url = `${baseUrl}/articles/${slug}`;
+  return axios.get(url);
 }
 
 /**
@@ -315,24 +300,17 @@ export function createArticle(
   )
     return;
   if (!tagList) tagList = [];
+
+  const url = `${baseUrl}/articles`;
   axios
-    .post(
-      `${baseUrl}/articles`,
-      {
-        article: {
-          title: title,
-          description: description,
-          body: body,
-          tagList: tagList
-        }
-      },
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json; charset=utf-8"
-        }
+    .post(url, {
+      article: {
+        title: title,
+        description: description,
+        body: body,
+        tagList: tagList
       }
-    )
+    })
     .then((response: any) => {
       console.log(response);
     })
@@ -350,19 +328,12 @@ export function createArticle(
  */
 export function updateArticle(slug: string, body: any) {
   if (!body || body === {} || slug || slug === "") return;
+
+  const url = `${baseUrl}/articles/${slug}`;
   axios
-    .put(
-      `${baseUrl}/articles/${slug}`,
-      {
-        article: body
-      },
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json; charset=utf-8"
-        }
-      }
-    )
+    .put(url, {
+      article: body
+    })
     .then((response: any) => {
       console.log(response);
     })
@@ -379,13 +350,9 @@ export function updateArticle(slug: string, body: any) {
  */
 export function deleteArticle(slug: string) {
   if (!slug || slug === "") return;
+  const url = `${baseUrl}/articles/${slug}`;
   axios
-    .delete(`${baseUrl}/articles/${slug}`, {
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    })
+    .delete(url)
     .then((response: any) => {
       console.log(response);
     })
@@ -416,19 +383,12 @@ export function addCommentToArticle(
     token === ""
   )
     return;
+
+  const url = `${baseUrl}/articles/${slug} /comments`;
   axios
-    .post(
-      `${baseUrl}/articles/${slug} /comments`,
-      {
-        comment: { body: comment }
-      },
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json; charset=utf-8"
-        }
-      }
-    )
+    .post(url, {
+      comment: { body: comment }
+    })
     .then((Response: any) => {
       console.log(Response);
     })
@@ -449,8 +409,10 @@ export function getCommentsByArticles(slug: string, token?: string) {
   const myHeaders: { [key: string]: string } = {};
   if (token) myHeaders["Authorization"] = `Token ${token}`;
   myHeaders["Content-Type"] = "application/json; charset=utf-8";
+
+  const url = `${baseUrl}/articles/${slug}/comments`;
   axios
-    .get(`${baseUrl}/articles/${slug}/comments`, {
+    .get(url, {
       headers: myHeaders
     })
     .then((Response: any) => {
@@ -469,13 +431,9 @@ export function getCommentsByArticles(slug: string, token?: string) {
 export function deleteComment(slug: string, id: string, token: string) {
   if (!slug || slug === "" || !id || id === "" || !token || token === "")
     return;
+  const url = `${baseUrl}/articles/${slug}/comments/ ${id}`;
   axios
-    .delete(`${baseUrl}/articles/${slug}/comments/ ${id}`, {
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    })
+    .delete(url)
     .then((respons: any) => {
       console.log(respons);
     })
@@ -491,17 +449,9 @@ export function deleteComment(slug: string, id: string, token: string) {
  */
 export function FavoriteArticle(slug: string, token: string) {
   if (!slug || slug === "" || token === "" || token === "") return;
+  const url = `${baseUrl}/articles/${slug}/favorite`;
   axios
-    .post(
-      `${baseUrl}/articles/${slug}/favorite`,
-      {},
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json; charset=utf-8"
-        }
-      }
-    )
+    .post(url, {})
     .then((response: any) => {
       console.log(response);
     })
@@ -517,13 +467,9 @@ export function FavoriteArticle(slug: string, token: string) {
  */
 export function unFavoriteArticle(slug: string, token: string) {
   if (!slug || slug === "" || token === "" || token === "") return;
+  const url = `${baseUrl}/articles/${slug}/favorite`;
   axios
-    .delete(`${baseUrl}/articles/${slug}/favorite`, {
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    })
+    .delete(url)
     .then((response: any) => {
       console.log(response);
     })
@@ -537,5 +483,6 @@ export function unFavoriteArticle(slug: string, token: string) {
  * /tags
  */
 export function getTags() {
-  return axios.get(`${baseUrl}/tags`);
+  const url = `${baseUrl}/tags`;
+  return axios.get(url);
 }
