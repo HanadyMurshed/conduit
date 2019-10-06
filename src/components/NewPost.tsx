@@ -13,22 +13,18 @@ const useStyle = makeStyles({
       textAlign: "center"
     }
   },
-  title: {
-    height: 50,
-    paddingLeft: 20,
-    fontSize: 18
-  },
   input: {
     maxHeidth: 900,
     width: "100%",
     margin: "auto",
     marginTop: 16,
     display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    "&::placeholder": {
-      color: "black"
-    }
+    paddingLeft: 10
+  },
+  title: {
+    height: 50,
+    paddingLeft: 20,
+    fontSize: 18
   },
   button: {
     textTransform: "none",
@@ -75,7 +71,7 @@ export const NewPost: React.FC<{
         <MyInput
           value={title}
           // onChange={handleTitleChange}
-          className={classes.input + " " + classes.title}
+          className={`${classes.input} ${classes.title}`}
           placeholder="Artical Title"
         />
         <MyInput
@@ -89,7 +85,7 @@ export const NewPost: React.FC<{
           // onChange={handleBodyChange}
           multiline
           rows="8"
-          className={classes.input + " " + classes.multiline}
+          className={`${classes.input} ${classes.multiline}`}
           placeholder="Write you're artical (in markdown)"
         />
         <MyInput
