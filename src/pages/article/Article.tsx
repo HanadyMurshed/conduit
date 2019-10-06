@@ -2,7 +2,7 @@ import * as React from "react";
 import { Grid, withStyles, Typography } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
 import { HeaderArticle } from "../../components/HeaderArticle";
-import { getAnArticle } from "../../server";
+import { getAnArticle } from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
 import { styles } from "./styles";
 

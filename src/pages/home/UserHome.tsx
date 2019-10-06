@@ -2,7 +2,7 @@ import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { RouteComponentProps, navigate } from "@reach/router";
-import { listArticles, getTags, getArticleFeed } from "../../server";
+import { listArticles, getTags, getArticleFeed } from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";

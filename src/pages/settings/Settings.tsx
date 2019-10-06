@@ -4,7 +4,7 @@ import { RouteComponentProps } from "@reach/router";
 import { Settings } from "../../components/settings/Settings";
 import { IState } from "./IState";
 import { styles } from "./styles";
-import { getCurrentUser, updateUser } from "../../server";
+import { getCurrentUser, updateUser } from "../../api/server";
 
 class SettingsPage extends React.Component<
   { classes: any; endSession: () => void } & RouteComponentProps,

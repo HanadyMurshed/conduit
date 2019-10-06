@@ -97,7 +97,7 @@ class App extends React.Component<{ classes: any }> {
           </Grid>
           <Router className={classes.router}>
             {token ? <UserHome path="/" /> : <Home path="/" />}
-            <SignUpPage path="/sign-up" />
+            <SignUpPage startSession={this.startSession} path="/sign-up" />
             <SignInPage startSession={this.startSession} path="/sign-in" />
             <NewPostPage path="/new-post" />
             <SettingsPage endSession={this.endSession} path="/settings" />

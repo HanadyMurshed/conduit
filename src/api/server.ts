@@ -1,15 +1,12 @@
-/**
- *422 If a request fails any validations
- *401 for Unauthorized requests, when a request requires authentication but it isn't provided
- *403 for Forbidden requests, when a request may be valid but the user doesn't have permissions to perform the action
- *404 for Not found requests, when a resource can't be found to fulfill the request
- */
-
-/* tslint-disable no-unused-expressions */
+import { RegisterUserInformation } from "./api.types";
 
 const baseUrl = "https://conduit.productionready.io/api";
 
 const axios = require("axios").default;
+
+function getAccessToken() {
+  return sessionStorage.getItem("token");
+}
 
 /**
  * Post
@@ -20,10 +17,6 @@ const axios = require("axios").default;
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, password
  */
-function getAccessToken() {
-  return sessionStorage.getItem("token");
-  // return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Njc0MDEsInVzZXJuYW1lIjoiSGFuYWR5IiwiZXhwIjoxNTc1MTc5MDk0fQ.TRk6avBRx0eU0liOQ_7ROlYisjuR5lBRzJx6q9kQE30"; //get tags
-}
 
 axios.interceptors.request.use(
   (config: any) => {
@@ -57,33 +50,11 @@ export function login(email: string, password: string) {
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, username, password
  */
-export function register(email: string, username: string, password: string) {
-  if (
-    !email ||
-    !username ||
-    !password ||
-    email === "" ||
-    username === "" ||
-    password === ""
-  )
-    return;
-
+export function register(user: RegisterUserInformation) {
   const url = `${baseUrl}/users`;
-  axios
-    .post(url, {
-      user: {
-        username: username,
-        email: email,
-        password: password
-      }
-    })
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      //422 taken username or email
-      console.log(error);
-    });
+  return axios.post(url, {
+    user: user
+  });
 }
 
 /**

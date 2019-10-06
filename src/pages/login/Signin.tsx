@@ -2,7 +2,7 @@ import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { SignIn } from "../../components/sign-in-up/SignIn";
-import { login } from "../../server";
+import { login } from "../../api/server";
 import { IUser } from "../../types/conduit.types";
 import { IState } from "./IState";
 
@@ -25,7 +25,6 @@ class SignInPage extends React.Component<
     email: "",
     password: "",
     popperContent: "",
-    popperAchorE: null,
     popperOpen: false
   };
 
@@ -77,14 +76,7 @@ class SignInPage extends React.Component<
   };
   render() {
     const { classes } = this.props;
-    const {
-      errors,
-      email,
-      password,
-      popperContent,
-      popperAchorE,
-      popperOpen
-    } = this.state;
+    const { errors, email, password, popperContent, popperOpen } = this.state;
     return (
       <Grid container className={classes.page}>
         <SignIn
@@ -92,7 +84,6 @@ class SignInPage extends React.Component<
           email={email}
           password={password}
           popperContent={popperContent}
-          popperAchorE={popperAchorE}
           popperOpen={popperOpen}
           handleEmailChange={this.handleEmailChange}
           handlePasswordChange={this.handlePasswordChange}

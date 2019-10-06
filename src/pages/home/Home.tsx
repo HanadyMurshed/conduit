@@ -3,7 +3,7 @@ import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { Header } from "../../components/Header";
-import { listArticles, getTags } from "../../server";
+import { listArticles, getTags } from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
