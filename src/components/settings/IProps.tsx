@@ -5,6 +5,8 @@ export interface IProps {
   email?: string;
   password?: string;
   image?: string;
+  popperOpen?: boolean;
+  popperContent?: string;
   handleURLChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleUsernameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleBioChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

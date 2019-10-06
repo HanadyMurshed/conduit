@@ -4,9 +4,10 @@ import { RouteComponentProps } from "@reach/router";
 import { Settings } from "../../components/settings/Settings";
 import { IState } from "./IState";
 import { styles } from "./styles";
+import { getCurrentUser, updateUser } from "../../server";
 
 class SettingsPage extends React.Component<
-  { classes: any } & RouteComponentProps,
+  { classes: any; endSession: () => void } & RouteComponentProps,
   IState
 > {
   state: IState = {
@@ -14,9 +15,22 @@ class SettingsPage extends React.Component<
     bio: "",
     url: "",
     email: "",
-    password: ""
+    password: "",
+    popperOpen: false,
+    popperContent: ""
   };
 
+  componentWillMount() {
+    getCurrentUser().then((response: any) => {
+      const { username, email, bio, image } = response.data.user;
+      this.setState({
+        username: username,
+        bio: bio,
+        email: email,
+        url: image
+      });
+    });
+  }
   handleURLChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       url: event.target.value
@@ -42,9 +56,36 @@ class SettingsPage extends React.Component<
       password: event.target.value
     });
   };
-  handleOnClickUpdate = () => {};
+  handleOnClickUpdate = () => {
+    const { username, email, bio, url } = this.state;
+    if (email.charAt(0) === "@")
+      this.setState({
+        popperOpen: true,
+        popperContent: `Please enterva part followed by '@'. ${email} is incomplete`
+      });
+    else if (email.charAt(email.length - 1) === "@")
+      this.setState({
+        popperOpen: true,
+        popperContent: `Please enterva part following '@'. ${email} is incomplete`
+      });
+    else if (!email.includes("@"))
+      this.setState({
+        popperOpen: true,
+        popperContent: `Please include an '@' in the email address. ${email} is missing an '@' `
+      });
+    else {
+      updateUser({
+        username: username,
+        email: email,
+        bio: bio,
+        image: url
+      })
+        .then((res: any) => {})
+        .catch((er: any) => {});
+    }
+  };
   render() {
-    const { classes } = this.props;
+    const { classes, endSession } = this.props;
     const { username, bio, email, url, password } = this.state;
     return (
       <Grid container className={classes.page}>
@@ -54,6 +95,8 @@ class SettingsPage extends React.Component<
           handlePasswordChange={this.handlePasswordChange}
           handleURLChange={this.handleURLChange}
           handleUsernameChange={this.handleUsernameChange}
+          handleOnClickUpdate={this.handleOnClickUpdate}
+          handleOnClickLogOut={endSession}
           userName={username}
           email={email}
           bio={bio}

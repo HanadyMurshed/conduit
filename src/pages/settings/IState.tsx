@@ -4,4 +4,6 @@ export interface IState {
   url: string;
   email: string;
   password: string;
+  popperOpen: boolean;
+  popperContent: string;
 }

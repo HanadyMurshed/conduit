@@ -39,19 +39,16 @@ class SignInPage extends React.Component<
     const { startSession } = this.props;
     if (email.charAt(0) === "@")
       this.setState({
-        popperAchorE: document.getElementById("emailInput"),
         popperOpen: true,
         popperContent: `Please enterva part followed by '@'. ${email} is incomplete`
       });
-    else if (email.charAt(email.length - 1) == "@")
+    else if (email.charAt(email.length - 1) === "@")
       this.setState({
-        popperAchorE: document.getElementById("emailInput"),
         popperOpen: true,
         popperContent: `Please enterva part following '@'. ${email} is incomplete`
       });
     else if (!email.includes("@"))
       this.setState({
-        popperAchorE: document.getElementById("emailInput"),
         popperOpen: true,
         popperContent: `Please include an '@' in the email address. ${email} is missing an '@' `
       });

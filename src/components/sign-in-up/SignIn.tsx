@@ -1,15 +1,8 @@
 import * as React from "react";
-import {
-  Typography,
-  Button,
-  Fade,
-  Paper,
-  Popper,
-  makeStyles
-} from "@material-ui/core";
+import { Typography, Button, makeStyles } from "@material-ui/core";
 import { MyInput } from "../Input";
 import { ErrorList } from "../errors";
-import ErrorIcon from "@material-ui/icons/Error";
+import { PopperMsg } from "../PoppupMsg";
 import { style } from "./style";
 import { IProps } from "./IProps";
 
@@ -19,7 +12,6 @@ export const SignIn: React.FC<IProps> = ({
   email = "",
   password = "",
   popperContent = "",
-  popperAchorE = null,
   popperOpen = false,
   onClick = () => {},
   handleFocusInput = () => {},
@@ -39,7 +31,7 @@ export const SignIn: React.FC<IProps> = ({
 
         <MyInput
           onfocus={handleFocusInput}
-          id="emailInput"
+          id="email"
           onChange={handleEmailChange}
           className={classes.input}
           placeholder="Email"
@@ -52,19 +44,7 @@ export const SignIn: React.FC<IProps> = ({
           value={password}
           type="password"
         />
-        <Popper open={popperOpen} anchorEl={popperAchorE} transition>
-          {({ TransitionProps }: any) => (
-            <Fade {...TransitionProps} timeout={350}>
-              <Paper>
-                <Typography className={classes.Popper}>
-                  <ErrorIcon style={{ height: 14, color: "#ffa300" }} />
-
-                  {popperContent}
-                </Typography>
-              </Paper>
-            </Fade>
-          )}
-        </Popper>
+        <PopperMsg open={popperOpen} id="email" content={popperContent} />
       </div>
       <Button onClick={onClick} className={classes.button}>
         Sign in

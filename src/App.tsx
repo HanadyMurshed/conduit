@@ -1,5 +1,5 @@
 import React from "react";
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import Grid from "@material-ui/core/Grid";
 import { NavBar } from "./components/NavBar";
 import { ButtonNavBar } from "./components/ButtonNavBar";
@@ -40,6 +40,15 @@ class App extends React.Component<{ classes: any }> {
     this.setState({
       token: token
     });
+  };
+  endSession = () => {
+    sessionStorage.clear();
+    this.setState(
+      {
+        token: null
+      },
+      () => navigate("/")
+    );
   };
 
   getNavBarButtons() {
@@ -90,7 +99,7 @@ class App extends React.Component<{ classes: any }> {
             <SignUpPage path="/sign-up" />
             <SignInPage startSession={this.startSession} path="/sign-in" />
             <NewPostPage path="/new-post" />
-            <SettingsPage path="/settings" />
+            <SettingsPage endSession={this.endSession} path="/settings" />
             <ArticlePage path="/Article/:slug" />
             <UserPage path="/:username" />
           </Router>

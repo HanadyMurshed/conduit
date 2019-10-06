@@ -95,17 +95,9 @@ export function register(email: string, username: string, password: string) {
  * -------: 401 :UNAUTHRIZED
  * -------: 422 :UNEXPECTED ERROR
  */
-export function getCurrentUser(token: string) {
-  if (!token || token === "") return;
+export function getCurrentUser() {
   const url = `${baseUrl}/user`;
-  axios
-    .get(url)
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.get(url);
 }
 
 /**
@@ -118,19 +110,11 @@ export function getCurrentUser(token: string) {
  * -------: 422 :UNEXPECTED ERROR
  * Accepted fields: email, username, password, image, bio
  */
-export function updateUser(body: any, token: string) {
-  if (!body || body === {} || !token || token === "") return;
+export function updateUser(body: any) {
   const url = `${baseUrl}/user`;
-  axios
-    .put(url, {
-      user: body
-    })
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.put(url, {
+    user: body
+  });
 }
 
 /**
