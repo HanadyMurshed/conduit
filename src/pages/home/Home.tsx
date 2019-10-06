@@ -5,7 +5,7 @@ import { RouteComponentProps, navigate } from "@reach/router";
 import { Header } from "../../components/Header";
 import { listArticles, getTags } from "../../server";
 import { IArticle } from "../../types/conduit.types";
-import { Article } from "../../components/Article";
+import { Article } from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { TagsPanel } from "../../components/TagPanel";
 import { IState } from "./IState";

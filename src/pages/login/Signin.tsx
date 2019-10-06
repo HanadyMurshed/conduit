@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps, navigate } from "@reach/router";
-import { SignIn } from "../../components/SignUpIn";
+import { SignIn } from "../../components/sign-in-up/SignIn";
 import { login } from "../../server";
 import { IUser } from "../../types/conduit.types";
 import { IState } from "./IState";

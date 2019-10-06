@@ -6,7 +6,7 @@ import { RouteComponentProps } from "@reach/router";
 import { UserHeader } from "../../components/HeaderUser";
 import { listArticles, getProfile } from "../../server";
 import { IArticle, IAuther } from "../../types/conduit.types";
-import { Article } from "../../components/Article";
+import { Article } from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 
 const styles = {

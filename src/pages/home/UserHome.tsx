@@ -4,7 +4,7 @@ import { MyTab } from "../../components/Tab";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { listArticles, getTags, getArticleFeed } from "../../server";
 import { IArticle } from "../../types/conduit.types";
-import { Article } from "../../components/Article";
+import { Article } from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { TagsPanel } from "../../components/TagPanel";
 import { styles } from "./styles";

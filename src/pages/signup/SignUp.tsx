@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
-import { SignUp } from "../../components/SignUpIn";
+import { SignUp } from "../../components/sign-in-up/SignUp";
 
 const styles = {
   page: {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
-import { NewPost } from "../../components/NewPost";
+import { NewArticle } from "../../components/newArticle/NewArticle";
 
 const styles = {
   page: {
@@ -16,7 +16,7 @@ class NewPostPage extends React.Component<
     const { classes } = this.props;
     return (
       <Grid container className={classes.page}>
-        <NewPost />
+        <NewArticle />
       </Grid>
     );
   }
