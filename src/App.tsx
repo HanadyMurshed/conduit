@@ -4,19 +4,18 @@ import Grid from "@material-ui/core/Grid";
 import { NavBar } from "./components/NavBar";
 import { ButtonNavBar } from "./components/ButtonNavBar";
 import { withStyles } from "@material-ui/styles";
-import Home from "./pages/home/PageHome";
+import Home from "./pages/home/Home";
 import UserHome from "./pages/home/UserHome";
-import SignUpPage from "./pages/signup/PageSignUp";
-import SignInPage from "./pages/login/PageSignIn";
-import NewPostPage from "./pages/newPost/PageNewPost";
-import SettingsPage from "./pages/settings/PageSettings";
-import ArticlePage from "./pages/article/PageArticle";
-import UserPage from "./pages/user/UserPage";
+import SignUpPage from "./pages/signup/SignUp";
+import SignInPage from "./pages/login/Signin";
+import NewPostPage from "./pages/newPost/NewPost";
+import SettingsPage from "./pages/settings/Settings";
+import ArticlePage from "./pages/article/Article";
+import UserPage from "./pages/Profile/Profile";
 import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-const logged = false;
 const style = {
   router: { width: "100%" }
 };
@@ -25,9 +24,26 @@ const theme = createMuiTheme({
     fontFamily: ["Merriweather Sans", "Titillium Web"].join(",")
   }
 });
+interface IState {
+  token?: string;
+}
 class App extends React.Component<{ classes: any }> {
+  state: { token: string | null } = { token: null };
+
+  componentDidMount() {
+    this.setState({
+      token: sessionStorage.getItem("token")
+    });
+  }
+  startSession = (token: string) => {
+    sessionStorage.setItem("token", token);
+    this.setState({
+      token: token
+    });
+  };
+
   getNavBarButtons() {
-    if (sessionStorage.getItem("token"))
+    if (this.state.token)
       return (
         <div>
           <ButtonNavBar to="/" title="Home" />
@@ -62,6 +78,7 @@ class App extends React.Component<{ classes: any }> {
   }
   render() {
     const { classes } = this.props;
+    const { token } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <Grid container spacing={1}>
@@ -69,13 +86,9 @@ class App extends React.Component<{ classes: any }> {
             <NavBar>{this.getNavBarButtons()}</NavBar>
           </Grid>
           <Router className={classes.router}>
-            {sessionStorage.getItem("token") ? (
-              <UserHome path="/" />
-            ) : (
-              <Home path="/" />
-            )}
+            {token ? <UserHome path="/" /> : <Home path="/" />}
             <SignUpPage path="/sign-up" />
-            <SignInPage path="/sign-in" />
+            <SignInPage startSession={this.startSession} path="/sign-in" />
             <NewPostPage path="/new-post" />
             <SettingsPage path="/settings" />
             <ArticlePage path="/Article/:slug" />

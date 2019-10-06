@@ -40,7 +40,6 @@ axios.interceptors.request.use(
 );
 
 export function login(email: string, password: string) {
-  if (!email || !password || email === "" || password === "") return;
   const url = `${baseUrl}/users/login`;
   return axios.post(url, {
     user: {

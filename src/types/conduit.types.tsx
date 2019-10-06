@@ -1,3 +1,5 @@
+import { type } from "os"
+
 export interface IArticle {
   slug: string;
   title: string;
@@ -10,6 +12,7 @@ export interface IArticle {
   favoritesCount: number;
   author: IAuther;
 }
+
 export interface IAuther {
   email: string;
   username: string;

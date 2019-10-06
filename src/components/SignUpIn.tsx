@@ -85,8 +85,8 @@ export const SignUp = () => {
 export const SignIn: React.FC<{
   errors?: string[];
 
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 
   popperAchorE?: ReferenceObject | null;
   popperOpen?: boolean;
@@ -95,7 +95,7 @@ export const SignIn: React.FC<{
   onClick?: (event: any) => void;
   handleEmailChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleFocusInput: () => void;
+  handleFocusInput?: () => void;
 }> = ({
   errors = [],
   email = "",

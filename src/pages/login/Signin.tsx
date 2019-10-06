@@ -24,7 +24,10 @@ interface IState {
   popperContent?: string;
 }
 class SignInPage extends React.Component<
-  { classes: any } & RouteComponentProps,
+  {
+    classes: any;
+    startSession: (tokenL: string) => void;
+  } & RouteComponentProps,
   IState
 > {
   state: IState = {
@@ -35,6 +38,7 @@ class SignInPage extends React.Component<
     popperAchorE: null,
     popperOpen: false
   };
+
   handleEmailFocus = () => {
     this.setState({
       popperOpen: false
@@ -42,6 +46,7 @@ class SignInPage extends React.Component<
   };
   handleLogin = () => {
     const { email, password } = this.state;
+    const { startSession } = this.props;
     if (email.charAt(0) === "@")
       this.setState({
         popperAchorE: document.getElementById("emailInput"),
@@ -65,16 +70,15 @@ class SignInPage extends React.Component<
         .then((response: any) => {
           //start session
           const { token, username }: IUser = response.data.user;
-          sessionStorage.setItem("token", token);
-          sessionStorage.setItem("username", username);
-
           navigate("/");
+          startSession(token);
         })
         .catch(() => {
           this.setState({ errors: ["email or password is invalid"] });
         });
     }
   };
+
   handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ email: e.target.value });
   };
