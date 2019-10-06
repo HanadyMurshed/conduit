@@ -57,7 +57,7 @@ export const MyInput: React.FC<{
         placeholder={placeholder}
         classes={{ focused: classes.focused }}
         disableUnderline={true}
-        className={classes.input.trim()}
+        className={`${classes.input} ${className}`.trim()}
         onChange={onChange}
       />
     );
@@ -72,7 +72,7 @@ export const MyInput: React.FC<{
         placeholder={placeholder}
         classes={{ focused: classes.focused }}
         disableUnderline={true}
-        className={(classes.input + " " + className).trim()}
+        className={`${classes.input} ${className}`.trim()}
         onChange={onChange}
       />
     );

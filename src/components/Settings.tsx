@@ -78,7 +78,7 @@ export const Settings: React.FC<{
         <Typography className={classes.title}>Your Settings</Typography>
         <MyInput
           value={url}
-          className={classes.input + classes.url}
+          className={`${classes.input} ${classes.url}`}
           placeholder="URL of profile picture"
         />
         <MyInput
@@ -90,7 +90,7 @@ export const Settings: React.FC<{
           multiline
           rows="8"
           value={bio}
-          className={classes.input + " " + classes.multiline}
+          className={`${classes.input} ${classes.multiline}`}
           placeholder="Short bio about you"
         />
         <MyInput value={email} className={classes.input} placeholder="email" />
