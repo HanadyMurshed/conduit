@@ -2,7 +2,7 @@ import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { colors, dims } from "../../SystemVariables";
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps, navigate } from "@reach/router";
 import { listArticles, getTags, getArticleFeed } from "../../server";
 import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/Article";
@@ -150,6 +150,8 @@ class Home extends React.Component<
       currentTag,
       currentTab
     } = this.state;
+
+    if (!sessionStorage.getItem("token")) navigate("/login");
 
     return (
       <Grid container style={{ paddingBottom: 100 }}>
