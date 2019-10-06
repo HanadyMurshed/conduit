@@ -148,23 +148,11 @@ export function updateUser(body: any, token: string) {
  * Authentication:optional
  * Required: username
  */
-export function getProfile(username: string, token?: string) {
+export function getProfile(username: string) {
   if (!username || username === "") return;
   const url = `${baseUrl}/profiles/${username}`;
-  const headers: { [key: string]: string } = {};
-  if (token) headers["Authorization"] = `Token ${token}`;
-  headers["Content-Type"] = "application/json; charset=utf-8";
 
-  axios
-    .get(url, {
-      headers: headers
-    })
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.get(url);
 }
 
 /**

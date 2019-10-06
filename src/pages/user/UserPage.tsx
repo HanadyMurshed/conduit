@@ -1,14 +1,13 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
-import { colors, dims } from "../../SystemVariables";
+import { colors, dims, defaultValues } from "../../SystemVariables";
 import { RouteComponentProps } from "@reach/router";
-import { Header } from "../../components/Header";
-import { listArticles, getTags } from "../../server";
-import { IArticle } from "../../types/conduit.types";
+import { UserHeader } from "../../components/HeaderUser";
+import { listArticles, getProfile } from "../../server";
+import { IArticle, IAuther } from "../../types/conduit.types";
 import { Article } from "../../components/Article";
 import { PageIndex } from "../../components/PageIndex";
-import { TagsPanel } from "../../components/TagPanel";
 
 const styles = {
   page: {
@@ -34,29 +33,30 @@ const styles = {
 interface IState {
   articles: IArticle[];
   count: number;
-  tags: string[];
-  currentPage: number;
   pageCount: number;
+  currentPage: number;
   tabs: string[];
-  currentTag: string;
+  author: IAuther;
+  selectedTab: number;
 }
 class Home extends React.Component<
-  { classes: any } & RouteComponentProps,
+  { classes: any } & RouteComponentProps<{ username: string }>,
   IState
 > {
   state: IState = {
     articles: [],
     count: 0,
-    tags: [],
-    currentPage: 0,
     pageCount: 0,
-    tabs: ["Global feed"],
-    currentTag: ""
+    currentPage: 0,
+    author: { username: "", email: "", bio: "", image: defaultValues.avatar },
+    tabs: ["My Articles", "Favoriteed Articles"],
+    selectedTab: 0
   };
 
   componentDidMount() {
-    this.getGlobalFeed({ limit: 10 });
-    this.getTags();
+    if (!this.props.username) return;
+    this.getGlobalFeed({ author: this.props.username, limit: 10 });
+    this.getuserInformation(this.props.username);
   }
 
   getGlobalFeed = (queryparams: any) => {
@@ -66,69 +66,65 @@ class Home extends React.Component<
     });
   };
 
-  getTags = () => {
-    getTags().then((response: any) => {
-      console.log(response.data);
-      this.setState({ tags: response.data.tags });
+  getuserInformation = (username: string) => {
+    getProfile(username).then((response: any) => {
+      this.setState({ author: response.data.profile });
     });
   };
-
   handleIndexClickEvent = (index: number) => {
     this.setState(
       {
         currentPage: index
       },
       () =>
-        this.getGlobalFeed(
-          this.state.currentTag !== ""
-            ? { limit: 10, offset: index * 10, tag: this.state.currentTag }
-            : { limit: 10, offset: index * 10 }
-        )
-    );
-  };
-
-  handleTagClickEvent = (tag: string) => {
-    this.setState(
-      {
-        currentTag: tag
-      },
-      () => this.getGlobalFeed({ limit: 10, tag: tag })
+        this.getGlobalFeed({
+          author: this.state.author.username,
+          limit: 10,
+          offset: index * 10
+        })
     );
   };
 
   handleTabChangeEvent = (event: React.ChangeEvent<{}>, value: any) => {
-    if (value === 0)
-      this.setState(
-        {
-          currentTag: ""
-        },
-        () => this.getGlobalFeed({ limit: 10 })
-      );
+    let params = {};
+    if (value === 1) {
+      params = {
+        favorited: this.state.author.username,
+        limit: 10
+      };
+    } else params = { author: this.state.author.username, limit: 10 };
+
+    this.setState({ selectedTab: value }, () => this.getGlobalFeed(params));
   };
 
   render() {
     const { classes } = this.props;
     const {
       articles,
-      tags,
-      currentPage,
       pageCount,
+      currentPage,
       tabs,
-      currentTag
+      author,
+      selectedTab
     } = this.state;
+    const { username, email, bio, image } = author;
 
     return (
       <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>
-          <Header />
+          <UserHeader
+            avatar={image}
+            username={username}
+            ButtonText={`Follow ${username}`}
+          />
         </Grid>
 
         <Grid container className={classes.page}>
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12}>
             <MyTab
               onChange={this.handleTabChangeEvent}
-              tabs={currentTag !== "" ? [...tabs, `#${currentTag}`] : tabs}
-              value={currentTag !== "" ? 1 : 0}
+              tabs={tabs}
+              value={selectedTab}
             >
               <div>
                 {articles.map((e: IArticle) => (
@@ -144,14 +140,6 @@ class Home extends React.Component<
                 PageCount={pageCount}
               />
             ) : null}
-          </Grid>
-
-          <Grid item xs={12} md={3}>
-            <TagsPanel
-              onClick={this.handleTagClickEvent}
-              tags={tags}
-              active={currentTag}
-            />
           </Grid>
         </Grid>
       </Grid>

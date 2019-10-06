@@ -105,6 +105,9 @@ export const Article: React.FC<{ article: IArticle }> = ({
   const handleClickArticle = (slug: string) => {
     navigate(`/Article/${slug}`);
   };
+  const handleClickUser = (username: string) => {
+    navigate(`/${username}`);
+  };
 
   const classes = style();
   return (
@@ -117,7 +120,11 @@ export const Article: React.FC<{ article: IArticle }> = ({
 
           <Grid item className={classes.headerCaption}>
             <div className={classes.VerticalCentreAlign}>
-              <Typography variant="h6" className={classes.headerTitle}>
+              <Typography
+                onClick={() => handleClickUser(username)}
+                variant="h6"
+                className={classes.headerTitle}
+              >
                 {username}
               </Typography>
               <Typography variant="h6" className={classes.headerSubTitle}>
