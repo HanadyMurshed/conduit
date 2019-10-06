@@ -16,7 +16,7 @@ const styles = {
 class SignInPage extends React.Component<
   {
     classes: any;
-    startSession: (tokenL: string) => void;
+    startSession: (tokenL: string, username: string) => void;
   } & RouteComponentProps,
   IState
 > {
@@ -58,7 +58,7 @@ class SignInPage extends React.Component<
           //start session
           const { token, username }: IUser = response.data.user;
           navigate("/");
-          startSession(token);
+          startSession(token, username);
         })
         .catch(() => {
           this.setState({ errors: ["email or password is invalid"] });

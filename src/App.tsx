@@ -28,24 +28,29 @@ interface IState {
   token?: string;
 }
 class App extends React.Component<{ classes: any }> {
-  state: { token: string | null } = { token: null };
+  state: { token: string | null; username: string | null } = {
+    token: null,
+    username: null
+  };
 
   componentDidMount() {
     this.setState({
       token: sessionStorage.getItem("token")
     });
   }
-  startSession = (token: string) => {
+  startSession = (token: string, username: string) => {
     sessionStorage.setItem("token", token);
     this.setState({
-      token: token
+      token: token,
+      username: username
     });
   };
   endSession = () => {
     sessionStorage.clear();
     this.setState(
       {
-        token: null
+        token: null,
+        username: null
       },
       () => navigate("/")
     );
@@ -68,11 +73,7 @@ class App extends React.Component<{ classes: any }> {
           />
           <ButtonNavBar
             to="/"
-            title={
-              sessionStorage.getItem("username") === null
-                ? "Profile"
-                : sessionStorage.getItem("username") + ""
-            }
+            title={this.state.username ? this.state.username : "Profile"}
           />
         </div>
       );
