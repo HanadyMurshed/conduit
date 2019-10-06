@@ -4,6 +4,7 @@ import { Typography, Button, Fade, Paper, Popper } from "@material-ui/core";
 import { fontSize, colors } from "../SystemVariables";
 import { MyInput } from "./Input";
 import { ReferenceObject } from "popper.js";
+import { ErrorList } from "./errors";
 import ErrorIcon from "@material-ui/icons/Error";
 
 // import MyInput from "./Input";
@@ -82,6 +83,8 @@ export const SignUp = () => {
 };
 
 export const SignIn: React.FC<{
+  errors?: string[];
+
   email: string;
   password: string;
 
@@ -94,6 +97,7 @@ export const SignIn: React.FC<{
   handlePasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFocusInput: () => void;
 }> = ({
+  errors = [],
   email = "",
   password = "",
   popperContent = "",
@@ -110,6 +114,8 @@ export const SignIn: React.FC<{
       <div>
         <Typography className={classes.title}>Sign In</Typography>
         <Typography className={classes.a}>Need an account?</Typography>
+        {errors && errors !== [] ? <ErrorList errors={errors} /> : null}
+
         <MyInput
           onfocus={handleFocusInput}
           id="emailInput"

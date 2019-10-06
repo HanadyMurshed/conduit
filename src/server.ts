@@ -42,20 +42,12 @@ axios.interceptors.request.use(
 export function login(email: string, password: string) {
   if (!email || !password || email === "" || password === "") return;
   const url = `${baseUrl}/users/login`;
-  axios
-    .post(url, {
-      user: {
-        email: email,
-        password: password
-      }
-    })
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      //422 invalid email or password
-      return "error";
-    });
+  return axios.post(url, {
+    user: {
+      email: email,
+      password: password
+    }
+  });
 }
 
 /**
