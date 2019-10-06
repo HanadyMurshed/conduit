@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
-import { colors, dims } from "../../SystemVariables";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { Header } from "../../components/Header";
 import { listArticles, getTags } from "../../server";
@@ -9,37 +8,9 @@ import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { TagsPanel } from "../../components/TagPanel";
+import { IState } from "./IState";
+import { styles } from "./styles";
 
-const styles = {
-  page: {
-    width: dims.pageWidth + 40,
-    margin: "auto",
-    paddingLeft: 20,
-    paddingRight: 20,
-    minWidth: 500,
-    marginTop: 30
-  },
-  tagPanel: {
-    background: colors.lightGray,
-    padding: "8px 5px 8px 5px",
-
-    "& .title": {
-      color: colors.TextPrimaryColor,
-      fontSize: 14,
-      padding: 0
-    }
-  }
-};
-
-interface IState {
-  articles: IArticle[];
-  count: number;
-  tags: string[];
-  currentPage: number;
-  pageCount: number;
-  tabs: string[];
-  currentTag: string;
-}
 class Home extends React.Component<
   { classes: any } & RouteComponentProps,
   IState

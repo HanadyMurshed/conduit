@@ -9,6 +9,14 @@ const styles = {
     marginTop: 20
   }
 };
+
+interface IState {
+  username: string;
+  bio: string;
+  url: string;
+  email: string;
+  password: string;
+}
 class SettingsPage extends React.Component<
   { classes: any } & RouteComponentProps
 > {

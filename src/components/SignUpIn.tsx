@@ -96,6 +96,7 @@ export const SignIn: React.FC<{
   handleEmailChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFocusInput?: () => void;
+  handleNoAccount: () => void;
 }> = ({
   errors = [],
   email = "",
@@ -106,14 +107,17 @@ export const SignIn: React.FC<{
   onClick = () => {},
   handleFocusInput = () => {},
   handleEmailChange = () => {},
-  handlePasswordChange = () => {}
+  handlePasswordChange = () => {},
+  handleNoAccount = () => {}
 }) => {
   const classes = useStyle();
   return (
     <div className={classes.form}>
       <div>
         <Typography className={classes.title}>Sign In</Typography>
-        <Typography className={classes.a}>Need an account?</Typography>
+        <Typography onClick={handleNoAccount} className={classes.a}>
+          Need an account?
+        </Typography>
         {errors && errors !== [] ? <ErrorList errors={errors} /> : null}
 
         <MyInput

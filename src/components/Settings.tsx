@@ -67,10 +67,29 @@ const useStyle = makeStyles({
 });
 export const Settings: React.FC<{
   url?: string;
-  userName: string;
+  userName?: string;
   bio?: string;
-  email: string;
-}> = ({ url = "", userName = "", bio = "", email = "" }) => {
+  email?: string;
+  handleURLChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleUsernameChange?: (e: React.ChangeEvent<{}>) => void;
+  handleBioChange?: (e: React.ChangeEvent<{}>) => void;
+  handleEmailChange?: (e: React.ChangeEvent<{}>) => void;
+  handlePasswordChange?: (e: React.ChangeEvent<{}>) => void;
+  handleOnClickUpdate?: () => void;
+  handleOnClickLogOut?: () => void;
+}> = ({
+  url = "",
+  userName = "",
+  bio = "",
+  email = "",
+  handleURLChange = () => {},
+  handleUsernameChange = () => {},
+  handleBioChange = () => {},
+  handleEmailChange = () => {},
+  handlePasswordChange = () => {},
+  handleOnClickUpdate = () => {},
+  handleOnClickLogOut = () => {}
+}) => {
   const classes = useStyle();
   return (
     <form className={classes.form}>
@@ -78,10 +97,12 @@ export const Settings: React.FC<{
         <Typography className={classes.title}>Your Settings</Typography>
         <MyInput
           value={url}
+          onChange={handleURLChange}
           className={`${classes.input} ${classes.url}`}
           placeholder="URL of profile picture"
         />
         <MyInput
+          onChange={handleUsernameChange}
           value={userName}
           className={classes.input}
           placeholder="UserName"
@@ -89,15 +110,29 @@ export const Settings: React.FC<{
         <MyInput
           multiline
           rows="8"
+          onChange={handleBioChange}
           value={bio}
           className={`${classes.input} ${classes.multiline}`}
           placeholder="Short bio about you"
         />
-        <MyInput value={email} className={classes.input} placeholder="email" />
-        <MyInput className={classes.input} placeholder="new Password" />
+        <MyInput
+          onChange={handleEmailChange}
+          value={email}
+          className={classes.input}
+          placeholder="email"
+        />
+        <MyInput
+          onChange={handlePasswordChange}
+          className={classes.input}
+          placeholder="new Password"
+        />
       </div>
-      <Button className={classes.button}>Update Setting</Button>
-      <Button className={classes.RedButton}>Or click here to logout.</Button>
+      <Button onClick={handleOnClickUpdate} className={classes.button}>
+        Update Setting
+      </Button>
+      <Button onClick={handleOnClickLogOut} className={classes.RedButton}>
+        Or click here to logout.
+      </Button>
     </form>
   );
 };

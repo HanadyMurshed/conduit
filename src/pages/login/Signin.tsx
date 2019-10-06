@@ -2,9 +2,9 @@ import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { SignIn } from "../../components/SignUpIn";
-import { ReferenceObject } from "popper.js";
 import { login } from "../../server";
 import { IUser } from "../../types/conduit.types";
+import { IState } from "./IState";
 
 const styles = {
   page: {
@@ -13,16 +13,6 @@ const styles = {
     marginTop: 20
   }
 };
-interface IState {
-  errors: string[];
-  email: string;
-  emailAnchor?: ReferenceObject | null;
-  password: string;
-  passwordAnchor?: string;
-  popperAchorE?: ReferenceObject | null;
-  popperOpen?: boolean;
-  popperContent?: string;
-}
 class SignInPage extends React.Component<
   {
     classes: any;
@@ -85,7 +75,9 @@ class SignInPage extends React.Component<
   handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ password: e.target.value });
   };
-
+  handleHaveAccount = () => {
+    navigate("/sign-up");
+  };
   render() {
     const { classes } = this.props;
     const {
@@ -109,6 +101,7 @@ class SignInPage extends React.Component<
           handlePasswordChange={this.handlePasswordChange}
           handleFocusInput={this.handleEmailFocus}
           onClick={this.handleLogin}
+          handleNoAccount={this.handleHaveAccount}
         />
       </Grid>
     );
