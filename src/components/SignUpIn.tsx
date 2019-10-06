@@ -1,8 +1,11 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, Fade, Paper, Popper } from "@material-ui/core";
 import { fontSize, colors } from "../SystemVariables";
 import { MyInput } from "./Input";
+import { ReferenceObject } from "popper.js";
+import ErrorIcon from "@material-ui/icons/Error";
+
 // import MyInput from "./Input";
 
 const useStyle = makeStyles({
@@ -53,6 +56,11 @@ const useStyle = makeStyles({
     "&:hover": {
       background: colors.PrimaryDark
     }
+  },
+  Popper: {
+    padding: 5,
+    fontSize: 14,
+    color: colors.TextPrimaryColor
   }
 });
 export const SignUp = () => {
@@ -73,19 +81,67 @@ export const SignUp = () => {
   );
 };
 
-export const SignIn = () => {
+export const SignIn: React.FC<{
+  email: string;
+  password: string;
+
+  popperAchorE?: ReferenceObject | null;
+  popperOpen?: boolean;
+  popperContent?: string;
+
+  onClick?: (event: any) => void;
+  handleEmailChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handlePasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFocusInput: () => void;
+}> = ({
+  email = "",
+  password = "",
+  popperContent = "",
+  popperAchorE = null,
+  popperOpen = false,
+  onClick = () => {},
+  handleFocusInput = () => {},
+  handleEmailChange = () => {},
+  handlePasswordChange = () => {}
+}) => {
   const classes = useStyle();
   return (
-    <form className={classes.form}>
+    <div className={classes.form}>
       <div>
         <Typography className={classes.title}>Sign In</Typography>
         <Typography className={classes.a}>Need an account?</Typography>
-        <MyInput className={classes.input} placeholder="Email" />
-        <MyInput className={classes.input} placeholder="Password" />
+        <MyInput
+          onfocus={handleFocusInput}
+          id="emailInput"
+          onChange={handleEmailChange}
+          className={classes.input}
+          placeholder="Email"
+          value={email}
+        />
+        <MyInput
+          onChange={handlePasswordChange}
+          className={classes.input}
+          placeholder="Password"
+          value={password}
+          type="password"
+        />
+        <Popper open={popperOpen} anchorEl={popperAchorE} transition>
+          {({ TransitionProps }: any) => (
+            <Fade {...TransitionProps} timeout={350}>
+              <Paper>
+                <Typography className={classes.Popper}>
+                  <ErrorIcon style={{ height: 14, color: "#ffa300" }} />
+
+                  {popperContent}
+                </Typography>
+              </Paper>
+            </Fade>
+          )}
+        </Popper>
       </div>
-      <Button className={classes.button} disableRipple>
+      <Button onClick={onClick} className={classes.button}>
         Sign in
       </Button>
-    </form>
+    </div>
   );
 };
