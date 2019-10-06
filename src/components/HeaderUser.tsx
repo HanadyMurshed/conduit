@@ -1,5 +1,5 @@
 import * as React from "react";
-import { colors, fontSize, defaultValues } from "../SystemVariables";
+import { colors, fontSize, defaultValues, dims } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
@@ -7,10 +7,16 @@ import { Button } from "@material-ui/core";
 // import { Typography } from "@material-ui/core";
 
 const useStyle = makeStyles({
-  headerContainor: {
+  root: {
     background: colors.lightGray,
-    height: "200px",
+    height: "240px"
+  },
+  headerContainor: {
     paddingTop: 40,
+    maxWidth: dims.pageWidth,
+    margin: "auto"
+  },
+  userfields: {
     textAlign: "center"
   },
   avatar: {
@@ -28,7 +34,6 @@ const useStyle = makeStyles({
     border: "solid 1px" + colors.TextPrimaryColor
   },
   username: {
-    margin: "auto",
     color: colors.TextPrimaryColor,
     lineHeight: "80%",
     fontWeight: "bold",
@@ -51,12 +56,16 @@ export const UserHeader: React.FC<{
 }) => {
   const classes = useStyle();
   return (
-    <div className={classes.headerContainor}>
-      <Avatar className={classes.avatar} src={avatar} />
-      <Typography className={classes.username}>{username}</Typography>
-      <Button className={classes.button} onClick={onClick}>
-        {ButtonText}
-      </Button>
+    <div className={classes.root}>
+      <div className={classes.headerContainor}>
+        <div className={classes.userfields}>
+          <Avatar className={classes.avatar} src={avatar} />
+          <Typography className={classes.username}>{username}</Typography>
+        </div>
+        <Button className={classes.button} onClick={onClick}>
+          {ButtonText}
+        </Button>
+      </div>
     </div>
   );
 };
