@@ -50,7 +50,7 @@ const style = makeStyles(() => ({
     "&:hover": {
       background: colors.PrimaryColor
     },
-    "&:hover $like": {
+    "&:hover $favoriteContent": {
       color: "white"
     },
     display: "inline-flex",

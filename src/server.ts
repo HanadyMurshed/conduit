@@ -21,14 +21,14 @@ const axios = require("axios").default;
  * Required fields: email, password
  */
 function getAccessToken() {
-  return "";
+  return sessionStorage.getItem("token");
   // return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Njc0MDEsInVzZXJuYW1lIjoiSGFuYWR5IiwiZXhwIjoxNTc1MTc5MDk0fQ.TRk6avBRx0eU0liOQ_7ROlYisjuR5lBRzJx6q9kQE30"; //get tags
 }
 
 axios.interceptors.request.use(
   (config: any) => {
     const token = getAccessToken();
-    if (token !== "") {
+    if (token && token !== "") {
       config.headers["Authorization"] = "Token " + token;
     }
     // config.headers['Content-Type'] = 'application/json';
@@ -222,24 +222,12 @@ export function listArticles(
  * optional offset/skip default 20
  * Returns most recent articles you follow
  */
-export function getArticleFeed(token: string, paramaeters?: any) {
-  if (!token || token === "") return;
+export function getArticleFeed(paramaeters?: any) {
   if (!paramaeters) paramaeters = {};
   const url = `${baseUrl}/articles/feed`;
-  axios
-    .get(url, {
-      params: paramaeters,
-      headers: {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    })
-    .then((response: any) => {
-      console.log(response.data);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.get(url, {
+    params: paramaeters
+  });
 }
 
 /**
@@ -253,6 +241,13 @@ export function getAnArticle(slug: string) {
   return axios.get(url);
 }
 
+interface CreateArticleRequest {
+  title: string;
+  description: string;
+  body: string;
+  token: string;
+  tagList?: string[];
+}
 /**
  * post
  * /articles
@@ -282,15 +277,16 @@ export function createArticle(
   if (!tagList) tagList = [];
 
   const url = `${baseUrl}/articles`;
+  const payload = {
+    article: {
+      title: title,
+      description: description,
+      body: body,
+      tagList: tagList
+    }
+  };
   axios
-    .post(url, {
-      article: {
-        title: title,
-        description: description,
-        body: body,
-        tagList: tagList
-      }
-    })
+    .post(url, payload)
     .then((response: any) => {
       console.log(response);
     })

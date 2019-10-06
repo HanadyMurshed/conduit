@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps, navigate } from "@reach/router";
 import { SignIn } from "../../components/SignUpIn";
 import { ReferenceObject } from "popper.js";
 import { login } from "../../server";
+import { IUser } from "../../types/conduit.types";
 
 const styles = {
   page: {
@@ -13,6 +14,7 @@ const styles = {
   }
 };
 interface IState {
+  errors: string[];
   email: string;
   emailAnchor?: ReferenceObject | null;
   password: string;
@@ -26,6 +28,7 @@ class SignInPage extends React.Component<
   IState
 > {
   state: IState = {
+    errors: [],
     email: "",
     password: "",
     popperContent: "",
@@ -57,6 +60,20 @@ class SignInPage extends React.Component<
         popperOpen: true,
         popperContent: `Please include an '@' in the email address. ${email} is missing an '@' `
       });
+    else {
+      login(email, password)
+        .then((response: any) => {
+          //start session
+          const { token, username }: IUser = response.data.user;
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("username", username);
+
+          navigate("/");
+        })
+        .catch(() => {
+          this.setState({ errors: ["email or password is invalid"] });
+        });
+    }
   };
   handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ email: e.target.value });
@@ -68,6 +85,7 @@ class SignInPage extends React.Component<
   render() {
     const { classes } = this.props;
     const {
+      errors,
       email,
       password,
       popperContent,
@@ -77,6 +95,7 @@ class SignInPage extends React.Component<
     return (
       <Grid container className={classes.page}>
         <SignIn
+          errors={errors}
           email={email}
           password={password}
           popperContent={popperContent}

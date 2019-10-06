@@ -11,3 +11,5 @@
 ##to do
 -intercepting the header
 -local storage browser session
+
+redux + redux saga

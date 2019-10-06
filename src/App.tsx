@@ -5,6 +5,7 @@ import { NavBar } from "./components/NavBar";
 import { ButtonNavBar } from "./components/ButtonNavBar";
 import { withStyles } from "@material-ui/styles";
 import Home from "./pages/home/PageHome";
+import UserHome from "./pages/home/UserHome";
 import SignUpPage from "./pages/signup/PageSignUp";
 import SignInPage from "./pages/login/PageSignIn";
 import NewPostPage from "./pages/newPost/PageNewPost";
@@ -26,7 +27,7 @@ const theme = createMuiTheme({
 });
 class App extends React.Component<{ classes: any }> {
   getNavBarButtons() {
-    if (logged)
+    if (sessionStorage.getItem("token"))
       return (
         <div>
           <ButtonNavBar to="/" title="Home" />
@@ -40,7 +41,14 @@ class App extends React.Component<{ classes: any }> {
             title="Settings"
             icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
-          <ButtonNavBar to="/" title="Hanady" />
+          <ButtonNavBar
+            to="/"
+            title={
+              sessionStorage.getItem("username") === null
+                ? "Profile"
+                : sessionStorage.getItem("username") + ""
+            }
+          />
         </div>
       );
     else
@@ -61,7 +69,11 @@ class App extends React.Component<{ classes: any }> {
             <NavBar>{this.getNavBarButtons()}</NavBar>
           </Grid>
           <Router className={classes.router}>
-            <Home path="/" />
+            {sessionStorage.getItem("token") ? (
+              <UserHome path="/" />
+            ) : (
+              <Home path="/" />
+            )}
             <SignUpPage path="/sign-up" />
             <SignInPage path="/sign-in" />
             <NewPostPage path="/new-post" />
