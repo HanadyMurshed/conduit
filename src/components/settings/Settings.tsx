@@ -12,6 +12,7 @@ export const Settings: React.FC<IProps> = ({
   userName = "",
   bio = "",
   email = "",
+  password = "",
   handleURLChange = () => {},
   handleUsernameChange = () => {},
   handleBioChange = () => {},
@@ -35,7 +36,7 @@ export const Settings: React.FC<IProps> = ({
           onChange={handleUsernameChange}
           value={userName}
           className={classes.input}
-          placeholder="UserName"
+          placeholder="Username"
         />
         <MyInput
           multiline
@@ -49,12 +50,14 @@ export const Settings: React.FC<IProps> = ({
           onChange={handleEmailChange}
           value={email}
           className={classes.input}
-          placeholder="email"
+          placeholder="Email"
         />
         <MyInput
+          type="password"
+          value={password}
           onChange={handlePasswordChange}
           className={classes.input}
-          placeholder="new Password"
+          placeholder="New Password"
         />
       </div>
       <Button onClick={handleOnClickUpdate} className={classes.button}>

@@ -3,6 +3,7 @@ export interface IProps {
   userName?: string;
   bio?: string;
   email?: string;
+  password?: string;
   image?: string;
   handleURLChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleUsernameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

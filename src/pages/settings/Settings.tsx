@@ -45,18 +45,20 @@ class SettingsPage extends React.Component<
   handleOnClickUpdate = () => {};
   render() {
     const { classes } = this.props;
-    const { username, bio, email, url } = this.state;
+    const { username, bio, email, url, password } = this.state;
     return (
       <Grid container className={classes.page}>
         <Settings
           handleBioChange={this.handleBioChange}
           handleEmailChange={this.handleEmailChange}
           handlePasswordChange={this.handlePasswordChange}
+          handleURLChange={this.handleURLChange}
           handleUsernameChange={this.handleUsernameChange}
           userName={username}
           email={email}
           bio={bio}
           url={url}
+          password={password}
         />
       </Grid>
     );
