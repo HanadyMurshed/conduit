@@ -114,15 +114,11 @@ class Home extends React.Component<
       currentPage: 0
     });
   };
-  handleFavoritEvent = (favorited: boolean, slug: string, fun: () => void) => {
+  handleFavoritEvent = (favorited: Boolean, slug: string) => {
     let favoriteToggle = favorited
       ? unFavoriteArticle(slug)
       : FavoriteArticle(slug);
-    favoriteToggle
-      .then((res: any) => {
-        fun();
-      })
-      .catch();
+    favoriteToggle.then((res: any) => {}).catch();
   };
 
   render() {

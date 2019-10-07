@@ -13,3 +13,5 @@
 -local storage browser session
 
 redux + redux saga
+
+ask about like

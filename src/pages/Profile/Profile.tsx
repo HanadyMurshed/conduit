@@ -31,16 +31,12 @@ class Home extends React.Component<
     tabs: ["My Articles", "Favoriteed Articles"],
     selectedTab: 0
   };
-  handleFavoritEvent = (favorited: boolean, slug: string, fun: () => void) => {
+  handleFavoritEvent = (favorited: Boolean, slug: string) => {
     console.log("like");
     let favoriteToggle = favorited
       ? unFavoriteArticle(slug)
       : FavoriteArticle(slug);
-    favoriteToggle
-      .then((res: any) => {
-        fun();
-      })
-      .catch();
+    favoriteToggle.then((res: any) => {}).catch();
   };
 
   componentDidMount() {

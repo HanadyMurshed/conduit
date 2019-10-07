@@ -9,12 +9,6 @@ import { IProps } from "./IProps";
 import { IState } from "./IState";
 
 class Article extends React.Component<IProps, IState> {
-  static getDerivedStateFromProps(props: IProps) {
-    const {
-      article: { favorited }
-    } = props;
-    return favorited;
-  }
   handleClickArticle = (slug: string) => {
     navigate(`/Article/${slug}`);
   };
@@ -22,19 +16,15 @@ class Article extends React.Component<IProps, IState> {
     navigate(`/${username}`);
   };
   private handleFavoriteClickEvent(
-    handleFavoritEvent:
-      | ((favorited: boolean, slug: string, fun: () => void) => void)
-      | undefined,
-    favorited: boolean,
-    slug: string
-  ):
-    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined {
+    slug: string,
+    favorited: Boolean,
+    handler?: (favorited: Boolean, slug: string) => void
+  ) {
     return () => {
-      if (handleFavoritEvent)
-        handleFavoritEvent(favorited, slug, () => {
-          this.setState({ favorited: !favorited });
-        });
+      if (handler)
+        this.setState({ favorited: !favorited }, () =>
+          handler(favorited, slug)
+        );
     };
   }
   render() {
@@ -44,13 +34,13 @@ class Article extends React.Component<IProps, IState> {
         title,
         description,
         createdAt,
+        favorited,
         favoritesCount,
         author: { username, image }
       },
       classes,
       handleFavoritEvent
     } = this.props;
-    const { favorited } = this.state;
     return (
       <Grid className={classes.root} container spacing={1}>
         <Grid item xs={11}>
@@ -79,9 +69,9 @@ class Article extends React.Component<IProps, IState> {
         <Grid item xs={1}>
           <IconButton
             onClick={this.handleFavoriteClickEvent(
-              handleFavoritEvent,
+              slug,
               favorited,
-              slug
+              handleFavoritEvent
             )}
             className={`${classes.favoriteButton} ${
               favorited ? classes.active : ""

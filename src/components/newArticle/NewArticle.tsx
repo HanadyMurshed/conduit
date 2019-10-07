@@ -3,16 +3,18 @@ import { Button } from "@material-ui/core";
 import { MyInput } from "../Input";
 import { makeStyles } from "@material-ui/styles";
 import { style } from "./style";
+import { IProps } from "./IProps";
 // import MyInput from "./Input";
 
 const useStyle = makeStyles(style);
 
-export const NewArticle: React.FC<{
-  title?: string;
-  about?: string;
-  body?: string;
-  tags?: string;
-}> = ({ title = "", about = "", body = "", tags = "" }) => {
+export const NewArticle: React.FC<IProps> = ({
+  title,
+  body,
+  describetion,
+  tag,
+  tags
+}) => {
   const classes = useStyle();
 
   return (
@@ -25,7 +27,7 @@ export const NewArticle: React.FC<{
           placeholder="Artical Title"
         />
         <MyInput
-          value={about}
+          value={describetion}
           // onChange={handleAboutChange}
           className={classes.input}
           placeholder="What's this artical about?"
@@ -39,7 +41,7 @@ export const NewArticle: React.FC<{
           placeholder="Write you're artical (in markdown)"
         />
         <MyInput
-          value={tags}
+          value={tag}
           // onChange={handleTagsChange}
           className={classes.input}
           placeholder="Enter tags"

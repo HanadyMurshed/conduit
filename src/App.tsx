@@ -33,7 +33,7 @@ class App extends React.Component<{ classes: any }> {
   componentDidMount() {
     this.setState({
       token: sessionStorage.getItem("token"),
-      username: localStorage.getItem("username")
+      username: sessionStorage.getItem("username")
     });
   }
   startSession = (token: string, username: string) => {

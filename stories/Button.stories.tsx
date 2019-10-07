@@ -2,6 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { ButtonNavBar } from "../src/components/ButtonNavBar";
 import { ButtonTag } from "../src/components/ButtonTag";
+import { ButtonTagCancel } from "../src/components/ButtonTagCancel";
 import { Index } from "../src/components/ButtonIndex";
 import SettingsIcon from "@material-ui/icons/Settings";
 
@@ -14,4 +15,5 @@ storiesOf("Buttons", module)
       title="Home"
     />
   ))
-  .add("Pager Button", () => <Index index={1} />);
+  .add("Pager Button", () => <Index index={1} />)
+  .add("Tag Button With X", () => <ButtonTagCancel title="ok" />);
