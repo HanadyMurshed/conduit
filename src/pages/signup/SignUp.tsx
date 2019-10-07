@@ -39,21 +39,25 @@ class SignUpPage extends React.Component<
     const { startSession } = this.props;
     let error = [];
     if (email === "") error.push("email can't be blank");
-    else if (email.charAt(0) === "@")
+    else if (email.charAt(0) === "@") {
       this.setState({
         popperOpen: true,
         popperContent: `Please enterva part followed by '@'. ${email} is incomplete`
       });
-    else if (email.charAt(email.length - 1) === "@")
+      return;
+    } else if (email.charAt(email.length - 1) === "@") {
       this.setState({
         popperOpen: true,
         popperContent: `Please enterva part following '@'. ${email} is incomplete`
       });
-    else if (!email.includes("@"))
+      return;
+    } else if (!email.includes("@")) {
       this.setState({
         popperOpen: true,
         popperContent: `Please include an '@' in the email address. ${email} is missing an '@' `
       });
+      return;
+    }
     if (username === "")
       error.push("username can't be blankis too short (minimum is 1 character");
     else if (username.length > 22)
@@ -61,6 +65,7 @@ class SignUpPage extends React.Component<
     if (password === "") error.push("password can't be blank");
     else if (password.length < 8)
       error.push("password is too short (minimum is 8 characters");
+
     if (error.length !== 0) {
       this.setState({ errors: error });
     } else {
@@ -75,7 +80,9 @@ class SignUpPage extends React.Component<
         })
         .catch((er: any) => {
           console.log(er);
-          this.setState({ errors: ["email, username or password is invalid"] });
+          this.setState({
+            errors: ["email, username or password is invalid"]
+          });
         });
     }
   };

@@ -71,7 +71,8 @@ class Home extends React.Component<
     if (value === 0)
       this.setState(
         {
-          currentTag: ""
+          currentTag: "",
+          currentPage: 0
         },
         () => this.getGlobalFeed({ limit: 10 })
       );
