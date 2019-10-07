@@ -6,6 +6,7 @@ export interface IProps {
   body?: string;
   tag?: string;
   tags?: string[];
+  errors: string[];
   handleTitleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleDescribetionChange?: (
     event: React.ChangeEvent<HTMLInputElement>

@@ -3,7 +3,7 @@ import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
 import { NewArticle } from "../../components/newArticle/NewArticle";
 import { IState } from "./IState";
-import { TagsPanel } from "../../components/TagPanel";
+import { createArticle } from "../../api/server";
 
 const styles = {
   page: {
@@ -36,7 +36,11 @@ class NewPostPage extends React.Component<
     });
   };
   handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.keyCode === 13 && this.state.tag !== "") {
+    if (
+      event.keyCode === 13 &&
+      this.state.tag !== "" &&
+      !this.state.tags.includes(this.state.tag)
+    ) {
       this.setState((state: IState) => ({
         tag: "",
         tags: [...state.tags, state.tag]
@@ -50,13 +54,42 @@ class NewPostPage extends React.Component<
       })
     }));
   };
-  state: IState = { title: "", body: "", describ: "", tag: "", tags: [] };
+  handlePublishEvent = () => {
+    const { title, body, describ, tags } = this.state;
+    const errors: string[] = [];
+    if (title === "")
+      errors.push("title can't be blankis too short (minimum is 1 character)");
+    if (body === "") errors.push("body can't be blank");
+    if (describ === "")
+      errors.push(
+        "description can't be blankis too short (minimum is 1 character)"
+      );
+
+    if (errors !== []) this.setState({ errors: errors });
+    else {
+      createArticle({
+        title: title,
+        description: describ,
+        body: body,
+        tagList: tags
+      }).then();
+    }
+  };
+  state: IState = {
+    title: "",
+    body: "",
+    describ: "",
+    tag: "",
+    errors: [],
+    tags: []
+  };
   render() {
     const { classes } = this.props;
-    const { title, body, describ, tag, tags } = this.state;
+    const { title, body, describ, tag, tags, errors } = this.state;
     return (
       <Grid container className={classes.page}>
         <NewArticle
+          errors={errors}
           title={title}
           body={body}
           describetion={describ}
@@ -68,6 +101,7 @@ class NewPostPage extends React.Component<
           handleTitleChange={this.handleTitleChange}
           onKeyDown={this.handleKeyDown}
           handleTagCnacelClick={this.handleTagCnacelClick}
+          handlePublishEvent={this.handlePublishEvent}
         />
       </Grid>
     );

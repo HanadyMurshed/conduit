@@ -4,4 +4,5 @@ export interface IState {
   describ: string;
   tag: string;
   tags: string[];
+  errors: string[];
 }

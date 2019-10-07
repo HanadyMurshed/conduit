@@ -6,12 +6,14 @@ import { ButtonTagCancel } from "../ButtonTagCancel";
 import { makeStyles } from "@material-ui/styles";
 import { style } from "./style";
 import { IProps } from "./IProps";
+import { ErrorList } from "../errors";
 // import MyInput from "./Input";
 
 const useStyle = makeStyles(style);
 
 export const NewArticle: React.FC<IProps> = ({
   title,
+  errors,
   body,
   describetion,
   tag,
@@ -29,6 +31,7 @@ export const NewArticle: React.FC<IProps> = ({
   return (
     <div className={classes.form}>
       <div>
+        {errors && errors !== [] ? <ErrorList errors={errors} /> : null}
         <MyInput
           value={title}
           onChange={handleTitleChange}
