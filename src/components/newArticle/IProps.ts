@@ -13,4 +13,6 @@ export interface IProps {
   handleBodyChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleTagsChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handlePublishEvent?: () => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleTagCnacelClick?: (title: string) => void;
 }

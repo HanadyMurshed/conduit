@@ -4,10 +4,7 @@ import { Style } from "jss";
 export const style: Style = {
   form: {
     margin: "auto",
-    width: 900,
-    "& div": {
-      textAlign: "center"
-    }
+    width: 900
   },
   input: {
     maxHeidth: 900,
@@ -27,7 +24,7 @@ export const style: Style = {
     color: "white",
     fontSize: fontSize.normal,
     background: colors.PrimaryColor,
-    marginTop: 16,
+    marginTop: 10,
     height: 50,
     width: 160,
     marginLeft: 740,
@@ -37,5 +34,9 @@ export const style: Style = {
   },
   multiline: {
     height: "auto"
+  },
+  tagPanel: {
+    textAlign: "left",
+    marginTop: 2
   }
 };

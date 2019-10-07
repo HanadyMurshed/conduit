@@ -6,11 +6,13 @@ const useStyle = makeStyles(() => ({
   tag: {
     background: colors.TagBackgroundColor,
     width: "auto",
-    padding: 5,
+    margin: 2,
+    padding: 3,
     fontSize: fontSize.smaller,
     lineHeight: "10px",
     borderRadius: 15,
-
+    height: "15px",
+    border: 0,
     overflow: "hidden",
     display: "inline-block"
   },
@@ -19,8 +21,9 @@ const useStyle = makeStyles(() => ({
     color: "white",
     width: "auto",
     marginRight: 5,
-    height: "20px",
+    lineHeight: "10px",
     borderRadius: 15,
+    height: "15px",
     minWidth: 10
   }
 }));
