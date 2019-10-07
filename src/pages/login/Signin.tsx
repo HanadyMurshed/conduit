@@ -52,7 +52,7 @@ class SignInPage extends React.Component<
         popperContent: `Please include an '@' in the email address. ${email} is missing an '@' `
       });
     else {
-      login(email, password)
+      login({ email: email, password: password })
         .then((response: any) => {
           //start session
           const { token, username }: IUser = response.data.user;
