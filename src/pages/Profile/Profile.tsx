@@ -1,46 +1,20 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
-import { colors, dims, defaultValues } from "../../SystemVariables";
-import { RouteComponentProps } from "@reach/router";
+import { defaultValues } from "../../SystemVariables";
+import { RouteComponentProps, navigate } from "@reach/router";
 import { UserHeader } from "../../components/HeaderUser";
 import { listArticles, getProfile } from "../../api/server";
-import { IArticle, IAuther } from "../../types/conduit.types";
+import { IArticle } from "../../types/conduit.types";
 import { Article } from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
+import { styles } from "./styles";
+import { IState } from "./IState";
 
-const styles = {
-  page: {
-    width: dims.pageWidth + 40,
-    margin: "auto",
-    paddingLeft: 20,
-    paddingRight: 20,
-    minWidth: 500,
-    marginTop: 30
-  },
-  tagPanel: {
-    background: colors.lightGray,
-    padding: "8px 5px 8px 5px",
-
-    "& .title": {
-      color: colors.TextPrimaryColor,
-      fontSize: 14,
-      padding: 0
-    }
-  }
-};
-
-interface IState {
-  articles: IArticle[];
-  count: number;
-  pageCount: number;
-  currentPage: number;
-  tabs: string[];
-  author: IAuther;
-  selectedTab: number;
-}
 class Home extends React.Component<
-  { classes: any } & RouteComponentProps<{ username: string }>,
+  { classes: any; loggedUser: string } & RouteComponentProps<{
+    username: string | null;
+  }>,
   IState
 > {
   state: IState = {
@@ -97,8 +71,13 @@ class Home extends React.Component<
     this.setState({ selectedTab: value }, () => this.getGlobalFeed(params));
   };
 
+  handleFollowEvent = () => {};
+  handleEditProfileEvent = () => {
+    navigate("/settings");
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, loggedUser } = this.props;
     const {
       articles,
       pageCount,
@@ -107,7 +86,7 @@ class Home extends React.Component<
       author,
       selectedTab
     } = this.state;
-    const { username, email, bio, image } = author;
+    const { username, image } = author;
 
     return (
       <Grid container style={{ paddingBottom: 100 }}>
@@ -115,7 +94,16 @@ class Home extends React.Component<
           <UserHeader
             avatar={image}
             username={username}
-            ButtonText={`Follow ${username}`}
+            onClick={
+              username === loggedUser
+                ? this.handleEditProfileEvent
+                : this.handleFollowEvent
+            }
+            ButtonText={
+              username === loggedUser
+                ? "Edit User Profile"
+                : `Follow ${username}`
+            }
           />
         </Grid>
 

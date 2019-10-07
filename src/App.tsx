@@ -40,6 +40,7 @@ class App extends React.Component<{ classes: any }> {
   }
   startSession = (token: string, username: string) => {
     sessionStorage.setItem("token", token);
+    console.log(username);
     this.setState({
       token: token,
       username: username
@@ -72,7 +73,7 @@ class App extends React.Component<{ classes: any }> {
             icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
           <ButtonNavBar
-            to="/"
+            to={`/${this.state.username}`}
             title={this.state.username ? this.state.username : "Profile"}
           />
         </div>
@@ -88,7 +89,7 @@ class App extends React.Component<{ classes: any }> {
   }
   render() {
     const { classes } = this.props;
-    const { token } = this.state;
+    const { token, username } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <Grid container spacing={1}>
@@ -102,7 +103,7 @@ class App extends React.Component<{ classes: any }> {
             <NewPostPage path="/new-post" />
             <SettingsPage endSession={this.endSession} path="/settings" />
             <ArticlePage path="/Article/:slug" />
-            <UserPage path="/:username" />
+            <UserPage loggedUser={username + ""} path="/:username" />
           </Router>
         </Grid>{" "}
       </ThemeProvider>
