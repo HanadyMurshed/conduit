@@ -40,7 +40,6 @@ class App extends React.Component<{ classes: any }> {
   }
   startSession = (token: string, username: string) => {
     sessionStorage.setItem("token", token);
-    console.log(username);
     this.setState({
       token: token,
       username: username

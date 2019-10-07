@@ -1,4 +1,8 @@
-import { RegisterUserInformation } from "./api.types";
+import {
+  RegisterUserRequest,
+  CreatedArticleRequest,
+  loginRequest
+} from "./api.types";
 
 const baseUrl = "https://conduit.productionready.io/api";
 
@@ -32,14 +36,12 @@ axios.interceptors.request.use(
   }
 );
 
-export function login(email: string, password: string) {
+export function login(user: loginRequest) {
   const url = `${baseUrl}/users/login`;
-  return axios.post(url, {
-    user: {
-      email: email,
-      password: password
-    }
-  });
+  const payload = {
+    user: user
+  };
+  return axios.post(url, payload);
 }
 
 /**
@@ -50,7 +52,7 @@ export function login(email: string, password: string) {
  * -------: 422 :UNEXPECTED ERROR
  * Required fields: email, username, password
  */
-export function register(user: RegisterUserInformation) {
+export function register(user: RegisterUserRequest) {
   const url = `${baseUrl}/users`;
   return axios.post(url, {
     user: user
@@ -83,9 +85,8 @@ export function getCurrentUser() {
  */
 export function updateUser(body: any) {
   const url = `${baseUrl}/user`;
-  return axios.put(url, {
-    user: body
-  });
+  const payload = { user: body };
+  return axios.put(url, payload);
 }
 
 /**
@@ -95,9 +96,8 @@ export function updateUser(body: any) {
  * Required: username
  */
 export function getProfile(username: string) {
-  if (!username || username === "") return;
+  if (!username) return;
   const url = `${baseUrl}/profiles/${username}`;
-
   return axios.get(url);
 }
 
@@ -108,17 +108,10 @@ export function getProfile(username: string) {
  * Required:username
  * not working
  */
-export function followUser(username: string, token: string) {
-  if (!username || username === "" || !token || token === "") return;
+export function followUser(username: string) {
+  if (!username) return;
   const url = `${baseUrl}/profiles/${username}/follow`;
-  axios
-    .post(url, {})
-    .then((response: any) => {
-      console.log(response.data);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.post(url, {});
 }
 
 /**
@@ -128,17 +121,9 @@ export function followUser(username: string, token: string) {
  * Required:username
  * not working
  */
-export function unFollowUser(username: string, token: string) {
-  if (!username || !token || username === "" || token === "") return;
+export function unFollowUser(username: string) {
   const url = `${baseUrl}/profiles/${username}/follow`;
-  axios
-    .delete(url)
-    .then((response: any) => {
-      console.log(response.data);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.delete(url);
 }
 
 /**
@@ -150,22 +135,12 @@ export function unFollowUser(username: string, token: string) {
  * optional offset/skip default 20
  * Returns most recent articles globally by default
  */
-export function listArticles(
-  paramaeters: { [key: string]: any },
-  token?: string
-) {
-  if (!paramaeters) paramaeters = {};
-  const myHeaders: { [key: string]: string } = {};
-  if (token) myHeaders["Authorization"] = `Token ${token}`;
-
-  myHeaders["Content-Type"] = "application/json; charset=utf-8";
-
+export function listArticles(paramaeters: { [key: string]: any }) {
   const url = `${baseUrl}/articles/`;
-
-  return axios.get(url, {
-    headers: myHeaders,
+  const payload = {
     params: paramaeters
-  });
+  };
+  return axios.get(url, payload);
 }
 
 /**
@@ -179,9 +154,12 @@ export function listArticles(
 export function getArticleFeed(paramaeters?: any) {
   if (!paramaeters) paramaeters = {};
   const url = `${baseUrl}/articles/feed`;
-  return axios.get(url, {
-    params: paramaeters
-  });
+  const payload = {
+    params: {
+      paramaeters
+    }
+  };
+  return axios.get(url, payload);
 }
 
 /**
@@ -195,13 +173,6 @@ export function getAnArticle(slug: string) {
   return axios.get(url);
 }
 
-interface CreateArticleRequest {
-  title: string;
-  description: string;
-  body: string;
-  token: string;
-  tagList?: string[];
-}
 /**
  * post
  * /articles
@@ -210,43 +181,16 @@ interface CreateArticleRequest {
  * Authentication
  * will return an Article
  */
-export function createArticle(
-  title: string,
-  description: string,
-  body: string,
-  token: string,
-  tagList?: string[]
-) {
-  if (
-    !title ||
-    !description ||
-    !body ||
-    !token ||
-    title === "" ||
-    description === "" ||
-    body === "" ||
-    token === ""
-  )
-    return;
-  if (!tagList) tagList = [];
+export function createArticle(article: CreatedArticleRequest) {
+  if (!article.tagList) article.tagList = [];
 
   const url = `${baseUrl}/articles`;
   const payload = {
     article: {
-      title: title,
-      description: description,
-      body: body,
-      tagList: tagList
+      article
     }
   };
-  axios
-    .post(url, payload)
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.post(url, payload);
 }
 
 /**
@@ -257,19 +201,11 @@ export function createArticle(
  * will return an Article
  */
 export function updateArticle(slug: string, body: any) {
-  if (!body || body === {} || slug || slug === "") return;
-
+  const payload = {
+    article: body
+  };
   const url = `${baseUrl}/articles/${slug}`;
-  axios
-    .put(url, {
-      article: body
-    })
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  axios.put(url, payload);
 }
 
 /**
@@ -279,16 +215,8 @@ export function updateArticle(slug: string, body: any) {
  * will return an Article
  */
 export function deleteArticle(slug: string) {
-  if (!slug || slug === "") return;
   const url = `${baseUrl}/articles/${slug}`;
-  axios
-    .delete(url)
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.delete(url);
 }
 
 /**
@@ -299,32 +227,12 @@ export function deleteArticle(slug: string) {
  * slug=this-is-article-title-e011lz
  */
 
-export function addCommentToArticle(
-  comment: string,
-  slug: string,
-  token: string
-) {
-  if (
-    !comment ||
-    comment === "" ||
-    !slug ||
-    slug === "" ||
-    !token ||
-    token === ""
-  )
-    return;
-
+export function addCommentToArticle(comment: string, slug: string) {
   const url = `${baseUrl}/articles/${slug} /comments`;
-  axios
-    .post(url, {
-      comment: { body: comment }
-    })
-    .then((Response: any) => {
-      console.log(Response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  const payload = {
+    comment: { body: comment }
+  };
+  return axios.post(url, payload);
 }
 
 /**
@@ -334,23 +242,9 @@ export function addCommentToArticle(
  * slug=this-is-article-title-e011lz
  */
 
-export function getCommentsByArticles(slug: string, token?: string) {
-  if (!slug || slug === "") return;
-  const myHeaders: { [key: string]: string } = {};
-  if (token) myHeaders["Authorization"] = `Token ${token}`;
-  myHeaders["Content-Type"] = "application/json; charset=utf-8";
-
+export function getCommentsByArticles(slug: string) {
   const url = `${baseUrl}/articles/${slug}/comments`;
-  axios
-    .get(url, {
-      headers: myHeaders
-    })
-    .then((Response: any) => {
-      console.log(Response.data);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.get(url);
 }
 
 /**
@@ -358,18 +252,9 @@ export function getCommentsByArticles(slug: string, token?: string) {
  * /articles/{slug}/comments/{id}
  * authentication
  */
-export function deleteComment(slug: string, id: string, token: string) {
-  if (!slug || slug === "" || !id || id === "" || !token || token === "")
-    return;
+export function deleteComment(slug: string, id: string) {
   const url = `${baseUrl}/articles/${slug}/comments/ ${id}`;
-  axios
-    .delete(url)
-    .then((respons: any) => {
-      console.log(respons);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  return axios.delete(url);
 }
 
 /**
@@ -377,17 +262,9 @@ export function deleteComment(slug: string, id: string, token: string) {
  * /articles/:slug/favorite
  * authintication
  */
-export function FavoriteArticle(slug: string, token: string) {
-  if (!slug || slug === "" || token === "" || token === "") return;
+export function FavoriteArticle(slug: string) {
   const url = `${baseUrl}/articles/${slug}/favorite`;
-  axios
-    .post(url, {})
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  axios.post(url, {});
 }
 
 /**
@@ -395,17 +272,9 @@ export function FavoriteArticle(slug: string, token: string) {
  * /articles/:slug/favorite
  * authintication
  */
-export function unFavoriteArticle(slug: string, token: string) {
-  if (!slug || slug === "" || token === "" || token === "") return;
+export function unFavoriteArticle(slug: string) {
   const url = `${baseUrl}/articles/${slug}/favorite`;
-  axios
-    .delete(url)
-    .then((response: any) => {
-      console.log(response);
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
+  axios.delete(url);
 }
 
 /**

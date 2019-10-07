@@ -60,6 +60,12 @@ export const style: Style = {
     paddingBottom: 10,
     color: colors.PrimaryColor
   },
+  active: {
+    "& $favoriteContent": {
+      color: "white"
+    },
+    background: colors.PrimaryColor
+  },
   bodyTitle: {
     cursor: "pointer",
     fontSize: fontSize.large,

@@ -77,6 +77,7 @@ class Home extends React.Component<
         () => this.getGlobalFeed({ limit: 10 })
       );
   };
+  handleFavoritEvent = () => {};
 
   render() {
     const { classes } = this.props;

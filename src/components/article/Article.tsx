@@ -11,7 +11,10 @@ import { style } from "./style";
 
 const useStyle = makeStyles(style);
 
-export const Article: React.FC<{ article: IArticle }> = ({
+export const Article: React.FC<{
+  article: IArticle;
+  handleFavoritEvent?: () => void;
+}> = ({
   article: {
     slug,
     title,
@@ -23,7 +26,8 @@ export const Article: React.FC<{ article: IArticle }> = ({
     favorited,
     favoritesCount,
     author: { email, username, bio, image = defaultValues.avatar }
-  }
+  },
+  handleFavoritEvent
 }) => {
   const handleClickArticle = (slug: string) => {
     navigate(`/Article/${slug}`);
@@ -59,7 +63,12 @@ export const Article: React.FC<{ article: IArticle }> = ({
       </Grid>
 
       <Grid item xs={1}>
-        <IconButton className={classes.favoriteButton}>
+        <IconButton
+          onClick={handleFavoritEvent}
+          className={`${classes.favoriteButton} ${
+            favorited ? classes.active : ""
+          }`.trim()}
+        >
           <FavoriteIcon className={classes.favoriteContent} />
           <span className={classes.favoriteContent}>{favoritesCount}</span>
         </IconButton>
