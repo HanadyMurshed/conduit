@@ -1,99 +1,120 @@
 import * as React from "react";
 import Avatar from "@material-ui/core/Avatar";
-import { defaultValues } from "../../SystemVariables";
 import Grid from "@material-ui/core/Grid";
-import { Typography, IconButton } from "@material-ui/core";
+import { Typography, IconButton, withStyles } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { IArticle } from "../../types/conduit.types";
 import { navigate } from "@reach/router";
-import { makeStyles } from "@material-ui/styles";
 import { style } from "./style";
+import { IProps } from "./IProps";
+import { IState } from "./IState";
 
-const useStyle = makeStyles(style);
-
-export const Article: React.FC<{
-  article: IArticle;
-  handleFavoritEvent?: () => void;
-}> = ({
-  article: {
-    slug,
-    title,
-    description,
-    body,
-    tagList,
-    createdAt,
-    updatedAt,
-    favorited,
-    favoritesCount,
-    author: { email, username, bio, image = defaultValues.avatar }
-  },
-  handleFavoritEvent
-}) => {
-  const handleClickArticle = (slug: string) => {
+class Article extends React.Component<IProps, IState> {
+  static getDerivedStateFromProps(props: IProps) {
+    const {
+      article: { favorited }
+    } = props;
+    return favorited;
+  }
+  handleClickArticle = (slug: string) => {
     navigate(`/Article/${slug}`);
   };
-  const handleClickUser = (username: string) => {
+  handleClickUser = (username: string) => {
     navigate(`/${username}`);
   };
+  private handleFavoriteClickEvent(
+    handleFavoritEvent:
+      | ((favorited: boolean, slug: string, fun: () => void) => void)
+      | undefined,
+    favorited: boolean,
+    slug: string
+  ):
+    | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
+    | undefined {
+    return () => {
+      if (handleFavoritEvent)
+        handleFavoritEvent(favorited, slug, () => {
+          this.setState({ favorited: !favorited });
+        });
+    };
+  }
+  render() {
+    const {
+      article: {
+        slug,
+        title,
+        description,
+        createdAt,
+        favoritesCount,
+        author: { username, image }
+      },
+      classes,
+      handleFavoritEvent
+    } = this.props;
+    const { favorited } = this.state;
+    return (
+      <Grid className={classes.root} container spacing={1}>
+        <Grid item xs={11}>
+          <Grid container spacing={1}>
+            <Grid item>
+              <Avatar className={classes.headerAvatar} src={image} />
+            </Grid>
 
-  const classes = useStyle();
-  return (
-    <Grid className={classes.root} container spacing={1}>
-      <Grid item xs={11}>
-        <Grid container spacing={1}>
-          <Grid item>
-            <Avatar className={classes.headerAvatar} src={image} />
-          </Grid>
-
-          <Grid item className={classes.headerCaption}>
-            <div className={classes.VerticalCentreAlign}>
-              <Typography
-                onClick={() => handleClickUser(username)}
-                variant="h6"
-                className={classes.headerTitle}
-              >
-                {username}
-              </Typography>
-              <Typography variant="h6" className={classes.headerSubTitle}>
-                {createdAt}
-              </Typography>
-            </div>
+            <Grid item className={classes.headerCaption}>
+              <div className={classes.VerticalCentreAlign}>
+                <Typography
+                  onClick={() => this.handleClickUser(username)}
+                  variant="h6"
+                  className={classes.headerTitle}
+                >
+                  {username}
+                </Typography>
+                <Typography variant="h6" className={classes.headerSubTitle}>
+                  {createdAt}
+                </Typography>
+              </div>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
 
-      <Grid item xs={1}>
-        <IconButton
-          onClick={handleFavoritEvent}
-          className={`${classes.favoriteButton} ${
-            favorited ? classes.active : ""
-          }`.trim()}
-        >
-          <FavoriteIcon className={classes.favoriteContent} />
-          <span className={classes.favoriteContent}>{favoritesCount}</span>
-        </IconButton>
-      </Grid>
+        <Grid item xs={1}>
+          <IconButton
+            onClick={this.handleFavoriteClickEvent(
+              handleFavoritEvent,
+              favorited,
+              slug
+            )}
+            className={`${classes.favoriteButton} ${
+              favorited ? classes.active : ""
+            }`.trim()}
+          >
+            <FavoriteIcon className={classes.favoriteContent} />
+            <span className={classes.favoriteContent}>{favoritesCount}</span>
+          </IconButton>
+        </Grid>
 
-      <Grid item xs={12}>
-        <Typography
-          onClick={() => handleClickArticle(slug)}
-          className={classes.bodyTitle}
-        >
-          {title}
-        </Typography>
-        <Typography
-          onClick={() => handleClickArticle(slug)}
-          className={classes.bodyText}
-        >
-          {description}
-        </Typography>
-        <Typography
-          onClick={() => handleClickArticle(slug)}
-          className={classes.showExtra}
-        >
-          Read more...
-        </Typography>
+        <Grid item xs={12}>
+          <Typography
+            onClick={() => this.handleClickArticle(slug)}
+            className={classes.bodyTitle}
+          >
+            {title}
+          </Typography>
+          <Typography
+            onClick={() => this.handleClickArticle(slug)}
+            className={classes.bodyText}
+          >
+            {description}
+          </Typography>
+          <Typography
+            onClick={() => this.handleClickArticle(slug)}
+            className={classes.showExtra}
+          >
+            Read more...
+          </Typography>
+        </Grid>
       </Grid>
-    </Grid>
-  );
-};
+    );
+  }
+}
+
+export default withStyles(style)(Article);

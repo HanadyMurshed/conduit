@@ -3,6 +3,7 @@ import { Grid, withStyles } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
 import { NewArticle } from "../../components/newArticle/NewArticle";
 
+interface IState {}
 const styles = {
   page: {
     minWidth: 500,

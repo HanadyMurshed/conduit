@@ -2,9 +2,15 @@ import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { RouteComponentProps, navigate } from "@reach/router";
-import { listArticles, getTags, getArticleFeed } from "../../api/server";
+import {
+  listArticles,
+  getTags,
+  getArticleFeed,
+  unFavoriteArticle,
+  FavoriteArticle
+} from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
-import { Article } from "../../components/article/Article";
+import Article from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { TagsPanel } from "../../components/TagPanel";
 import { styles } from "./styles";
@@ -108,6 +114,16 @@ class Home extends React.Component<
       currentPage: 0
     });
   };
+  handleFavoritEvent = (favorited: boolean, slug: string, fun: () => void) => {
+    let favoriteToggle = favorited
+      ? unFavoriteArticle(slug)
+      : FavoriteArticle(slug);
+    favoriteToggle
+      .then((res: any) => {
+        fun();
+      })
+      .catch();
+  };
 
   render() {
     const { classes } = this.props;
@@ -134,7 +150,11 @@ class Home extends React.Component<
             >
               <div>
                 {articles.map((e: IArticle) => (
-                  <Article key={e.slug} article={e} />
+                  <Article
+                    handleFavoritEvent={this.handleFavoritEvent}
+                    key={e.slug}
+                    article={e}
+                  />
                 ))}
               </div>
             </MyTab>

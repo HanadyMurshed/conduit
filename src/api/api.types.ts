@@ -13,8 +13,3 @@ export interface CreatedArticleRequest {
 
 export type loginRequest = Pick<RegisterUserRequest, "email" | "password">;
 
-export interface AddCommentRequest {
-  comment: string;
-  slug: string;
-  token: string;
-}

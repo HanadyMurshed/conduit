@@ -264,7 +264,7 @@ export function deleteComment(slug: string, id: string) {
  */
 export function FavoriteArticle(slug: string) {
   const url = `${baseUrl}/articles/${slug}/favorite`;
-  axios.post(url, {});
+  return axios.post(url, {});
 }
 
 /**
@@ -274,7 +274,7 @@ export function FavoriteArticle(slug: string) {
  */
 export function unFavoriteArticle(slug: string) {
   const url = `${baseUrl}/articles/${slug}/favorite`;
-  axios.delete(url);
+  return axios.delete(url);
 }
 
 /**

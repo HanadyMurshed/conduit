@@ -8,7 +8,7 @@ import Home from "./pages/home/Home";
 import UserHome from "./pages/home/UserHome";
 import SignUpPage from "./pages/signup/SignUp";
 import SignInPage from "./pages/login/Signin";
-import NewPostPage from "./pages/newPost/NewPost";
+import NewPostPage from "./pages/newArticle/NewArticle";
 import SettingsPage from "./pages/settings/Settings";
 import ArticlePage from "./pages/article/Article";
 import UserPage from "./pages/Profile/Profile";
@@ -24,9 +24,6 @@ const theme = createMuiTheme({
     fontFamily: ["Merriweather Sans", "Titillium Web"].join(",")
   }
 });
-interface IState {
-  token?: string;
-}
 class App extends React.Component<{ classes: any }> {
   state: { token: string | null; username: string | null } = {
     token: null,
@@ -35,11 +32,14 @@ class App extends React.Component<{ classes: any }> {
 
   componentDidMount() {
     this.setState({
-      token: sessionStorage.getItem("token")
+      token: sessionStorage.getItem("token"),
+      username: localStorage.getItem("username")
     });
   }
   startSession = (token: string, username: string) => {
     sessionStorage.setItem("token", token);
+    sessionStorage.setItem("username", username);
+
     this.setState({
       token: token,
       username: username
@@ -49,8 +49,8 @@ class App extends React.Component<{ classes: any }> {
     sessionStorage.clear();
     this.setState(
       {
-        token: null,
-        username: null
+        username: null,
+        token: null
       },
       () => navigate("/")
     );
@@ -73,7 +73,7 @@ class App extends React.Component<{ classes: any }> {
           />
           <ButtonNavBar
             to={`/${this.state.username}`}
-            title={this.state.username ? this.state.username : "Profile"}
+            title={this.state.username ? this.state.username : "My Profile"}
           />
         </div>
       );

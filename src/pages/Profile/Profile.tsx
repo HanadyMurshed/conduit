@@ -4,9 +4,14 @@ import { MyTab } from "../../components/Tab";
 import { defaultValues } from "../../SystemVariables";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { UserHeader } from "../../components/HeaderUser";
-import { listArticles, getProfile } from "../../api/server";
+import {
+  listArticles,
+  getProfile,
+  unFavoriteArticle,
+  FavoriteArticle
+} from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
-import { Article } from "../../components/article/Article";
+import Article from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { styles } from "./styles";
 import { IState } from "./IState";
@@ -25,6 +30,17 @@ class Home extends React.Component<
     author: { username: "", email: "", bio: "", image: defaultValues.avatar },
     tabs: ["My Articles", "Favoriteed Articles"],
     selectedTab: 0
+  };
+  handleFavoritEvent = (favorited: boolean, slug: string, fun: () => void) => {
+    console.log("like");
+    let favoriteToggle = favorited
+      ? unFavoriteArticle(slug)
+      : FavoriteArticle(slug);
+    favoriteToggle
+      .then((res: any) => {
+        fun();
+      })
+      .catch();
   };
 
   componentDidMount() {
@@ -116,7 +132,11 @@ class Home extends React.Component<
             >
               <div>
                 {articles.map((e: IArticle) => (
-                  <Article key={e.slug} article={e} />
+                  <Article
+                    handleFavoritEvent={this.handleFavoritEvent}
+                    key={e.slug}
+                    article={e}
+                  />
                 ))}
               </div>
             </MyTab>

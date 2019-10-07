@@ -46,7 +46,6 @@ class Article extends React.Component<
             username={username}
           />
         </Grid>
-
         <Grid item xs={12}>
           <Typography className={classes.page}>{body}</Typography>
         </Grid>
