@@ -8,7 +8,8 @@ import { CardHeader, Avatar } from "@material-ui/core";
 const useStyle = makeStyles({
   root: { width: "100%", background: colors.darkHeader },
   headerContainor: {
-    maxWidth: dims.pageWidth,
+    maxWidth: dims.pageWidth + 20,
+    paddingLeft: 20,
     color: "white",
     margin: "auto",
     height: "170px"

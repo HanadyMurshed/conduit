@@ -4,9 +4,14 @@ import { RouteComponentProps, navigate } from "@reach/router";
 import { NewArticle } from "../../components/newArticle/NewArticle";
 import { IState } from "./IState";
 import { createArticle } from "../../api/server";
+import { dims } from "../../SystemVariables";
 
 const styles = {
   page: {
+    width: dims.pageWidth + 40,
+    margin: "auto",
+    paddingLeft: 20,
+    paddingRight: 20,
     minWidth: 500,
     marginTop: 20
   }

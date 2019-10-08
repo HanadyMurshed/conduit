@@ -57,6 +57,7 @@ export function register(user: RegisterUserRequest) {
   const payload = {
     user: user
   };
+  console.log(payload);
   return axios.post(url, payload);
 }
 

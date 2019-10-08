@@ -57,6 +57,8 @@ class SignUpPage extends React.Component<
         popperContent: `Please include an '@' in the email address. ${email} is missing an '@' `
       });
       return;
+    } else if (!validateEmail(email)) {
+      error.push("email is invalid");
     }
     if (username === "")
       error.push("username can't be blankis too short (minimum is 1 character");
@@ -80,6 +82,7 @@ class SignUpPage extends React.Component<
         })
         .catch((er: any) => {
           console.log(er);
+
           this.setState({
             errors: ["email, username or password is invalid"]
           });
@@ -130,3 +133,7 @@ class SignUpPage extends React.Component<
   }
 }
 export default withStyles(styles)(SignUpPage);
+function validateEmail(email: string) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}

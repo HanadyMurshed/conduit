@@ -3,8 +3,8 @@ export const styles = {
   page: {
     width: dims.pageWidth,
     margin: "auto",
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 40,
+    paddingRight: 40,
     minWidth: 500,
     marginTop: 30
   },
