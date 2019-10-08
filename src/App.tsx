@@ -63,7 +63,7 @@ class App extends React.Component<{ classes: any }> {
           <ButtonNavBar to="/" title="Home" />
           <ButtonNavBar
             to="/new-post"
-            title="New Post"
+            title="New Article"
             icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
           <ButtonNavBar

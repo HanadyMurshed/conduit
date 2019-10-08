@@ -9,24 +9,39 @@ import { IProps } from "./IProps";
 import { IState } from "./IState";
 
 class Article extends React.Component<IProps, IState> {
+  state: IState = { favorited: false, favoritesCount: 0 };
+  componentDidMount() {
+    const fav: Boolean = this.props.article.favorited;
+    const count: number = this.props.article.favoritesCount;
+    this.setState({ favorited: fav, favoritesCount: count });
+  }
+  reversFavorite() {
+    const favorited = this.state.favorited;
+    const favoritesCount = favorited
+      ? this.state.favoritesCount - 1
+      : this.state.favoritesCount + 1;
+    this.setState({ favorited: !favorited, favoritesCount: favoritesCount });
+  }
   handleClickArticle = (slug: string) => {
     navigate(`/Article/${slug}`);
   };
   handleClickUser = (username: string) => {
     navigate(`/${username}`);
   };
-  private handleFavoriteClickEvent(
-    slug: string,
-    favorited: Boolean,
-    handler?: (favorited: Boolean, slug: string) => void
-  ) {
-    return () => {
-      if (handler)
-        this.setState({ favorited: !favorited }, () =>
-          handler(favorited, slug)
-        );
-    };
-  }
+  private handleFavoriteClick = (slug: string) => {
+    const handler = this.props.handleFavoritEvent;
+    const favorited = this.state.favorited;
+    const favoritesCount = favorited
+      ? this.state.favoritesCount - 1
+      : this.state.favoritesCount + 1;
+
+    if (handler)
+      this.setState(
+        { favorited: !favorited, favoritesCount: favoritesCount },
+        () => handler(favorited, slug, this.reversFavorite)
+      );
+  };
+
   render() {
     const {
       article: {
@@ -34,13 +49,11 @@ class Article extends React.Component<IProps, IState> {
         title,
         description,
         createdAt,
-        favorited,
-        favoritesCount,
         author: { username, image }
       },
-      classes,
-      handleFavoritEvent
+      classes
     } = this.props;
+    const { favorited, favoritesCount } = this.state;
     return (
       <Grid className={classes.root} container spacing={1}>
         <Grid item xs={11}>
@@ -68,11 +81,7 @@ class Article extends React.Component<IProps, IState> {
 
         <Grid item xs={1}>
           <IconButton
-            onClick={this.handleFavoriteClickEvent(
-              slug,
-              favorited,
-              handleFavoritEvent
-            )}
+            onClick={() => this.handleFavoriteClick(slug)}
             className={`${classes.favoriteButton} ${
               favorited ? classes.active : ""
             }`.trim()}

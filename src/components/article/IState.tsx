@@ -1,3 +1,4 @@
 export interface IState {
-  favorited: boolean;
+  favorited: Boolean;
+  favoritesCount: number;
 }

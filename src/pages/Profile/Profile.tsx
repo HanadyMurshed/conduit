@@ -2,7 +2,7 @@ import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { defaultValues } from "../../SystemVariables";
-import { RouteComponentProps, navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 import { UserHeader } from "../../components/HeaderUser";
 import {
   listArticles,
@@ -15,13 +15,9 @@ import Article from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { styles } from "./styles";
 import { IState } from "./IState";
+import { IProps } from "./IProps";
 
-class Home extends React.Component<
-  { classes: any; loggedUser: string } & RouteComponentProps<{
-    username: string | null;
-  }>,
-  IState
-> {
+class Home extends React.Component<IProps, IState> {
   state: IState = {
     articles: [],
     count: 0,
@@ -31,8 +27,8 @@ class Home extends React.Component<
     tabs: ["My Articles", "Favoriteed Articles"],
     selectedTab: 0
   };
+
   handleFavoritEvent = (favorited: Boolean, slug: string) => {
-    console.log("like");
     let favoriteToggle = favorited
       ? unFavoriteArticle(slug)
       : FavoriteArticle(slug);
