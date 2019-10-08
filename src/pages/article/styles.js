@@ -1,10 +1,10 @@
 import { colors, dims } from "../../SystemVariables";
 export const styles = {
   page: {
-    width: dims.pageWidth,
+    width: dims.pageWidth + 40,
     margin: "auto",
-    paddingLeft: 40,
-    paddingRight: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
     minWidth: 500,
     marginTop: 30
   },
@@ -16,5 +16,22 @@ export const styles = {
       fontSize: 14,
       padding: 0
     }
+  },
+  link: {
+    color: colors.PrimaryColor,
+    fontSize: 14,
+    cursor: "pointer",
+    textDecoration: "none",
+    paddingTop: 7,
+    "&:hover": {
+      color: colors.PrimaryDark,
+      textDecoration: "underline"
+    }
+  },
+  footer: {
+    marginTop: 70,
+    paddingTop: 50,
+    paddingLeft: 100,
+    borderTop: "solid 1px " + colors.lightGray
   }
 };

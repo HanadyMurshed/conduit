@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Grid, withStyles, Typography } from "@material-ui/core";
+import { Link } from "@reach/router";
 import { RouteComponentProps } from "@reach/router";
 import { HeaderArticle } from "../../components/HeaderArticle";
 import { getAnArticle } from "../../api/server";
@@ -36,6 +37,7 @@ class Article extends React.Component<
     const { title, body, author, createdAt } = this.state;
     const { username, image } = author;
 
+    const logged: boolean = Boolean(sessionStorage.getItem("token"));
     return (
       <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>
@@ -45,9 +47,21 @@ class Article extends React.Component<
             image={image}
             username={username}
           />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.page}>{body}</Typography>
+          <Grid className={classes.page} item xs={12}>
+            <Typography>{body}</Typography>
+            {!logged ? (
+              <Typography className={classes.footer}>
+                <Link className={classes.link} to="/sign-in">
+                  Sign in
+                </Link>{" "}
+                or{" "}
+                <Link className={classes.link} to="/sign-up">
+                  sign un
+                </Link>{" "}
+                to add comments on this article.
+              </Typography>
+            ) : null}
+          </Grid>
         </Grid>
       </Grid>
     );
