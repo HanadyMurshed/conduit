@@ -54,9 +54,10 @@ export function login(user: loginRequest) {
  */
 export function register(user: RegisterUserRequest) {
   const url = `${baseUrl}/users`;
-  return axios.post(url, {
+  const payload = {
     user: user
-  });
+  };
+  return axios.post(url, payload);
 }
 
 /**
@@ -186,9 +187,7 @@ export function createArticle(article: CreatedArticleRequest) {
 
   const url = `${baseUrl}/articles`;
   const payload = {
-    article: {
-      article
-    }
+    article: article
   };
   return axios.post(url, payload);
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps, navigate } from "@reach/router";
 import { NewArticle } from "../../components/newArticle/NewArticle";
 import { IState } from "./IState";
 import { createArticle } from "../../api/server";
@@ -36,11 +36,11 @@ class NewPostPage extends React.Component<
     });
   };
   handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      event.keyCode === 13 &&
-      this.state.tag !== "" &&
-      !this.state.tags.includes(this.state.tag)
-    ) {
+    if (this.state.tags.includes(this.state.tag)) {
+      this.setState((state: IState) => ({
+        tag: ""
+      }));
+    } else if (event.keyCode === 13 && this.state.tag !== "") {
       this.setState((state: IState) => ({
         tag: "",
         tags: [...state.tags, state.tag]
@@ -65,14 +65,21 @@ class NewPostPage extends React.Component<
         "description can't be blankis too short (minimum is 1 character)"
       );
 
-    if (errors !== []) this.setState({ errors: errors });
-    else {
+    if (errors.length !== 0) {
+      this.setState({ errors: errors });
+    } else {
       createArticle({
         title: title,
         description: describ,
         body: body,
         tagList: tags
-      }).then();
+      })
+        .then((res: any) => {
+          navigate(`/Article/${res.data.article.slug}`);
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
     }
   };
   state: IState = {
