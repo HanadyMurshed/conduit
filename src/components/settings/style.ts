@@ -37,7 +37,8 @@ export const style: Style = {
     width: 180,
     marginLeft: 320,
     "&:hover": {
-      background: colors.PrimaryDark
+      background: colors.PrimaryDark,
+      textDecoration: "underline"
     }
   },
   RedButton: {
