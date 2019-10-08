@@ -41,7 +41,12 @@ export const style: Style = {
     width: 20,
     marginTop: 10,
     height: 20,
-    color: colors.TextPrimaryColor
+    color: colors.TextPrimaryColor,
+    opacity: 0.6,
+    cursor: "pointer",
+    "&:hover": {
+      opacity: 1
+    }
   },
   buttonGreen: {
     textTransform: "none",
