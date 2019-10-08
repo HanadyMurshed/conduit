@@ -17,7 +17,7 @@ import { styles } from "./styles";
 import { IState } from "./IState";
 import { IProps } from "./IProps";
 
-class Home extends React.Component<IProps, IState> {
+class Profile extends React.Component<IProps, IState> {
   state: IState = {
     articles: [],
     count: 0,
@@ -39,6 +39,38 @@ class Home extends React.Component<IProps, IState> {
     if (!this.props.username) return;
     this.getGlobalFeed({ author: this.props.username, limit: 10 });
     this.getuserInformation(this.props.username);
+  }
+
+  // static getDerivedStateFromProps(props: IProps, prevState: IState) {
+  //   const { username } = props;
+  //   console.log(props, prevState);
+  //   if (username === prevState.author.username) return null;
+  //   else if (props.username) {
+  //     getProfile(props.username).then((response: any) => {
+  //       const author = response.data.profile;
+
+  //       listArticles({ author: props.username, limit: 10 }).then(
+  //         (response: any) => {
+  //           const count = Math.ceil(response.data.articlesCount / 10);
+  //           const articles = response.data.articles;
+  //           console.log("halllo");
+  //           return {
+  //             author: author,
+  //             articles: articles,
+  //             pageCount: count
+  //           };
+  //         }
+  //       );
+  //     });
+  //   }
+  //   return null;
+  // }
+  componentWillReceiveProps(nextProps: IProps) {
+    const username = nextProps.username;
+    if (nextProps.username !== this.state.author.username && username) {
+      this.getGlobalFeed({ author: this.props.username, limit: 10 });
+      this.getuserInformation(username);
+    }
   }
 
   getGlobalFeed = (queryparams: any) => {
@@ -147,4 +179,4 @@ class Home extends React.Component<IProps, IState> {
   }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(Profile);
