@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { RouteComponentProps, navigate, redirectTo } from "@reach/router";
+import { RouteComponentProps, navigate } from "@reach/router";
 import { SignUp } from "../../components/sign-in-up/SignUp";
 import { IState } from "./IState";
 import { register } from "../../api/server";
@@ -29,7 +29,6 @@ class SignUpPage extends React.Component<
     popperOpen: false
   };
   componentDidMount() {
-    console.log("MMMM", this.props);
     if (sessionStorage.getItem("token")) {
       this.props.navigate!("/");
       // window.location.href = "/";
@@ -142,6 +141,6 @@ class SignUpPage extends React.Component<
 }
 export default withStyles(styles)(SignUpPage);
 function validateEmail(email: string) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(String(email).toLowerCase());
 }

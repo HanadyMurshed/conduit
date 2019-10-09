@@ -39,7 +39,6 @@ class Home extends React.Component<
 
   getTags = () => {
     getTags().then((response: any) => {
-      console.log(response.data);
       this.setState({ tags: response.data.tags });
     });
   };

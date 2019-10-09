@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, withStyles, Typography, colors } from "@material-ui/core";
+import { Grid, withStyles, Typography } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { defaultValues } from "../../SystemVariables";
 import { navigate } from "@reach/router";
@@ -20,6 +20,7 @@ import { IProps } from "./IProps";
 class Profile extends React.Component<IProps, IState> {
   state: IState = {
     articles: [],
+    username: "",
     count: 0,
     pageCount: 0,
     currentPage: 0,
@@ -27,6 +28,12 @@ class Profile extends React.Component<IProps, IState> {
     tabs: ["My Articles", "Favoriteed Articles"],
     selectedTab: 0
   };
+  componentDidMount() {
+    if (!this.props.username) return;
+    this.getGlobalFeed({ author: this.props.username, limit: 10 });
+    this.getuserInformation(this.props.username);
+    this.setState({ username: this.props.username });
+  }
 
   handleFavoritEvent = (favorited: Boolean, slug: string) => {
     let favoriteToggle = favorited
@@ -34,12 +41,6 @@ class Profile extends React.Component<IProps, IState> {
       : FavoriteArticle(slug);
     favoriteToggle.then((res: any) => {}).catch();
   };
-
-  componentDidMount() {
-    if (!this.props.username) return;
-    this.getGlobalFeed({ author: this.props.username, limit: 10 });
-    this.getuserInformation(this.props.username);
-  }
 
   // static getDerivedStateFromProps(props: IProps, prevState: IState) {
   //   const { username } = props;
@@ -67,7 +68,11 @@ class Profile extends React.Component<IProps, IState> {
   // }
   componentWillReceiveProps(nextProps: IProps) {
     const username = nextProps.username;
-    if (nextProps.username !== this.state.author.username && username) {
+    if (nextProps.username !== this.state.username && username) {
+      this.setState({
+        currentPage: 0,
+        selectedTab: 1
+      });
       this.getGlobalFeed({ author: this.props.username, limit: 10 });
       this.getuserInformation(username);
     }

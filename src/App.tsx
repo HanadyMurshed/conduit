@@ -40,16 +40,24 @@ class App extends React.Component<{ classes: any }> {
     this.updateUser();
   }
 
-  updateUser() {
-    getCurrentUser().then((res: any) => {
-      const { token, username, image } = res.data.user;
-      this.setState({
-        token: token,
-        username: username,
-        image: image
+  updateUser = () => {
+    getCurrentUser()
+      .then((res: any) => {
+        const { token, username, image } = res.data.user;
+        this.setState({
+          token: token,
+          username: username,
+          image: image
+        });
+      })
+      .catch((err: any) => {
+        this.setState({
+          token: null,
+          username: null,
+          image: null
+        });
       });
-    });
-  }
+  };
 
   startSession = (token: string, username: string) => {
     sessionStorage.setItem("token", token);
@@ -103,7 +111,7 @@ class App extends React.Component<{ classes: any }> {
   }
   render() {
     const { classes } = this.props;
-    const { token, image, username } = this.state;
+    const { token, username } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <Grid container spacing={1}>

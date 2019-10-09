@@ -45,21 +45,25 @@ class Article extends React.Component<
     const { slug } = this.props;
     if (!slug) navigate("/");
     else {
-      getCurrentUser().then((res: any) => {
-        if (res.data.user.image) {
-          this.setState({ image: res.data.user.image });
-        }
+      getCurrentUser()
+        .then((res: any) => {
+          if (res.data.user.image) {
+            this.setState({ image: res.data.user.image });
+          }
 
-        this.setState({
-          username: res.data.user.username
-        });
-      });
+          this.setState({
+            username: res.data.user.username
+          });
+        })
+        .catch();
 
-      getAnArticle(slug).then((response: any) => {
-        this.setState({ article: response.data.article }, () =>
-          this.getComments(response.data.article.slug)
-        );
-      });
+      getAnArticle(slug)
+        .then((response: any) => {
+          this.setState({ article: response.data.article }, () =>
+            this.getComments(response.data.article.slug)
+          );
+        })
+        .catch();
     }
   }
   getComments = (slug: string) => {
@@ -74,9 +78,11 @@ class Article extends React.Component<
   deleteComment = (id: string) => {
     const { slug } = this.props;
     if (slug)
-      deleteComment(slug, id).then((res: any) => {
-        this.getComments(slug);
-      });
+      deleteComment(slug, id)
+        .then((res: any) => {
+          this.getComments(slug);
+        })
+        .catch();
   };
   addComment = (comment: string) => {
     const { slug } = this.props;
@@ -85,9 +91,7 @@ class Article extends React.Component<
         .then((res: any) => {
           this.setState({ currentComment: "" }, () => this.getComments(slug));
         })
-        .catch((err: any) => {
-          console.log(err);
-        });
+        .catch((err: any) => {});
   };
   handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ currentComment: e.currentTarget.value });
@@ -152,7 +156,13 @@ class Article extends React.Component<
                     />
                   );
                 else
-                  return <CommenShow comment={e} className={classes.comment} />;
+                  return (
+                    <CommenShow
+                      key={e.id}
+                      comment={e}
+                      className={classes.comment}
+                    />
+                  );
               })}
             </div>
           </Grid>
