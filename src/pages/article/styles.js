@@ -31,7 +31,11 @@ export const styles = {
   footer: {
     marginTop: 70,
     paddingTop: 50,
-    paddingLeft: 100,
+    margin: "auto",
     borderTop: "solid 1px " + colors.lightGray
+  },
+  comment: {
+    margin: "auto",
+    marginBottom: 15
   }
 };

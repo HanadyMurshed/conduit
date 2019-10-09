@@ -4,20 +4,27 @@ import { style } from "./style";
 
 const useStyle = makeStyles(style);
 
-export const CommentWrite = () => {
+export const CommentWrite: React.FC<{
+  className?: string;
+  image?: string;
+  onCLck?: () => void;
+}> = ({ className = "", image = "", onCLck = () => {} }) => {
   const classes = useStyle();
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} ${className}`.trim()}>
       <Input
         className={classes.Input}
         multiline
-        rows={3}
+        rows={4}
         disableUnderline={true}
         placeholder="Write a comment..."
       />
       <div className={classes.footer}>
-        <Avatar className={classes.avatar} />
-        <Button className={`${classes.button} ${classes.buttonGreen}`}>
+        <Avatar className={classes.avatar} src={image} />
+        <Button
+          onClick={onCLck}
+          className={`${classes.button} ${classes.buttonGreen}`}
+        >
           Post Comment
         </Button>
       </div>

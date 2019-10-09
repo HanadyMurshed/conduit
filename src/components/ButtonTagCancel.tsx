@@ -1,7 +1,7 @@
 import * as React from "react";
 import { colors, fontSize } from "../SystemVariables";
 import { makeStyles } from "@material-ui/styles";
-import { Typography, ButtonBase } from "@material-ui/core";
+import { ButtonBase } from "@material-ui/core";
 const useStyle = makeStyles(() => ({
   tag: {
     background: colors.TagBackgroundColor,

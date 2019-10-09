@@ -16,6 +16,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import { getCurrentUser } from "./api/server";
 const style = {
   router: { width: "100%" }
 };
@@ -25,15 +26,28 @@ const theme = createMuiTheme({
   }
 });
 class App extends React.Component<{ classes: any }> {
-  state: { token: string | null; username: string | null } = {
+  state: {
+    token: string | null;
+    username: string | null;
+    image: string | null;
+  } = {
     token: null,
-    username: null
+    username: null,
+    image: null
   };
 
   componentDidMount() {
-    this.setState({
-      token: sessionStorage.getItem("token"),
-      username: sessionStorage.getItem("username")
+    this.updateUser();
+  }
+
+  updateUser() {
+    getCurrentUser().then((res: any) => {
+      const { token, username, image } = res.data.user;
+      this.setState({
+        token: token,
+        username: username,
+        image: image
+      });
     });
   }
   startSession = (token: string, username: string) => {
@@ -88,7 +102,7 @@ class App extends React.Component<{ classes: any }> {
   }
   render() {
     const { classes } = this.props;
-    const { token, username } = this.state;
+    const { token, image, username } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <Grid container spacing={1}>
@@ -100,7 +114,11 @@ class App extends React.Component<{ classes: any }> {
             <SignUpPage startSession={this.startSession} path="/sign-up" />
             <SignInPage startSession={this.startSession} path="/sign-in" />
             <NewPostPage path="/new-post" />
-            <SettingsPage endSession={this.endSession} path="/settings" />
+            <SettingsPage
+              endSession={this.endSession}
+              handleUpdate={this.updateUser}
+              path="/settings"
+            />
             <ArticlePage path="/Article/:slug" />
             <UserPage loggedUser={username + ""} path="/:username" />
           </Router>

@@ -18,7 +18,8 @@ const styles = {
 };
 
 class NewPostPage extends React.Component<
-  { classes: any } & RouteComponentProps
+  { classes: any } & RouteComponentProps,
+  IState
 > {
   handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({

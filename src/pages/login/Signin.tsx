@@ -1,25 +1,14 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { RouteComponentProps, navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 import { SignIn } from "../../components/sign-in-up/SignIn";
 import { login } from "../../api/server";
 import { IUser } from "../../types/conduit.types";
 import { IState } from "./IState";
+import { IProps } from "./IProps";
+import { styles } from "./styles";
 
-const styles = {
-  page: {
-    margin: "auto",
-    minWidth: 500,
-    marginTop: 20
-  }
-};
-class SignInPage extends React.Component<
-  {
-    classes: any;
-    startSession: (tokenL: string, username: string) => void;
-  } & RouteComponentProps,
-  IState
-> {
+class SignInPage extends React.Component<IProps, IState> {
   state: IState = {
     errors: [],
     email: "",
@@ -55,9 +44,9 @@ class SignInPage extends React.Component<
       login({ email: email, password: password })
         .then((response: any) => {
           //start session
-          const { token, username }: IUser = response.data.user;
+          const user: IUser = response.data.user;
           navigate("/");
-          startSession(token, username);
+          startSession(user.token, user.username);
         })
         .catch(() => {
           this.setState({ errors: ["email or password is invalid"] });

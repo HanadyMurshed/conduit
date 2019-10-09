@@ -2,15 +2,18 @@ import { colors, fontSize } from "../../SystemVariables";
 import { Style } from "jss";
 export const style: Style = {
   root: {
-    maxWidth: 600,
+    maxWidth: 700,
     border: "1px solid #e5e5e5",
     borderRadius: 5,
     overflow: "hidden"
   },
   Input: {
+    height: "auto",
     width: "100%",
-    padding: "15px 15px 0px 15px",
+
+    padding: "20px 20px 0px 20px",
     fontSize: fontSize.normal,
+    opacity: 0.8,
     colors: colors.TextPrimaryColor
   },
   commentBody: {
@@ -30,7 +33,7 @@ export const style: Style = {
   },
   avatar: {
     float: "left",
-    marginLeft: 15,
+    marginLeft: 20,
     marginTop: 10,
     width: 30,
     height: 30

@@ -1,4 +1,4 @@
-import { type } from "os"
+import { type } from "os";
 
 export interface IArticle {
   slug: string;
@@ -22,4 +22,12 @@ export interface IAuther {
 
 export interface IUser extends IAuther {
   token: string;
+}
+
+export interface IComment {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  body: string;
+  author: IAuther;
 }

@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { RouteComponentProps } from "@reach/router";
 import { Settings } from "../../components/settings/Settings";
 import { IState } from "./IState";
 import { styles } from "./styles";
 import { getCurrentUser, updateUser } from "../../api/server";
+import { IProps } from "./IProps";
+import { navigate, RouteComponentProps } from "@reach/router";
 
 class SettingsPage extends React.Component<
-  { classes: any; endSession: () => void } & RouteComponentProps,
+  IProps & RouteComponentProps,
   IState
 > {
   state: IState = {
@@ -80,7 +81,10 @@ class SettingsPage extends React.Component<
         bio: bio,
         image: url
       })
-        .then((res: any) => {})
+        .then((res: any) => {
+          this.props.handleUpdate();
+          navigate("/");
+        })
         .catch((er: any) => {});
     }
   };
