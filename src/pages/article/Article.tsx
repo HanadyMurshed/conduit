@@ -37,6 +37,7 @@ class Article extends React.Component<
     },
     username: "",
     commentList: [],
+    currentComment: "",
     image: defaultValues.avatar
   };
 
@@ -80,13 +81,29 @@ class Article extends React.Component<
   addComment = (comment: string) => {
     const { slug } = this.props;
     if (slug)
-      addCommentToArticle(comment, slug).then((res: any) => {
-        this.getComments(slug);
-      });
+      addCommentToArticle(comment, slug)
+        .then((res: any) => {
+          this.setState({ currentComment: "" }, () => this.getComments(slug));
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+  };
+  handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ currentComment: e.currentTarget.value });
+  };
+  handlePostComment = () => {
+    if (this.state.currentComment) this.addComment(this.state.currentComment);
   };
   render() {
     const { classes } = this.props;
-    const { username, image, article, commentList } = this.state;
+    const {
+      username,
+      image,
+      article,
+      commentList,
+      currentComment
+    } = this.state;
     const { title, body, author, createdAt } = article;
     const { username: authoName, image: autherImage } = author;
 
@@ -115,7 +132,13 @@ class Article extends React.Component<
                   to add comments on this article.
                 </Typography>
               ) : (
-                <CommentWrite image={image} className={classes.comment} />
+                <CommentWrite
+                  onChange={this.handleCommentChange}
+                  onClick={this.handlePostComment}
+                  comment={currentComment}
+                  image={image}
+                  className={classes.comment}
+                />
               )}
               {commentList.map(e => {
                 if (e.author.username === username)

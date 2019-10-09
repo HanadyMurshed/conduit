@@ -228,7 +228,7 @@ export function deleteArticle(slug: string) {
  */
 
 export function addCommentToArticle(comment: string, slug: string) {
-  const url = `${baseUrl}/articles/${slug} /comments`;
+  const url = `${baseUrl}/articles/${slug}/comments`;
   const payload = {
     comment: { body: comment }
   };

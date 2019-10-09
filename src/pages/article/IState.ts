@@ -4,4 +4,5 @@ export interface IState {
   username: string;
   commentList: IComment[];
   image: string;
+  currentComment: string;
 }
