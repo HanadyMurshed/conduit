@@ -7,9 +7,10 @@ const useStyle = makeStyles(style);
 export const CommentWrite: React.FC<{
   className?: string;
   image?: string;
-  onCLck?: () => void;
-}> = ({ className = "", image = "", onCLck = () => {} }) => {
+  onCLick?: (comment: string) => void;
+}> = ({ className = "", image = "", onCLick = () => {} }) => {
   const classes = useStyle();
+
   return (
     <div className={`${classes.root} ${className}`.trim()}>
       <Input
@@ -21,10 +22,7 @@ export const CommentWrite: React.FC<{
       />
       <div className={classes.footer}>
         <Avatar className={classes.avatar} src={image} />
-        <Button
-          onClick={onCLck}
-          className={`${classes.button} ${classes.buttonGreen}`}
-        >
+        <Button className={`${classes.button} ${classes.buttonGreen}`}>
           Post Comment
         </Button>
       </div>

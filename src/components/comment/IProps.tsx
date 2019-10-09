@@ -4,5 +4,5 @@ export interface IProps {
   className: string;
   deleteButtonShow?: boolean;
   comment: IComment;
-  onCLck?: () => void;
+  onClick?: (id: string) => void;
 }

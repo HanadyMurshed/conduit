@@ -9,10 +9,10 @@ export const CommenShow: React.FC<IProps> = ({
   className = "",
   deleteButtonShow = false,
   comment,
-  onCLck = () => {}
+  onClick = () => {}
 }) => {
   const classes = useStyle();
-  const { body, createdAt, author } = comment;
+  const { body, createdAt, author, id } = comment;
   const { username, image } = author;
   return (
     <div className={`${classes.root} ${className}`.trim()}>
@@ -28,7 +28,7 @@ export const CommenShow: React.FC<IProps> = ({
         <Typography className={classes.createdAt}>{createdAt}</Typography>
         {deleteButtonShow ? (
           <Delete
-            onClick={onCLck}
+            onClick={() => onClick(id)}
             className={`${classes.button} ${classes.buttonSmaller}`}
           />
         ) : null}

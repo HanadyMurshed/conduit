@@ -6,7 +6,9 @@ import { HeaderArticle } from "../../components/HeaderArticle";
 import {
   getAnArticle,
   getCurrentUser,
-  getCommentsByArticles
+  getCommentsByArticles,
+  deleteComment,
+  addCommentToArticle
 } from "../../api/server";
 import { styles } from "./styles";
 import { CommentWrite } from "../../components/comment/CommentWrite";
@@ -59,7 +61,7 @@ class Article extends React.Component<
       });
     }
   }
-  getComments(slug: string) {
+  getComments = (slug: string) => {
     getCommentsByArticles(slug)
       .then((res: any) => {
         this.setState({
@@ -67,7 +69,21 @@ class Article extends React.Component<
         });
       })
       .catch();
-  }
+  };
+  deleteComment = (id: string) => {
+    const { slug } = this.props;
+    if (slug)
+      deleteComment(slug, id).then((res: any) => {
+        this.getComments(slug);
+      });
+  };
+  addComment = (comment: string) => {
+    const { slug } = this.props;
+    if (slug)
+      addCommentToArticle(comment, slug).then((res: any) => {
+        this.getComments(slug);
+      });
+  };
   render() {
     const { classes } = this.props;
     const { username, image, article, commentList } = this.state;
@@ -105,6 +121,7 @@ class Article extends React.Component<
                 if (e.author.username === username)
                   return (
                     <CommenShow
+                      onClick={this.deleteComment}
                       deleteButtonShow={true}
                       comment={e}
                       className={classes.comment}
