@@ -50,6 +50,7 @@ class App extends React.Component<{ classes: any }> {
       });
     });
   }
+
   startSession = (token: string, username: string) => {
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("username", username);
@@ -109,6 +110,7 @@ class App extends React.Component<{ classes: any }> {
           <Grid item xs={12}>
             <NavBar>{this.getNavBarButtons()}</NavBar>
           </Grid>
+
           <Router className={classes.router}>
             {token ? <UserHome path="/" /> : <Home path="/" />}
             <SignUpPage startSession={this.startSession} path="/sign-up" />
@@ -119,8 +121,10 @@ class App extends React.Component<{ classes: any }> {
               handleUpdate={this.updateUser}
               path="/settings"
             />
+
             <ArticlePage path="/Article/:slug" />
             <UserPage loggedUser={username + ""} path="/:username" />
+            {/* <NotFound default /> */}
           </Router>
         </Grid>{" "}
       </ThemeProvider>

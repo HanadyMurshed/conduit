@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, withStyles } from "@material-ui/core";
+import { Grid, withStyles, Typography, colors } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { defaultValues } from "../../SystemVariables";
 import { navigate } from "@reach/router";
@@ -155,13 +155,15 @@ class Profile extends React.Component<IProps, IState> {
               value={selectedTab}
             >
               <div>
-                {articles.map((e: IArticle) => (
-                  <Article
-                    handleFavoritEvent={this.handleFavoritEvent}
-                    key={e.slug}
-                    article={e}
-                  />
-                ))}
+                {articles.length !== 0 ? (
+                  articles.map((e: IArticle) => (
+                    <Article key={e.slug} article={e} />
+                  ))
+                ) : (
+                  <Typography style={{ color: "black", opacity: 0.6 }}>
+                    No article found yst
+                  </Typography>
+                )}
               </div>
             </MyTab>
             {pageCount && pageCount > 1 ? (

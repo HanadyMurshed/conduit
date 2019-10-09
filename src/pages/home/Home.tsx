@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, withStyles } from "@material-ui/core";
+import { Grid, withStyles, Typography } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { Header } from "../../components/Header";
@@ -104,9 +104,15 @@ class Home extends React.Component<
               value={currentTag !== "" ? 1 : 0}
             >
               <div>
-                {articles.map((e: IArticle) => (
-                  <Article key={e.slug} article={e} />
-                ))}
+                {articles.length !== 0 ? (
+                  articles.map((e: IArticle) => (
+                    <Article key={e.slug} article={e} />
+                  ))
+                ) : (
+                  <Typography style={{ color: "black", opacity: 0.6 }}>
+                    No article found yst
+                  </Typography>
+                )}
               </div>
             </MyTab>
             {pageCount && pageCount > 1 ? (

@@ -22,6 +22,7 @@ class SettingsPage extends React.Component<
   };
 
   componentWillMount() {
+    if (!sessionStorage.getItem("token")) navigate("/");
     getCurrentUser().then((response: any) => {
       const { username, email, bio, image } = response.data.user;
       this.setState({

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { RouteComponentProps, navigate } from "@reach/router";
+import { RouteComponentProps, navigate, redirectTo } from "@reach/router";
 import { SignUp } from "../../components/sign-in-up/SignUp";
 import { IState } from "./IState";
 import { register } from "../../api/server";
@@ -28,6 +28,14 @@ class SignUpPage extends React.Component<
     popperContent: "",
     popperOpen: false
   };
+  componentDidMount() {
+    console.log("MMMM", this.props);
+    if (sessionStorage.getItem("token")) {
+      this.props.navigate!("/");
+      // window.location.href = "/";
+      this.forceUpdate();
+    }
+  }
 
   handleEmailFocus = () => {
     this.setState({
