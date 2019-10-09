@@ -146,6 +146,7 @@ class Article extends React.Component<
                     <CommenShow
                       onClick={this.deleteComment}
                       deleteButtonShow={true}
+                      key={e.id}
                       comment={e}
                       className={classes.comment}
                     />
