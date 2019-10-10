@@ -156,7 +156,7 @@ class Profile extends React.Component<IProps, IState> {
 
   handleFollowEvent = () => {};
   handleEditProfileEvent = () => {
-    this.setState({ toSetting: false });
+    this.setState({ toSetting: true });
   };
 
   render() {

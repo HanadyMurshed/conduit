@@ -107,7 +107,7 @@ class Article extends React.Component<IProps, IState> {
     const { title, body, author, createdAt } = article;
     const { username: authoName, image: autherImage } = author;
 
-    const logged: boolean = Boolean(sessionStorage.getItem("token"));
+    const { isLogged } = this.props;
     if (toHome) return <Redirect to="/" />;
     return (
       <Grid container style={{ paddingBottom: 100 }}>
@@ -121,7 +121,7 @@ class Article extends React.Component<IProps, IState> {
           <Grid className={classes.page} item xs={12}>
             <Typography>{body}</Typography>
             <div className={classes.footer}>
-              {!logged ? (
+              {!isLogged ? (
                 <Typography>
                   <Link className={classes.link} to="/sign-in">
                     Sign in

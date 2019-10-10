@@ -147,7 +147,15 @@ class App extends React.Component<{ classes: any }> {
                     path="/sign-in"
                   />
                 </PrivateRoute>
-                <Route path="/Article/:slug" component={ArticlePage} />
+                <Route
+                  path="/Article/:slug"
+                  render={(props: any) => (
+                    <ArticlePage
+                      {...props}
+                      isLogged={Boolean(this.state.token)}
+                    />
+                  )}
+                ></Route>
                 <PrivateRoute
                   to="/"
                   authentocationRequired={true}
