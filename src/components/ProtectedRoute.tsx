@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isAuthenticated } from "../utils/authintication";
+import { isAuthenticated } from "../utils/Helpers";
 
 export const PrivateRoute: React.FC<{
   to: string;

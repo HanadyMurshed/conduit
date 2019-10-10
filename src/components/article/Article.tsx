@@ -8,6 +8,7 @@ import { IProps } from "./IProps";
 import { IState } from "./IState";
 import { Link } from "react-router-dom";
 import { colors } from "../../utils/SystemVariables";
+import { formatDate } from "../../utils/Helpers";
 
 class Article extends React.Component<IProps, IState> {
   state: IState = { favorited: false, favoritesCount: 0 };
@@ -71,7 +72,7 @@ class Article extends React.Component<IProps, IState> {
                   </Typography>
                 </Link>
                 <Typography variant="h6" className={classes.headerSubTitle}>
-                  {createdAt}
+                  {formatDate(createdAt)}
                 </Typography>
               </div>
             </Grid>

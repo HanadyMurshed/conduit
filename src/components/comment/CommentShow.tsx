@@ -5,6 +5,7 @@ import Delete from "@material-ui/icons/Delete";
 import { IProps } from "./IProps";
 import { Link } from "react-router-dom";
 import { colors } from "../../utils/SystemVariables";
+import { formatDate } from "../../utils/Helpers";
 
 const useStyle = makeStyles(style);
 export const CommenShow: React.FC<IProps> = ({
@@ -32,7 +33,9 @@ export const CommenShow: React.FC<IProps> = ({
         >
           <Typography className={classes.username}>{username}</Typography>
         </Link>
-        <Typography className={classes.createdAt}>{createdAt}</Typography>
+        <Typography className={classes.createdAt}>
+          {formatDate(createdAt + "")}
+        </Typography>
         {deleteButtonShow ? (
           <Delete
             onClick={() => onClick(id)}
