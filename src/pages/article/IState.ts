@@ -5,4 +5,5 @@ export interface IState {
   commentList: IComment[];
   image: string;
   currentComment: string;
+  toHome: boolean;
 }

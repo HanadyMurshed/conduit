@@ -1,4 +1,4 @@
-import { colors, dims } from "../../SystemVariables";
+import { colors, dims } from "../../utils/SystemVariables";
 export const styles = {
   page: {
     width: dims.pageWidth + 40,

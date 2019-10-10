@@ -8,4 +8,6 @@ export interface IState {
   tabs: string[];
   author: IAuther;
   selectedTab: number;
+  toSetting: boolean;
+  toHome: boolean;
 }

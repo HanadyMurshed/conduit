@@ -1,6 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
-import { colors, fontSize } from "../SystemVariables";
+import { colors, fontSize } from "../utils/SystemVariables";
 import { Button } from "@material-ui/core";
 
 export const useStyle = makeStyles(() => ({
@@ -37,10 +37,11 @@ export const Index: React.FC<{
   index: number;
   propStyle?: string;
   onClick?: (index: number) => void;
-}> = ({ index, propStyle, onClick = () => {} }) => {
+}> = ({ index, propStyle, onClick = () => {}, ...rest }) => {
   const classes = useStyle();
   return (
     <Button
+      {...rest}
       onClick={() => onClick(index - 1)}
       className={propStyle ? propStyle : classes.defualt}
     >

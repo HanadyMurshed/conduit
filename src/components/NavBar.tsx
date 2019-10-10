@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
-import { colors, dims, fontSize, strings } from "../SystemVariables";
+import { colors, dims, fontSize, strings } from "../utils/SystemVariables";
 
 const useStyle = makeStyles({
   appBar: {

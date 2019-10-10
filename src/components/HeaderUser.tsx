@@ -1,5 +1,10 @@
 import * as React from "react";
-import { colors, fontSize, defaultValues, dims } from "../SystemVariables";
+import {
+  colors,
+  fontSize,
+  defaultValues,
+  dims
+} from "../utils/SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";

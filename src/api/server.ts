@@ -9,7 +9,8 @@ const baseUrl = "https://conduit.productionready.io/api";
 const axios = require("axios").default;
 
 function getAccessToken() {
-  return sessionStorage.getItem("token");
+  const stringfiedData = sessionStorage.getItem("data");
+  if (stringfiedData) return JSON.parse(stringfiedData).token;
 }
 
 /**

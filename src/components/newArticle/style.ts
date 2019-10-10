@@ -1,4 +1,4 @@
-import { fontSize, colors } from "../../SystemVariables";
+import { fontSize, colors } from "../../utils/SystemVariables";
 import { Style } from "jss";
 // import MyInput from "./Input";
 export const style: Style = {

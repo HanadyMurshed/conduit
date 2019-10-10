@@ -1,7 +1,7 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/styles";
 import Input from "@material-ui/core/Input";
-import { colors } from "../SystemVariables";
+import { colors } from "../utils/SystemVariables";
 
 const useStyle = makeStyles({
   input: {
@@ -42,12 +42,14 @@ export const MyInput: React.FC<{
   value = "",
   type = "input",
   onChange = () => {},
-  onkeydown = () => {}
+  onkeydown = () => {},
+  ...rest
 }) => {
   const classes = useStyle();
   if (multiline)
     return (
       <Input
+        {...rest}
         id={id}
         type={type}
         multiline
@@ -65,6 +67,7 @@ export const MyInput: React.FC<{
   else
     return (
       <Input
+        {...rest}
         id={id}
         onKeyDown={onkeydown}
         onFocus={onfocus}

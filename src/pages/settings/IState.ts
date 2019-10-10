@@ -6,4 +6,5 @@ export interface IState {
   password: string;
   popperOpen: boolean;
   popperContent: string;
+  toHome: boolean;
 }

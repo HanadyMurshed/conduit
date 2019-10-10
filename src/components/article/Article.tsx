@@ -3,10 +3,11 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import { Typography, IconButton, withStyles } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { navigate } from "@reach/router";
 import { style } from "./style";
 import { IProps } from "./IProps";
 import { IState } from "./IState";
+import { Link } from "react-router-dom";
+import { colors } from "../../utils/SystemVariables";
 
 class Article extends React.Component<IProps, IState> {
   state: IState = { favorited: false, favoritesCount: 0 };
@@ -22,12 +23,7 @@ class Article extends React.Component<IProps, IState> {
       : this.state.favoritesCount + 1;
     this.setState({ favorited: !favorited, favoritesCount: favoritesCount });
   }
-  handleClickArticle = (slug: string) => {
-    navigate(`/Article/${slug}`);
-  };
-  handleClickUser = (username: string) => {
-    navigate(`/${username}`);
-  };
+
   private handleFavoriteClick = (slug: string) => {
     const handler = this.props.handleFavoritEvent;
     const favorited = this.state.favorited;
@@ -64,13 +60,16 @@ class Article extends React.Component<IProps, IState> {
 
             <Grid item className={classes.headerCaption}>
               <div className={classes.VerticalCentreAlign}>
-                <Typography
-                  onClick={() => this.handleClickUser(username)}
-                  variant="h6"
-                  className={classes.headerTitle}
+                <Link
+                  style={{
+                    textDecoration: "none"
+                  }}
+                  to={`/user/${username}`}
                 >
-                  {username}
-                </Typography>
+                  <Typography variant="h6" className={classes.headerTitle}>
+                    {username}
+                  </Typography>
+                </Link>
                 <Typography variant="h6" className={classes.headerSubTitle}>
                   {createdAt}
                 </Typography>
@@ -92,24 +91,14 @@ class Article extends React.Component<IProps, IState> {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography
-            onClick={() => this.handleClickArticle(slug)}
-            className={classes.bodyTitle}
+          <Link
+            style={{ textDecoration: "none", color: colors.TextPrimaryColor }}
+            to={`/Article/${slug}`}
           >
-            {title}
-          </Typography>
-          <Typography
-            onClick={() => this.handleClickArticle(slug)}
-            className={classes.bodyText}
-          >
-            {description}
-          </Typography>
-          <Typography
-            onClick={() => this.handleClickArticle(slug)}
-            className={classes.showExtra}
-          >
-            Read more...
-          </Typography>
+            <Typography className={classes.bodyTitle}>{title}</Typography>
+            <Typography className={classes.bodyText}>{description}</Typography>
+            <Typography className={classes.showExtra}>Read more...</Typography>
+          </Link>
         </Grid>
       </Grid>
     );

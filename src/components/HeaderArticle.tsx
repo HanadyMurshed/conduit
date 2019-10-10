@@ -1,8 +1,14 @@
 import * as React from "react";
-import { colors, fontSize, dims, defaultValues } from "../SystemVariables";
+import {
+  colors,
+  fontSize,
+  dims,
+  defaultValues
+} from "../utils/SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader, Avatar } from "@material-ui/core";
+import { Link } from "react-router-dom";
 // import { Typography } from "@material-ui/core";
 
 const useStyle = makeStyles({
@@ -63,7 +69,14 @@ export const HeaderArticle: React.FC<{
               src={image}
             />
           }
-          title={username}
+          title={
+            <Link
+              style={{ color: "white", textDecoration: "none" }}
+              to={`/user/${username}`}
+            >
+              <Typography>{username}</Typography>
+            </Link>
+          }
           subheader={createdAt}
         />
       </div>

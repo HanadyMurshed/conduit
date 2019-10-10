@@ -1,3 +1,5 @@
+import { register } from "../api/server";
+
 // import { createMuiTheme } from '@material-ui/core/styles';
 
 // export const defaultTheme = createMuiTheme({
@@ -39,4 +41,12 @@ export const strings = {
 };
 export const defaultValues = {
   avatar: "https://static.productionready.io/images/smiley-cyrus.jpg"
+};
+
+export const paths = {
+  signin: "/login",
+  signup: "/register",
+  NewArticle: "editor",
+  setting: "settings",
+  home: "/"
 };

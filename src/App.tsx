@@ -1,11 +1,9 @@
 import React from "react";
-import { Router, navigate } from "@reach/router";
 import Grid from "@material-ui/core/Grid";
 import { NavBar } from "./components/NavBar";
 import { ButtonNavBar } from "./components/ButtonNavBar";
 import { withStyles } from "@material-ui/styles";
 import Home from "./pages/home/Home";
-import UserHome from "./pages/home/UserHome";
 import SignUpPage from "./pages/signup/SignUp";
 import SignInPage from "./pages/login/Signin";
 import NewPostPage from "./pages/newArticle/NewArticle";
@@ -17,6 +15,8 @@ import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { getCurrentUser } from "./api/server";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { PrivateRoute } from "./components/ProtectedRoute";
 const style = {
   router: { width: "100%" }
 };
@@ -37,7 +37,14 @@ class App extends React.Component<{ classes: any }> {
   };
 
   componentDidMount() {
-    this.updateUser();
+    const jsonData = sessionStorage.getItem("data");
+    if (jsonData) {
+      const data = JSON.parse(jsonData);
+      this.setState({
+        token: data.token,
+        username: data.username
+      });
+    }
   }
 
   updateUser = () => {
@@ -50,18 +57,14 @@ class App extends React.Component<{ classes: any }> {
           image: image
         });
       })
-      .catch((err: any) => {
-        this.setState({
-          token: null,
-          username: null,
-          image: null
-        });
-      });
+      .catch((err: any) => {});
   };
 
   startSession = (token: string, username: string) => {
-    sessionStorage.setItem("token", token);
-    sessionStorage.setItem("username", username);
+    sessionStorage.setItem(
+      "data",
+      JSON.stringify({ token: token, username: username })
+    );
 
     this.setState({
       token: token,
@@ -74,8 +77,8 @@ class App extends React.Component<{ classes: any }> {
       {
         username: null,
         token: null
-      },
-      () => navigate("/")
+      }
+      // () => navigate("/")
     );
   };
 
@@ -95,7 +98,7 @@ class App extends React.Component<{ classes: any }> {
             icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
           />
           <ButtonNavBar
-            to={`/${this.state.username}`}
+            to={`/user/${this.state.username}`}
             title={this.state.username ? this.state.username : "My Profile"}
           />
         </div>
@@ -111,31 +114,66 @@ class App extends React.Component<{ classes: any }> {
   }
   render() {
     const { classes } = this.props;
-    const { token, username } = this.state;
+    const { username } = this.state;
     return (
-      <ThemeProvider theme={theme}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <NavBar>{this.getNavBarButtons()}</NavBar>
-          </Grid>
-
-          <Router className={classes.router}>
-            {token ? <UserHome path="/" /> : <Home path="/" />}
-            <SignUpPage startSession={this.startSession} path="/sign-up" />
-            <SignInPage startSession={this.startSession} path="/sign-in" />
-            <NewPostPage path="/new-post" />
-            <SettingsPage
-              endSession={this.endSession}
-              handleUpdate={this.updateUser}
-              path="/settings"
-            />
-
-            <ArticlePage path="/Article/:slug" />
-            <UserPage loggedUser={username + ""} path="/:username" />
-            {/* <NotFound default /> */}
-          </Router>
-        </Grid>{" "}
-      </ThemeProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <NavBar>{this.getNavBarButtons()}</NavBar>
+            </Grid>
+            <div className={classes.router}>
+              <Switch>
+                <Route
+                  path="/user/:username"
+                  render={(props: any) => (
+                    <UserPage {...props} loggedUser={username} />
+                  )}
+                />
+                <PrivateRoute
+                  to="/"
+                  authentocationRequired={false}
+                  path="/sign-up"
+                >
+                  <SignUpPage startSession={this.startSession} />
+                </PrivateRoute>
+                <PrivateRoute
+                  to="/"
+                  authentocationRequired={false}
+                  path="/sign-in"
+                >
+                  <SignInPage
+                    startSession={this.startSession}
+                    path="/sign-in"
+                  />
+                </PrivateRoute>
+                <Route path="/Article/:slug" component={ArticlePage} />
+                <PrivateRoute
+                  to="/"
+                  authentocationRequired={true}
+                  path="/new-post"
+                >
+                  <NewPostPage />
+                </PrivateRoute>
+                <PrivateRoute
+                  to="/"
+                  authentocationRequired={true}
+                  path="/settings"
+                >
+                  <SettingsPage
+                    endSession={this.endSession}
+                    handleUpdate={this.updateUser}
+                  />
+                </PrivateRoute>
+                <Route path="/">
+                  <Home isLogged={Boolean(this.state.token)} />
+                </Route>
+              </Switch>
+              {/* <NotFound default /> */}
+            </div>
+          </Grid>{" "}
+        </ThemeProvider>
+      </Router>
     );
   }
 }

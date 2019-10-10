@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
-import { RouteComponentProps, navigate } from "@reach/router";
 import {
   listArticles,
   getTags,
@@ -16,10 +15,7 @@ import { TagsPanel } from "../../components/TagPanel";
 import { styles } from "./styles";
 import { IStateLogged } from "./IState";
 
-class Home extends React.Component<
-  { classes: any } & RouteComponentProps,
-  IStateLogged
-> {
+class Home extends React.Component<{ classes: any }, IStateLogged> {
   state: IStateLogged = {
     articles: [],
     count: 0,
@@ -131,8 +127,6 @@ class Home extends React.Component<
       currentTag,
       currentTab
     } = this.state;
-
-    if (!sessionStorage.getItem("token")) navigate("/login");
 
     return (
       <Grid container style={{ paddingBottom: 100 }}>

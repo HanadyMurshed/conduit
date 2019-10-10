@@ -5,12 +5,9 @@ import { IState } from "./IState";
 import { styles } from "./styles";
 import { getCurrentUser, updateUser } from "../../api/server";
 import { IProps } from "./IProps";
-import { navigate, RouteComponentProps } from "@reach/router";
+import { Redirect } from "react-router-dom";
 
-class SettingsPage extends React.Component<
-  IProps & RouteComponentProps,
-  IState
-> {
+class SettingsPage extends React.Component<IProps, IState> {
   state: IState = {
     username: "",
     bio: "",
@@ -18,20 +15,22 @@ class SettingsPage extends React.Component<
     email: "",
     password: "",
     popperOpen: false,
-    popperContent: ""
+    popperContent: "",
+    toHome: false
   };
 
   componentWillMount() {
-    if (!sessionStorage.getItem("token")) navigate("/");
-    getCurrentUser().then((response: any) => {
-      const { username, email, bio, image } = response.data.user;
-      this.setState({
-        username: username,
-        bio: bio,
-        email: email,
-        url: image
-      });
-    });
+    getCurrentUser()
+      .then((response: any) => {
+        const { username, email, bio, image } = response.data.user;
+        this.setState({
+          username: username,
+          bio: bio,
+          email: email,
+          url: image
+        });
+      })
+      .catch((err: any) => this.setState({ toHome: true }));
   }
   handleURLChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
@@ -83,15 +82,15 @@ class SettingsPage extends React.Component<
         image: url
       })
         .then((res: any) => {
-          this.props.handleUpdate();
-          navigate("/");
+          this.setState({ toHome: true }, () => this.props.handleUpdate());
         })
         .catch((er: any) => {});
     }
   };
   render() {
     const { classes, endSession } = this.props;
-    const { username, bio, email, url, password } = this.state;
+    const { username, bio, email, url, password, toHome } = this.state;
+    if (toHome) return <Redirect to="/" />;
     return (
       <Grid container className={classes.page}>
         <Settings

@@ -3,6 +3,8 @@ import { Avatar, makeStyles, Typography } from "@material-ui/core";
 import { style } from "./style";
 import Delete from "@material-ui/icons/Delete";
 import { IProps } from "./IProps";
+import { Link } from "react-router-dom";
+import { colors } from "../../utils/SystemVariables";
 
 const useStyle = makeStyles(style);
 export const CommenShow: React.FC<IProps> = ({
@@ -24,7 +26,12 @@ export const CommenShow: React.FC<IProps> = ({
           src={image}
           className={`${classes.avatar} ${classes.avatarSmaller}`}
         />
-        <Typography className={classes.username}>{username}</Typography>
+        <Link
+          style={{ textDecoration: "none", color: colors.TextPrimaryColor }}
+          to={`/user/${username}`}
+        >
+          <Typography className={classes.username}>{username}</Typography>
+        </Link>
         <Typography className={classes.createdAt}>{createdAt}</Typography>
         {deleteButtonShow ? (
           <Delete

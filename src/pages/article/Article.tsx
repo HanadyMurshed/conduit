@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Grid, withStyles, Typography } from "@material-ui/core";
-import { Link, navigate } from "@reach/router";
-import { RouteComponentProps } from "@reach/router";
+import { Link, Redirect } from "react-router-dom";
 import { HeaderArticle } from "../../components/HeaderArticle";
 import {
   getAnArticle,
@@ -14,13 +13,10 @@ import { styles } from "./styles";
 import { CommentWrite } from "../../components/comment/CommentWrite";
 import { IProps } from "./IProps";
 import { IState } from "./IState";
-import { defaultValues } from "../../SystemVariables";
+import { defaultValues } from "../../utils/SystemVariables";
 import { CommenShow } from "../../components/comment/CommentShow";
 
-class Article extends React.Component<
-  IProps & RouteComponentProps<{ slug: string }>,
-  IState
-> {
+class Article extends React.Component<IProps, IState> {
   state: IState = {
     article: {
       slug: "",
@@ -38,33 +34,32 @@ class Article extends React.Component<
     username: "",
     commentList: [],
     currentComment: "",
-    image: defaultValues.avatar
+    image: defaultValues.avatar,
+    toHome: false
   };
 
   componentDidMount() {
-    const { slug } = this.props;
-    if (!slug) navigate("/");
-    else {
-      getCurrentUser()
-        .then((res: any) => {
-          if (res.data.user.image) {
-            this.setState({ image: res.data.user.image });
-          }
+    const { slug } = this.props.match.params;
 
-          this.setState({
-            username: res.data.user.username
-          });
-        })
-        .catch();
+    getCurrentUser()
+      .then((res: any) => {
+        if (res.data.user.image) {
+          this.setState({ image: res.data.user.image });
+        }
 
-      getAnArticle(slug)
-        .then((response: any) => {
-          this.setState({ article: response.data.article }, () =>
-            this.getComments(response.data.article.slug)
-          );
-        })
-        .catch();
-    }
+        this.setState({
+          username: res.data.user.username
+        });
+      })
+      .catch();
+
+    getAnArticle(slug)
+      .then((response: any) => {
+        this.setState({ article: response.data.article }, () =>
+          this.getComments(response.data.article.slug)
+        );
+      })
+      .catch();
   }
   getComments = (slug: string) => {
     getCommentsByArticles(slug)
@@ -73,10 +68,10 @@ class Article extends React.Component<
           commentList: res.data.comments
         });
       })
-      .catch();
+      .catch((err: any) => this.setState({ toHome: true }));
   };
   deleteComment = (id: string) => {
-    const { slug } = this.props;
+    const { slug } = this.props.match.params;
     if (slug)
       deleteComment(slug, id)
         .then((res: any) => {
@@ -85,7 +80,7 @@ class Article extends React.Component<
         .catch();
   };
   addComment = (comment: string) => {
-    const { slug } = this.props;
+    const { slug } = this.props.match.params;
     if (slug)
       addCommentToArticle(comment, slug)
         .then((res: any) => {
@@ -106,12 +101,14 @@ class Article extends React.Component<
       image,
       article,
       commentList,
-      currentComment
+      currentComment,
+      toHome
     } = this.state;
     const { title, body, author, createdAt } = article;
     const { username: authoName, image: autherImage } = author;
 
     const logged: boolean = Boolean(sessionStorage.getItem("token"));
+    if (toHome) return <Redirect to="/" />;
     return (
       <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ButtonTag } from "./ButtonTag";
 import { makeStyles } from "@material-ui/styles";
-import { colors } from "../SystemVariables";
+import { colors } from "../utils/SystemVariables";
 import { Typography } from "@material-ui/core";
 
 const useStyle = makeStyles({

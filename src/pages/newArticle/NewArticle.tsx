@@ -4,7 +4,7 @@ import { RouteComponentProps, navigate } from "@reach/router";
 import { NewArticle } from "../../components/newArticle/NewArticle";
 import { IState } from "./IState";
 import { createArticle } from "../../api/server";
-import { dims } from "../../SystemVariables";
+import { dims } from "../../utils/SystemVariables";
 
 const styles = {
   page: {

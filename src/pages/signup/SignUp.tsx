@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { RouteComponentProps, navigate } from "@reach/router";
 import { SignUp } from "../../components/sign-in-up/SignUp";
 import { IState } from "./IState";
 import { register } from "../../api/server";
 import { IUser } from "../../types/conduit.types";
+import { Redirect } from "react-router";
 
 const styles = {
   page: {
@@ -17,10 +17,12 @@ class SignUpPage extends React.Component<
   {
     classes: any;
     startSession: (tokenL: string, username: string) => void;
-  } & RouteComponentProps,
+  },
   IState
 > {
   state: IState = {
+    toSignInUp: false,
+    toHome: false,
     errors: [],
     email: "",
     username: "",
@@ -28,13 +30,6 @@ class SignUpPage extends React.Component<
     popperContent: "",
     popperOpen: false
   };
-  componentDidMount() {
-    if (sessionStorage.getItem("token")) {
-      this.props.navigate!("/");
-      // window.location.href = "/";
-      this.forceUpdate();
-    }
-  }
 
   handleEmailFocus = () => {
     this.setState({
@@ -84,8 +79,7 @@ class SignUpPage extends React.Component<
           //start session
           console.log(response);
           const { token, username }: IUser = response.data.user;
-          navigate("/");
-          startSession(token, username);
+          this.setState({ toHome: true }, () => startSession(token, username));
         })
         .catch((er: any) => {
           console.log(er);
@@ -107,18 +101,22 @@ class SignUpPage extends React.Component<
     this.setState({ username: e.target.value });
   };
   handleHaveAccount = () => {
-    navigate("/sign-in");
+    this.setState({ toSignInUp: true });
   };
   render() {
     const { classes } = this.props;
     const {
+      toHome,
       email,
       password,
       username,
       popperOpen,
       popperContent,
-      errors
+      errors,
+      toSignInUp
     } = this.state;
+    if (toHome) return <Redirect to="/" />;
+    if (toSignInUp) return <Redirect to="/sign-in" />;
     return (
       <Grid container className={classes.page}>
         <SignUp

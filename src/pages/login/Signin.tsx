@@ -1,21 +1,26 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
-import { navigate } from "@reach/router";
 import { SignIn } from "../../components/sign-in-up/SignIn";
 import { login } from "../../api/server";
 import { IUser } from "../../types/conduit.types";
 import { IState } from "./IState";
 import { IProps } from "./IProps";
 import { styles } from "./styles";
+import { Redirect } from "react-router";
 
 class SignInPage extends React.Component<IProps, IState> {
   state: IState = {
+    toHome: false,
     errors: [],
     email: "",
     password: "",
     popperContent: "",
-    popperOpen: false
+    popperOpen: false,
+    toSignInUp: false
   };
+  componentDidMount() {
+    this.setState({ toHome: Boolean(sessionStorage.getItem("token")) });
+  }
 
   handleEmailFocus = () => {
     this.setState({
@@ -45,7 +50,7 @@ class SignInPage extends React.Component<IProps, IState> {
         .then((response: any) => {
           //start session
           const user: IUser = response.data.user;
-          navigate("/");
+          this.setState({ toHome: true });
           startSession(user.token, user.username);
         })
         .catch(() => {
@@ -61,11 +66,23 @@ class SignInPage extends React.Component<IProps, IState> {
     this.setState({ password: e.target.value });
   };
   handleHaveAccount = () => {
-    navigate("/sign-up");
+    this.setState({
+      toSignInUp: true
+    });
   };
   render() {
     const { classes } = this.props;
-    const { errors, email, password, popperContent, popperOpen } = this.state;
+    const {
+      errors,
+      email,
+      password,
+      popperContent,
+      popperOpen,
+      toHome,
+      toSignInUp
+    } = this.state;
+    if (toHome) return <Redirect to="/" />;
+    if (toSignInUp) return <Redirect to="/sign-up" />;
     return (
       <Grid container className={classes.page}>
         <SignIn

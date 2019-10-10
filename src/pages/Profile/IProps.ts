@@ -1,7 +1,5 @@
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps } from "react-router-dom";
 export type IProps = {
   classes: any;
   loggedUser: string;
-} & RouteComponentProps<{
-  username: string;
-}>;
+} & RouteComponentProps<{ username: string }>;
