@@ -7,8 +7,7 @@ import {
   listArticles,
   getProfile,
   unFavoriteArticle,
-  FavoriteArticle,
-  getCurrentUser
+  FavoriteArticle
 } from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
 import Article from "../../components/article/Article";
@@ -57,7 +56,10 @@ class Profile extends React.Component<IProps, IState> {
             })
           );
       })
-      .catch((err: any) => this.setState({ toHome: true }));
+      .catch((err: any) => {
+        this.setState({ toHome: true });
+        console.log(err);
+      });
   }
 
   handleFavoritEvent = (favorited: Boolean, slug: string) => {
@@ -113,16 +115,28 @@ class Profile extends React.Component<IProps, IState> {
       .catch();
   };
   handleIndexClickEvent = (index: number) => {
+    const { selectedTab } = this.state;
+    let fun: () => void = () => {};
+    if (selectedTab === 1)
+      fun = () =>
+        this.getGlobalFeed({
+          favorited: this.state.author.username,
+          limit: 10,
+          offset: index * 10
+        });
+    else if (selectedTab === 0)
+      fun = () =>
+        this.getGlobalFeed({
+          limit: 10,
+          author: this.state.author.username,
+          offset: index * 10
+        });
+
     this.setState(
       {
         currentPage: index
       },
-      () =>
-        this.getGlobalFeed({
-          author: this.state.author.username,
-          limit: 10,
-          offset: index * 10
-        })
+      () => fun()
     );
   };
 
@@ -135,7 +149,9 @@ class Profile extends React.Component<IProps, IState> {
       };
     } else params = { author: this.state.author.username, limit: 10 };
 
-    this.setState({ selectedTab: value }, () => this.getGlobalFeed(params));
+    this.setState({ selectedTab: value, currentPage: 0 }, () =>
+      this.getGlobalFeed(params)
+    );
   };
 
   handleFollowEvent = () => {};
@@ -158,7 +174,7 @@ class Profile extends React.Component<IProps, IState> {
     const { username, image } = author;
 
     if (toSetting) return <Redirect to="/settings" />;
-    if (!author || toHome) return <Redirect to="/" />;
+    if (toHome) return <Redirect to="/" />;
     return (
       <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>

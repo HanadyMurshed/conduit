@@ -100,6 +100,15 @@ export function updateUser(body: any) {
 export function getProfile(username: string) {
   if (!username) return;
   const url = `${baseUrl}/profiles/${username}`;
+  const req = axios.get(url);
+  console.log(url);
+  req
+    .then((re: any) => {
+      console.log(re);
+    })
+    .catch((e: any) => {
+      console.log(`${baseUrl}/user`);
+    });
   return axios.get(url);
 }
 
