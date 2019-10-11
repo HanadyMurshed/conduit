@@ -10,17 +10,18 @@ export interface IArticle {
   updatedAt: string;
   favorited: Boolean;
   favoritesCount: number;
-  author: IAuther;
+  author: IProfile;
 }
 
-export interface IAuther {
-  email: string;
+export type IProfile = Pick<IUser, "username" | "bio" | "image"> & {
+  following: boolean;
+};
+
+export interface IUser {
   username: string;
   bio: string;
   image?: string;
-}
-
-export interface IUser extends IAuther {
+  emaik: string;
   token: string;
 }
 
@@ -29,5 +30,5 @@ export interface IComment {
   createdAt: string;
   updatedAt: string;
   body: string;
-  author: IAuther;
+  author: IProfile;
 }

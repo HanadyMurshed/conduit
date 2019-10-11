@@ -1,4 +1,5 @@
-import { IArticle, IAuther } from "../../types/conduit.types";
+import { IArticle } from "../../types/conduit.types";
+import { IProfile } from "../../types/conduit.types";
 export interface IState {
   articles: IArticle[];
   count: number;
@@ -6,7 +7,7 @@ export interface IState {
   pageCount: number;
   currentPage: number;
   tabs: string[];
-  author: IAuther;
+  author: IProfile;
   selectedTab: number;
   toSetting: boolean;
   toHome: boolean;

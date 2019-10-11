@@ -29,7 +29,12 @@ class Profile extends React.Component<IProps, IState> {
     count: 0,
     pageCount: 0,
     currentPage: 0,
-    author: { username: "", email: "", bio: "", image: defaultValues.avatar },
+    author: {
+      username: "",
+      following: false,
+      bio: "",
+      image: defaultValues.avatar
+    },
     tabs: ["My Articles", "Favoriteed Articles"],
     selectedTab: 0,
     toSetting: false,

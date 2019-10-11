@@ -15,7 +15,7 @@ storiesOf("Feed", module).add("postedFeed", () => (
       favorited: true,
       favoritesCount: 70,
       author: {
-        email: "me@hotmail.com",
+        following: false,
         username: "Hanady",
         bio: "no bio plea",
         image: ""
