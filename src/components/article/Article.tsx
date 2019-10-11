@@ -63,7 +63,8 @@ class Article extends React.Component<IProps, IState> {
               <div className={classes.VerticalCentreAlign}>
                 <Link
                   style={{
-                    textDecoration: "none"
+                    textDecoration: "none",
+                    fontWeight: "bold"
                   }}
                   to={`/user/${username}`}
                 >
@@ -93,7 +94,11 @@ class Article extends React.Component<IProps, IState> {
 
         <Grid item xs={12}>
           <Link
-            style={{ textDecoration: "none", color: colors.TextPrimaryColor }}
+            style={{
+              textDecoration: "none",
+              fontWeight: "bold",
+              color: colors.TextPrimaryColor
+            }}
             to={`/Article/${slug}`}
           >
             <Typography className={classes.bodyTitle}>{title}</Typography>

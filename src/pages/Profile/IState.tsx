@@ -10,4 +10,6 @@ export interface IState {
   selectedTab: number;
   toSetting: boolean;
   toHome: boolean;
+  loadingProfile: boolean;
+  loadingArticles: boolean;
 }

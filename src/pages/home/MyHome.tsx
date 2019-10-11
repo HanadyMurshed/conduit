@@ -1,5 +1,10 @@
 import * as React from "react";
-import { Grid, withStyles } from "@material-ui/core";
+import {
+  Grid,
+  withStyles,
+  CircularProgress,
+  Typography
+} from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import {
   listArticles,
@@ -24,7 +29,8 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
     pageCount: 0,
     tabs: ["Your Feed", "Global feed"],
     currentTag: "",
-    currentTab: 1
+    currentTab: 1,
+    loading: true
   };
 
   componentDidMount() {
@@ -33,17 +39,31 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
   }
 
   getGlobalFeed = (queryparams: any) => {
-    listArticles(queryparams).then((response: any) => {
-      const count = Math.ceil(response.data.articlesCount / 10);
-      this.setState({ articles: response.data.articles, pageCount: count });
-    });
+    listArticles(queryparams)
+      .then((response: any) => {
+        const count = Math.ceil(response.data.articlesCount / 10);
+        this.setState({
+          articles: response.data.articles,
+          pageCount: count,
+          loading: false
+        });
+      })
+      .catch((err: any) => {
+        this.setState({ loading: false });
+      });
   };
 
   getYourFeed = (queryparams: any) => {
-    getArticleFeed(queryparams).then((response: any) => {
-      const count = Math.ceil(response.data.articlesCount / 10);
-      this.setState({ articles: response.data.articles, pageCount: count });
-    });
+    getArticleFeed(queryparams)
+      .then((response: any) => {
+        const count = Math.ceil(response.data.articlesCount / 10);
+        this.setState({
+          articles: response.data.articles,
+          pageCount: count,
+          loading: false
+        });
+      })
+      .catch((err: any) => this.setState({ loading: false }));
   };
 
   getTags = () => {
@@ -80,7 +100,8 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
       {
         currentTag: tag,
         currentTab: 2,
-        currentPage: 0
+        currentPage: 0,
+        loading: true
       },
       () => this.getGlobalFeed({ limit: 10, tag: tag })
     );
@@ -91,7 +112,8 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
       this.setState(
         {
           currentTag: "",
-          currentPage: 0
+          currentPage: 0,
+          loading: true
         },
         () => this.getGlobalFeed({ limit: 10 })
       );
@@ -125,7 +147,8 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
       pageCount,
       tabs,
       currentTag,
-      currentTab
+      currentTab,
+      loading
     } = this.state;
 
     return (
@@ -137,15 +160,25 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
               tabs={currentTag !== "" ? [...tabs, `#${currentTag}`] : tabs}
               value={currentTab}
             >
-              <div>
-                {articles.map((e: IArticle) => (
-                  <Article
-                    handleFavoritEvent={this.handleFavoritEvent}
-                    key={e.slug}
-                    article={e}
-                  />
-                ))}
-              </div>
+              {loading ? (
+                <div style={{ textAlign: "center" }}>
+                  <CircularProgress className={classes.progess} />
+                </div>
+              ) : articles.length !== 0 ? (
+                <div>
+                  {articles.map((e: IArticle) => (
+                    <Article
+                      handleFavoritEvent={this.handleFavoritEvent}
+                      key={e.slug}
+                      article={e}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <Typography style={{ color: "black", opacity: 0.6 }}>
+                  No article found... yet
+                </Typography>
+              )}
             </MyTab>
             {pageCount && pageCount > 1 ? (
               <PageIndex

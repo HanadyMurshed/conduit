@@ -1,6 +1,5 @@
 import { fontSize, colors } from "../../utils/SystemVariables";
 import { Style } from "jss";
-// import MyInput from "./Input";
 export const style: Style = {
   form: {
     margin: "auto",

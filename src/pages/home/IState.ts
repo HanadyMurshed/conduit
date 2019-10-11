@@ -7,6 +7,7 @@ export interface IState {
   pageCount: number;
   tabs: string[];
   currentTag: string;
+  loading: boolean;
 }
 
 export interface IStateLogged extends IState {

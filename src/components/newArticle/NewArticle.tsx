@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/styles";
 import { style } from "./style";
 import { IProps } from "./IProps";
 import { ErrorList } from "../errors";
-// import MyInput from "./Input";
 
 const useStyle = makeStyles(style);
 

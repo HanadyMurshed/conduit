@@ -1,5 +1,10 @@
 import * as React from "react";
-import { Grid, withStyles, Typography } from "@material-ui/core";
+import {
+  Grid,
+  withStyles,
+  Typography,
+  CircularProgress
+} from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { defaultValues } from "../../utils/SystemVariables";
 import { UserHeader } from "../../components/HeaderUser";
@@ -28,33 +33,24 @@ class Profile extends React.Component<IProps, IState> {
     tabs: ["My Articles", "Favoriteed Articles"],
     selectedTab: 0,
     toSetting: false,
-    toHome: false
+    toHome: false,
+    loadingProfile: true,
+    loadingArticles: true
   };
   componentDidMount() {
     const { username } = this.props.match.params;
     this.setProfile(username);
+    this.getGlobalFeed({ author: username, limit: 10 });
   }
 
   setProfile(username: string) {
     getProfile(username)
       .then((res: any) => {
-        listArticles({ author: username, limit: 10 })
-          .then((response: any) => {
-            const count = Math.ceil(response.data.articlesCount / 10);
-            this.setState({
-              author: res.data.profile,
-              articles: response.data.articles,
-              pageCount: count,
-              username: username
-            });
-          })
-          .catch((err: any) =>
-            this.setState({
-              currentPage: 0,
-              author: res.data.profile,
-              username: username
-            })
-          );
+        this.setState({
+          author: res.data.profile,
+          loadingProfile: false,
+          username: username
+        });
       })
       .catch((err: any) => {
         this.setState({ toHome: true });
@@ -95,25 +91,35 @@ class Profile extends React.Component<IProps, IState> {
   // }
   componentWillReceiveProps(nextProps: IProps) {
     const { username } = nextProps.match.params;
-    this.setProfile(username);
+    if (username !== this.state.username) {
+      this.setState({
+        loadingArticles: true,
+        loadingProfile: true,
+        articles: [],
+        username: "",
+        count: 0,
+        pageCount: 0,
+        currentPage: 0,
+        selectedTab: 0
+      });
+      this.setProfile(username);
+      this.getGlobalFeed({ author: username, limit: 10 });
+    }
   }
 
   getGlobalFeed = (queryparams: any) => {
     listArticles(queryparams)
       .then((response: any) => {
         const count = Math.ceil(response.data.articlesCount / 10);
-        this.setState({ articles: response.data.articles, pageCount: count });
+        this.setState({
+          articles: response.data.articles,
+          pageCount: count,
+          loadingArticles: false
+        });
       })
-      .catch();
+      .catch((err: any) => this.setState({ loadingArticles: false }));
   };
 
-  getuserInformation = (username: string) => {
-    getProfile(username)
-      .then((response: any) => {
-        this.setState({ author: response.data.profile });
-      })
-      .catch();
-  };
   handleIndexClickEvent = (index: number) => {
     const { selectedTab } = this.state;
     let fun: () => void = () => {};
@@ -141,6 +147,7 @@ class Profile extends React.Component<IProps, IState> {
   };
 
   handleTabChangeEvent = (event: React.ChangeEvent<{}>, value: any) => {
+    this.setState({ loadingArticles: true });
     let params = {};
     if (value === 1) {
       params = {
@@ -155,6 +162,7 @@ class Profile extends React.Component<IProps, IState> {
   };
 
   handleFollowEvent = () => {};
+
   handleEditProfileEvent = () => {
     this.setState({ toSetting: true });
   };
@@ -169,12 +177,20 @@ class Profile extends React.Component<IProps, IState> {
       author,
       selectedTab,
       toSetting,
-      toHome
+      toHome,
+      loadingArticles,
+      loadingProfile
     } = this.state;
     const { username, image } = author;
 
     if (toSetting) return <Redirect to="/settings" />;
     if (toHome) return <Redirect to="/" />;
+    if (loadingProfile)
+      return (
+        <div style={{ textAlign: "center" }}>
+          <CircularProgress className={classes.progress} />;
+        </div>
+      );
     return (
       <Grid container style={{ paddingBottom: 100 }}>
         <Grid item xs={12}>
@@ -201,17 +217,21 @@ class Profile extends React.Component<IProps, IState> {
               tabs={tabs}
               value={selectedTab}
             >
-              <div>
-                {articles.length !== 0 ? (
-                  articles.map((e: IArticle) => (
+              {loadingArticles ? (
+                <div style={{ textAlign: "center" }}>
+                  <CircularProgress className={classes.progess} />
+                </div>
+              ) : articles.length !== 0 ? (
+                <div>
+                  {articles.map((e: IArticle) => (
                     <Article key={e.slug} article={e} />
-                  ))
-                ) : (
-                  <Typography style={{ color: "black", opacity: 0.6 }}>
-                    No article found yst
-                  </Typography>
-                )}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <Typography style={{ color: "black", opacity: 0.6 }}>
+                  No article found... yet
+                </Typography>
+              )}
             </MyTab>
             {pageCount && pageCount > 1 ? (
               <PageIndex

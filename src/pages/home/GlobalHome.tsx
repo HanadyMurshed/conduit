@@ -9,6 +9,7 @@ import { PageIndex } from "../../components/PageIndex";
 import { TagsPanel } from "../../components/TagPanel";
 import { IState } from "./IState";
 import { styles } from "./styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Home extends React.Component<{ classes: any }, IState> {
   state: IState = {
@@ -18,7 +19,8 @@ class Home extends React.Component<{ classes: any }, IState> {
     currentPage: 0,
     pageCount: 0,
     tabs: ["Global feed"],
-    currentTag: ""
+    currentTag: "",
+    loading: true
   };
 
   componentDidMount() {
@@ -27,10 +29,18 @@ class Home extends React.Component<{ classes: any }, IState> {
   }
 
   getGlobalFeed = (queryparams: any) => {
-    listArticles(queryparams).then((response: any) => {
-      const count = Math.ceil(response.data.articlesCount / 10);
-      this.setState({ articles: response.data.articles, pageCount: count });
-    });
+    listArticles(queryparams)
+      .then((response: any) => {
+        const count = Math.ceil(response.data.articlesCount / 10);
+        this.setState({
+          articles: response.data.articles,
+          pageCount: count,
+          loading: false
+        });
+      })
+      .catch((err: any) => {
+        this.setState({ loading: false });
+      });
   };
 
   getTags = () => {
@@ -56,6 +66,7 @@ class Home extends React.Component<{ classes: any }, IState> {
   handleTagClickEvent = (tag: string) => {
     this.setState(
       {
+        loading: true,
         currentTag: tag
       },
       () => this.getGlobalFeed({ limit: 10, tag: tag })
@@ -81,7 +92,8 @@ class Home extends React.Component<{ classes: any }, IState> {
       currentPage,
       pageCount,
       tabs,
-      currentTag
+      currentTag,
+      loading
     } = this.state;
 
     return (
@@ -97,17 +109,21 @@ class Home extends React.Component<{ classes: any }, IState> {
               tabs={currentTag !== "" ? [...tabs, `#${currentTag}`] : tabs}
               value={currentTag !== "" ? 1 : 0}
             >
-              <div>
-                {articles.length !== 0 ? (
-                  articles.map((e: IArticle) => (
+              {loading ? (
+                <div style={{ textAlign: "center" }}>
+                  <CircularProgress className={classes.progess} />
+                </div>
+              ) : articles.length !== 0 ? (
+                <div>
+                  {articles.map((e: IArticle) => (
                     <Article key={e.slug} article={e} />
-                  ))
-                ) : (
-                  <Typography style={{ color: "black", opacity: 0.6 }}>
-                    No article found yst
-                  </Typography>
-                )}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <Typography style={{ color: "black", opacity: 0.6 }}>
+                  No article found... yet
+                </Typography>
+              )}
             </MyTab>
             {pageCount && pageCount > 1 ? (
               <PageIndex

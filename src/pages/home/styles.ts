@@ -16,5 +16,10 @@ export const styles = {
       fontSize: 14,
       padding: 0
     }
+  },
+  progess: {
+    marginTop: 90,
+    width: 30,
+    color: colors.TextPrimaryColor
   }
 };
