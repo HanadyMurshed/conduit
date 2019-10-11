@@ -12,7 +12,9 @@ import {
   listArticles,
   getProfile,
   unFavoriteArticle,
-  FavoriteArticle
+  FavoriteArticle,
+  followUser,
+  unFollowUser
 } from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
 import Article from "../../components/article/Article";
@@ -166,7 +168,16 @@ class Profile extends React.Component<IProps, IState> {
     );
   };
 
-  handleFollowEvent = () => {};
+  handleFollowEvent = (username: string) => {
+    const { following } = this.state.author;
+    let fun: (username: string) => any;
+    following ? (fun = unFollowUser) : (fun = followUser);
+    fun(username)
+      .then((res: any) => {
+        this.setState({ author: res.data.profile });
+      })
+      .catch();
+  };
 
   handleEditProfileEvent = () => {
     this.setState({ toSetting: true });
@@ -186,7 +197,7 @@ class Profile extends React.Component<IProps, IState> {
       loadingArticles,
       loadingProfile
     } = this.state;
-    const { username, image } = author;
+    const { username, image, following } = author;
 
     if (toSetting) return <Redirect to="/settings" />;
     if (toHome) return <Redirect to="/" />;
@@ -205,12 +216,16 @@ class Profile extends React.Component<IProps, IState> {
             onClick={
               username === loggedUser
                 ? this.handleEditProfileEvent
-                : this.handleFollowEvent
+                : loggedUser
+                ? () => this.handleFollowEvent(username)
+                : () => {}
             }
             ButtonText={
               username === loggedUser
                 ? "Edit User Profile"
-                : `Follow ${username}`
+                : !following
+                ? `Follow ${username}`
+                : `Unfollow ${username}`
             }
           />
         </Grid>

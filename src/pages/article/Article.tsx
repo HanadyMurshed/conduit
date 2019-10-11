@@ -24,12 +24,11 @@ class Article extends React.Component<IProps, IState> {
       description: "",
       body: "",
       tagList: [],
-
       createdAt: "",
       updatedAt: "",
       favorited: false,
       favoritesCount: 0,
-      author: { username: "", email: "", bio: "", image: "" }
+      author: { username: "", following: false, bio: "", image: "" }
     },
     username: "",
     commentList: [],

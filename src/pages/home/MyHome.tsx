@@ -101,7 +101,8 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
         currentTag: tag,
         currentTab: 2,
         currentPage: 0,
-        loading: true
+        loading: true,
+        pageCount: 0
       },
       () => this.getGlobalFeed({ limit: 10, tag: tag })
     );
@@ -113,7 +114,8 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
         {
           currentTag: "",
           currentPage: 0,
-          loading: true
+          loading: true,
+          pageCount: 0
         },
         () => this.getGlobalFeed({ limit: 10 })
       );
@@ -121,7 +123,9 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
       this.setState(
         {
           currentTag: "",
-          currentPage: 0
+          currentPage: 0,
+          loading: true,
+          pageCount: 0
         },
         () => this.getYourFeed({ limit: 10 })
       );
