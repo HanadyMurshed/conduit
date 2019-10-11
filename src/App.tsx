@@ -15,10 +15,14 @@ import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { getCurrentUser } from "./api/server";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { PrivateRoute } from "./components/ProtectedRoute";
+import { IUser } from "./types/conduit.types";
 const style = {
-  router: { width: "100%" }
+  router: { width: "100%" },
+  link: {
+    textDecoration: "none"
+  }
 };
 const theme = createMuiTheme({
   typography: {
@@ -30,10 +34,14 @@ class App extends React.Component<{ classes: any }> {
     token: string | null;
     username: string | null;
     image: string | null;
+    bio: string | null;
+    email: string | null;
   } = {
     token: null,
     username: null,
-    image: null
+    image: null,
+    bio: null,
+    email: null
   };
 
   componentDidMount() {
@@ -60,15 +68,15 @@ class App extends React.Component<{ classes: any }> {
       .catch((err: any) => {});
   };
 
-  startSession = (token: string, username: string) => {
-    sessionStorage.setItem(
-      "data",
-      JSON.stringify({ token: token, username: username })
-    );
+  startSession = (user: IUser) => {
+    sessionStorage.setItem("data", JSON.stringify(user));
 
     this.setState({
-      token: token,
-      username: username
+      token: user.token,
+      username: user.username,
+      image: user.image,
+      email: user.email,
+      bio: user.bio
     });
   };
   endSession = () => {
@@ -76,51 +84,63 @@ class App extends React.Component<{ classes: any }> {
     this.setState(
       {
         username: null,
-        token: null
+        token: null,
+        image: null
       }
       // () => navigate("/")
     );
   };
 
-  getNavBarButtons() {
+  getNavBarButtons(classes: any) {
     if (this.state.token)
       return (
         <div>
-          <ButtonNavBar to="/" title="Home" />
-          <ButtonNavBar
-            to="/new-post"
-            title="New Article"
-            icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
-          />
-          <ButtonNavBar
-            to="/settings"
-            title="Settings"
-            icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
-          />
-          <ButtonNavBar
-            to={`/user/${this.state.username}`}
-            title={this.state.username ? this.state.username : "My Profile"}
-          />
+          <Link className={classes.link} to="/">
+            <ButtonNavBar title="Home" />
+          </Link>
+          <Link className={classes.link} to="/new-post">
+            <ButtonNavBar
+              title="New Article"
+              icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
+            />
+          </Link>
+          <Link className={classes.link} to="/settings">
+            <ButtonNavBar
+              title="Settings"
+              icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
+            />
+          </Link>
+          <Link className={classes.link} to={`/user/${this.state.username}`}>
+            <ButtonNavBar
+              title={this.state.username ? this.state.username : "My Profile"}
+            />
+          </Link>
         </div>
       );
     else
       return (
         <div>
-          <ButtonNavBar to="/" title="Home" />
-          <ButtonNavBar to="sign-up" title="Sign Up" />
-          <ButtonNavBar to="sign-in" title="Sign In" />
+          <Link className={classes.link} to="/">
+            <ButtonNavBar title="Home" />
+          </Link>
+          <Link className={classes.link} to="sign-up">
+            <ButtonNavBar title="Sign Up" />
+          </Link>
+          <Link className={classes.link} to="sign-in">
+            <ButtonNavBar title="Sign In" />
+          </Link>
         </div>
       );
   }
   render() {
     const { classes } = this.props;
-    const { username } = this.state;
+    const { username, image, bio, email } = this.state;
     return (
       <Router>
         <ThemeProvider theme={theme}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <NavBar>{this.getNavBarButtons()}</NavBar>
+              <NavBar>{this.getNavBarButtons(classes)}</NavBar>
             </Grid>
             <div className={classes.router}>
               <Switch>
@@ -171,6 +191,12 @@ class App extends React.Component<{ classes: any }> {
                   <SettingsPage
                     endSession={this.endSession}
                     handleUpdate={this.updateUser}
+                    user={{
+                      username: username + "",
+                      image: image + "",
+                      bio: bio + "",
+                      email: email + ""
+                    }}
                   />
                 </PrivateRoute>
                 <Route path="/">

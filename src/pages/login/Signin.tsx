@@ -51,7 +51,7 @@ class SignInPage extends React.Component<IProps, IState> {
           //start session
           const user: IUser = response.data.user;
           this.setState({ toHome: true });
-          startSession(user.token, user.username);
+          startSession(user);
         })
         .catch(() => {
           this.setState({ errors: ["email or password is invalid"] });

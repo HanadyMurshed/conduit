@@ -48,9 +48,9 @@ const useStyle = makeStyles({
 export const HeaderArticle: React.FC<{
   title: string;
   image?: string;
-  username?: string;
+  usernameLink?: JSX.Element;
   createdAt?: string;
-}> = ({ title, username, createdAt, image = defaultValues.avatar }) => {
+}> = ({ title, usernameLink, createdAt, image = defaultValues.avatar }) => {
   const classes = useStyle();
   return (
     <div className={classes.root}>
@@ -70,14 +70,7 @@ export const HeaderArticle: React.FC<{
               src={image}
             />
           }
-          title={
-            <Link
-              style={{ color: "white", textDecoration: "none" }}
-              to={`/user/${username}`}
-            >
-              <Typography>{username}</Typography>
-            </Link>
-          }
+          title={usernameLink}
           subheader={formatDate(createdAt + "")}
         />
       </div>

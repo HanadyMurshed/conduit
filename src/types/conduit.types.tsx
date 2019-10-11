@@ -21,7 +21,7 @@ export interface IUser {
   username: string;
   bio: string;
   image?: string;
-  emaik: string;
+  email: string;
   token: string;
 }
 

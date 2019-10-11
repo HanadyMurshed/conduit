@@ -3,7 +3,6 @@ import { Grid, withStyles, Typography } from "@material-ui/core";
 import { Link, Redirect } from "react-router-dom";
 import { HeaderArticle } from "../../components/HeaderArticle";
 import {
-  getAnArticle,
   getCurrentUser,
   getCommentsByArticles,
   deleteComment,
@@ -15,21 +14,10 @@ import { IProps } from "./IProps";
 import { IState } from "./IState";
 import { defaultValues } from "../../utils/SystemVariables";
 import { CommenShow } from "../../components/comment/CommentShow";
+import { colors } from "../../utils/SystemVariables";
 
 class Article extends React.Component<IProps, IState> {
   state: IState = {
-    article: {
-      slug: "",
-      title: "",
-      description: "",
-      body: "",
-      tagList: [],
-      createdAt: "",
-      updatedAt: "",
-      favorited: false,
-      favoritesCount: 0,
-      author: { username: "", following: false, bio: "", image: "" }
-    },
     username: "",
     commentList: [],
     currentComment: "",
@@ -38,8 +26,6 @@ class Article extends React.Component<IProps, IState> {
   };
 
   componentDidMount() {
-    const { slug } = this.props.match.params;
-
     getCurrentUser()
       .then((res: any) => {
         if (res.data.user.image) {
@@ -49,14 +35,6 @@ class Article extends React.Component<IProps, IState> {
         this.setState({
           username: res.data.user.username
         });
-      })
-      .catch();
-
-    getAnArticle(slug)
-      .then((response: any) => {
-        this.setState({ article: response.data.article }, () =>
-          this.getComments(response.data.article.slug)
-        );
       })
       .catch();
   }
@@ -95,14 +73,8 @@ class Article extends React.Component<IProps, IState> {
   };
   render() {
     const { classes } = this.props;
-    const {
-      username,
-      image,
-      article,
-      commentList,
-      currentComment,
-      toHome
-    } = this.state;
+    const { username, image, commentList, currentComment, toHome } = this.state;
+    const { article } = this.props.location.state;
     const { title, body, author, createdAt } = article;
     const { username: authoName, image: autherImage } = author;
 
@@ -115,13 +87,20 @@ class Article extends React.Component<IProps, IState> {
             createdAt={createdAt}
             title={title}
             image={autherImage}
-            username={authoName}
+            usernameLink={
+              <Link
+                style={{ color: "white", textDecoration: "none" }}
+                to={`/user/${authoName}`}
+              >
+                <Typography>{authoName}</Typography>
+              </Link>
+            }
           />
           <Grid className={classes.page} item xs={12}>
             <Typography>{body}</Typography>
             <div className={classes.footer}>
               {!isLogged ? (
-                <Typography>
+                <Typography style={{ paddingLeft: 200 }}>
                   <Link className={classes.link} to="/sign-in">
                     Sign in
                   </Link>{" "}
@@ -148,6 +127,19 @@ class Article extends React.Component<IProps, IState> {
                       deleteButtonShow={true}
                       key={e.id}
                       comment={e}
+                      usernameLink={
+                        <Link
+                          style={{
+                            textDecoration: "none",
+                            color: colors.TextPrimaryColor
+                          }}
+                          to={`/user/${e.author.username}`}
+                        >
+                          <Typography className={classes.username}>
+                            {e.author.username}
+                          </Typography>
+                        </Link>
+                      }
                       className={classes.comment}
                     />
                   );

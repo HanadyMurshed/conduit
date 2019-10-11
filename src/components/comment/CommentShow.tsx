@@ -12,11 +12,12 @@ export const CommenShow: React.FC<IProps> = ({
   className = "",
   deleteButtonShow = false,
   comment,
+  usernameLink,
   onClick = () => {}
 }) => {
   const classes = useStyle();
   const { body, createdAt, author, id } = comment;
-  const { username, image } = author;
+  const { image } = author;
   return (
     <div className={`${classes.root} ${className}`.trim()}>
       <div className={classes.topSection}>
@@ -27,12 +28,7 @@ export const CommenShow: React.FC<IProps> = ({
           src={image}
           className={`${classes.avatar} ${classes.avatarSmaller}`}
         />
-        <Link
-          style={{ textDecoration: "none", color: colors.TextPrimaryColor }}
-          to={`/user/${username}`}
-        >
-          <Typography className={classes.username}>{username}</Typography>
-        </Link>
+        {usernameLink}
         <Typography className={classes.createdAt}>
           {formatDate(createdAt + "")}
         </Typography>

@@ -3,7 +3,7 @@ import { Grid, withStyles } from "@material-ui/core";
 import { Settings } from "../../components/settings/Settings";
 import { IState } from "./IState";
 import { styles } from "./styles";
-import { getCurrentUser, updateUser } from "../../api/server";
+import { updateUser } from "../../api/server";
 import { IProps } from "./IProps";
 import { Redirect } from "react-router-dom";
 
@@ -20,17 +20,15 @@ class SettingsPage extends React.Component<IProps, IState> {
   };
 
   componentWillMount() {
-    getCurrentUser()
-      .then((response: any) => {
-        const { username, email, bio, image } = response.data.user;
-        this.setState({
-          username: username,
-          bio: bio,
-          email: email,
-          url: image
-        });
-      })
-      .catch((err: any) => this.setState({ toHome: true }));
+    if (this.props.user) {
+      const { username, bio, email, image } = this.props.user;
+      this.setState({
+        username: username,
+        bio: bio,
+        email: email,
+        url: image ? image : ""
+      });
+    }
   }
   handleURLChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({

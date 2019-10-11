@@ -57,13 +57,16 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
     getArticleFeed(queryparams)
       .then((response: any) => {
         const count = Math.ceil(response.data.articlesCount / 10);
+
         this.setState({
           articles: response.data.articles,
           pageCount: count,
           loading: false
         });
       })
-      .catch((err: any) => this.setState({ loading: false }));
+      .catch((err: any) => {
+        this.setState({ loading: false });
+      });
   };
 
   getTags = () => {
@@ -113,7 +116,6 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
       this.setState(
         {
           currentTag: "",
-          currentPage: 0,
           loading: true,
           pageCount: 0
         },
@@ -123,7 +125,6 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
       this.setState(
         {
           currentTag: "",
-          currentPage: 0,
           loading: true,
           pageCount: 0
         },

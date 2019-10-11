@@ -16,7 +16,7 @@ const styles = {
 class SignUpPage extends React.Component<
   {
     classes: any;
-    startSession: (tokenL: string, username: string) => void;
+    startSession: (user: IUser) => void;
   },
   IState
 > {
@@ -78,8 +78,8 @@ class SignUpPage extends React.Component<
         .then((response: any) => {
           //start session
           console.log(response);
-          const { token, username }: IUser = response.data.user;
-          this.setState({ toHome: true }, () => startSession(token, username));
+          const user: IUser = response.data.user;
+          this.setState({ toHome: true }, () => startSession(user));
         })
         .catch((er: any) => {
           console.log(er);

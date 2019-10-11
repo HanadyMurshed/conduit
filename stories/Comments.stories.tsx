@@ -10,7 +10,7 @@ storiesOf("Comments", module)
         body: "dsssssss",
         updatedAt: "",
         createdAt: "2019/5/2",
-        author: { username: "Hanady", bio: "no need", email: "Hanady" },
+        author: { username: "Hanady", bio: "no need", following: false },
         id: "sdfdsfsfd"
       }}
     />

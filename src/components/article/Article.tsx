@@ -99,7 +99,10 @@ class Article extends React.Component<IProps, IState> {
               fontWeight: "bold",
               color: colors.TextPrimaryColor
             }}
-            to={`/Article/${slug}`}
+            to={{
+              pathname: `/Article/${slug}`,
+              state: { article: this.props.article }
+            }}
           >
             <Typography className={classes.bodyTitle}>{title}</Typography>
             <Typography className={classes.bodyText}>{description}</Typography>

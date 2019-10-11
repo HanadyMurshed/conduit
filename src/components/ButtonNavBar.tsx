@@ -1,13 +1,9 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 import { colors, fontSize } from "../utils/SystemVariables";
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@material-ui/core";
 
 const useStyle = makeStyles(() => ({
-  link: {
-    textDecoration: "none"
-  },
   button: {
     background: "inherit",
     fontSize: fontSize.normal,
@@ -26,16 +22,13 @@ const useStyle = makeStyles(() => ({
 
 export const ButtonNavBar: React.FC<{
   title: string;
-  to?: string;
   icon?: JSX.Element;
-}> = ({ title, to = "/", icon, ...rest }) => {
+}> = ({ title, icon, ...rest }) => {
   const classes = useStyle();
   return (
-    <Link className={classes.link} to={to}>
-      <Button {...rest} className={classes.button}>
-        {icon}
-        {title}
-      </Button>
-    </Link>
+    <Button {...rest} className={classes.button}>
+      {icon}
+      {title}
+    </Button>
   );
 };
