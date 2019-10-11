@@ -18,6 +18,7 @@ import { getCurrentUser } from "./api/server";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { PrivateRoute } from "./components/ProtectedRoute";
 import { IUser } from "./types/conduit.types";
+import { Avatar } from "@material-ui/core";
 const style = {
   router: { width: "100%" },
   link: {
@@ -47,10 +48,13 @@ class App extends React.Component<{ classes: any }> {
   componentDidMount() {
     const jsonData = sessionStorage.getItem("data");
     if (jsonData) {
-      const data = JSON.parse(jsonData);
+      const user = JSON.parse(jsonData);
       this.setState({
-        token: data.token,
-        username: data.username
+        token: user.token,
+        username: user.username,
+        image: user.image,
+        email: user.email,
+        bio: user.bio
       });
     }
   }
@@ -58,11 +62,13 @@ class App extends React.Component<{ classes: any }> {
   updateUser = () => {
     getCurrentUser()
       .then((res: any) => {
-        const { token, username, image } = res.data.user;
+        const { token, username, image, email, bio } = res.data.user;
         this.setState({
           token: token,
           username: username,
-          image: image
+          image: image,
+          email: email,
+          bio: bio
         });
       })
       .catch((err: any) => {});
