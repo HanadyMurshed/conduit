@@ -18,7 +18,6 @@ import { getCurrentUser } from "./api/server";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { PrivateRoute } from "./components/ProtectedRoute";
 import { IUser } from "./types/conduit.types";
-import { Avatar } from "@material-ui/core";
 const style = {
   router: { width: "100%" },
   link: {

@@ -3,8 +3,6 @@ import { Avatar, makeStyles, Typography } from "@material-ui/core";
 import { style } from "./style";
 import Delete from "@material-ui/icons/Delete";
 import { IProps } from "./IProps";
-import { Link } from "react-router-dom";
-import { colors } from "../../utils/SystemVariables";
 import { formatDate } from "../../utils/Helpers";
 
 const useStyle = makeStyles(style);

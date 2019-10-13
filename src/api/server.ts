@@ -100,15 +100,6 @@ export function updateUser(body: any) {
 export function getProfile(username: string) {
   if (!username) return;
   const url = `${baseUrl}/profiles/${username}`;
-  const req = axios.get(url);
-  console.log(url);
-  req
-    .then((re: any) => {
-      console.log(re);
-    })
-    .catch((e: any) => {
-      console.log(`${baseUrl}/user`);
-    });
   return axios.get(url);
 }
 
@@ -163,12 +154,9 @@ export function listArticles(paramaeters: { [key: string]: any }) {
  * Returns most recent articles you follow
  */
 export function getArticleFeed(paramaeters?: any) {
-  if (!paramaeters) paramaeters = {};
   const url = `${baseUrl}/articles/feed`;
   const payload = {
-    params: {
-      paramaeters
-    }
+    params: paramaeters
   };
   return axios.get(url, payload);
 }

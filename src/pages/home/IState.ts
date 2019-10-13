@@ -8,6 +8,7 @@ export interface IState {
   tabs: string[];
   currentTag: string;
   loading: boolean;
+  loadingArticle: boolean;
 }
 
 export interface IStateLogged extends IState {

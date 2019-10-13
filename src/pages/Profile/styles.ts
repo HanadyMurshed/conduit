@@ -17,7 +17,7 @@ export const styles = {
       padding: 0
     }
   },
-  progress: {
+  progess: {
     margin: "auto",
     marginTop: 90,
     width: 30,

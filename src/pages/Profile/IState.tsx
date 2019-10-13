@@ -13,4 +13,5 @@ export interface IState {
   toHome: boolean;
   loadingProfile: boolean;
   loadingArticles: boolean;
+  loadingArticle: boolean;
 }

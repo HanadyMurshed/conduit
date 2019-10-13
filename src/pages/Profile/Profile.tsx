@@ -42,7 +42,8 @@ class Profile extends React.Component<IProps, IState> {
     toSetting: false,
     toHome: false,
     loadingProfile: true,
-    loadingArticles: true
+    loadingArticles: true,
+    loadingArticle: false
   };
   componentDidMount() {
     const { username } = this.props.match.params;
@@ -121,10 +122,13 @@ class Profile extends React.Component<IProps, IState> {
         this.setState({
           articles: response.data.articles,
           pageCount: count,
-          loadingArticles: false
+          loadingArticles: false,
+          loadingArticle: false
         });
       })
-      .catch((err: any) => this.setState({ loadingArticles: false }));
+      .catch((err: any) =>
+        this.setState({ loadingArticles: false, loadingArticle: false })
+      );
   };
 
   handleIndexClickEvent = (index: number) => {
@@ -147,7 +151,8 @@ class Profile extends React.Component<IProps, IState> {
 
     this.setState(
       {
-        currentPage: index
+        currentPage: index,
+        loadingArticle: true
       },
       () => fun()
     );
@@ -195,7 +200,8 @@ class Profile extends React.Component<IProps, IState> {
       toSetting,
       toHome,
       loadingArticles,
-      loadingProfile
+      loadingProfile,
+      loadingArticle
     } = this.state;
     const { username, image, following } = author;
 
@@ -204,7 +210,16 @@ class Profile extends React.Component<IProps, IState> {
     if (loadingProfile)
       return (
         <div style={{ textAlign: "center" }}>
-          <CircularProgress className={classes.progress} />;
+          <CircularProgress
+            style={{
+              margin: "auto",
+              marginTop: 90,
+              width: 30,
+              color: "black",
+              opacity: 0.6
+            }}
+          />
+          ;
         </div>
       );
     return (
@@ -253,6 +268,18 @@ class Profile extends React.Component<IProps, IState> {
                 </Typography>
               )}
             </MyTab>
+            {loadingArticle && (
+              <Typography
+                style={{
+                  color: "black",
+                  opacity: 0.8,
+                  fontSize: 14,
+                  marginTop: 40
+                }}
+              >
+                Loading Articles ...
+              </Typography>
+            )}
             {pageCount && pageCount > 1 ? (
               <PageIndex
                 onClick={this.handleIndexClickEvent}

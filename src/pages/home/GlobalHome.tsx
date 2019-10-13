@@ -20,7 +20,8 @@ class Home extends React.Component<{ classes: any }, IState> {
     pageCount: 0,
     tabs: ["Global feed"],
     currentTag: "",
-    loading: true
+    loading: true,
+    loadingArticle: false
   };
 
   componentDidMount() {
@@ -35,7 +36,8 @@ class Home extends React.Component<{ classes: any }, IState> {
         this.setState({
           articles: response.data.articles,
           pageCount: count,
-          loading: false
+          loading: false,
+          loadingArticle: false
         });
       })
       .catch((err: any) => {
@@ -50,23 +52,19 @@ class Home extends React.Component<{ classes: any }, IState> {
   };
 
   handleIndexClickEvent = (index: number) => {
-    this.setState(
-      {
-        currentPage: index
-      },
-      () =>
-        this.getGlobalFeed(
-          this.state.currentTag !== ""
-            ? { limit: 10, offset: index * 10, tag: this.state.currentTag }
-            : { limit: 10, offset: index * 10 }
-        )
+    this.setState({ loadingArticle: true, currentPage: index }, () =>
+      this.getGlobalFeed(
+        this.state.currentTag !== ""
+          ? { limit: 10, offset: index * 10, tag: this.state.currentTag }
+          : { limit: 10, offset: index * 10 }
+      )
     );
   };
 
   handleTagClickEvent = (tag: string) => {
     this.setState(
       {
-        loading: true,
+        loadingArticle: true,
         currentTag: tag
       },
       () => this.getGlobalFeed({ limit: 10, tag: tag })
@@ -93,7 +91,8 @@ class Home extends React.Component<{ classes: any }, IState> {
       pageCount,
       tabs,
       currentTag,
-      loading
+      loading,
+      loadingArticle
     } = this.state;
 
     return (
@@ -125,6 +124,19 @@ class Home extends React.Component<{ classes: any }, IState> {
                 </Typography>
               )}
             </MyTab>
+
+            {loadingArticle && (
+              <Typography
+                style={{
+                  color: "black",
+                  opacity: 0.8,
+                  fontSize: 14,
+                  marginTop: 40
+                }}
+              >
+                Loading Articles ...
+              </Typography>
+            )}
             {pageCount && pageCount > 1 ? (
               <PageIndex
                 onClick={this.handleIndexClickEvent}
