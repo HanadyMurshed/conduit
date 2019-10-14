@@ -5,4 +5,5 @@ export interface IState {
   image: string;
   currentComment: string;
   toHome: boolean;
+  article: IArticle;
 }

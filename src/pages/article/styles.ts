@@ -1,5 +1,5 @@
-import { colors, dims } from "../../utils/SystemVariables";
-export const styles = {
+import { colors, dims, fontSize } from "../../utils/SystemVariables";
+export const styles: import("jss").Style = {
   page: {
     width: dims.pageWidth + 40,
     margin: "auto",
@@ -37,5 +37,18 @@ export const styles = {
   comment: {
     margin: "auto",
     marginBottom: 15
+  },
+  username: {
+    float: "left",
+    paddingTop: 13,
+    paddingLeft: 2,
+    cursor: "pointer",
+
+    fontSize: fontSize.smaller,
+    color: colors.PrimaryColor,
+    "&:hover": {
+      color: colors.PrimaryDark,
+      textDecoration: "underline"
+    }
   }
 };

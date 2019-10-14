@@ -128,10 +128,10 @@ class App extends React.Component<{ classes: any }> {
           <Link className={classes.link} to="/">
             <ButtonNavBar title="Home" />
           </Link>
-          <Link className={classes.link} to="sign-up">
+          <Link className={classes.link} to="/sign-up">
             <ButtonNavBar title="Sign Up" />
           </Link>
-          <Link className={classes.link} to="sign-in">
+          <Link className={classes.link} to="/sign-in">
             <ButtonNavBar title="Sign In" />
           </Link>
         </div>

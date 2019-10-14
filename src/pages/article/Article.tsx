@@ -6,7 +6,8 @@ import {
   getCurrentUser,
   getCommentsByArticles,
   deleteComment,
-  addCommentToArticle
+  addCommentToArticle,
+  getAnArticle
 } from "../../api/server";
 import { styles } from "./styles";
 import { CommentWrite } from "../../components/comment/CommentWrite";
@@ -22,10 +23,32 @@ class Article extends React.Component<IProps, IState> {
     commentList: [],
     currentComment: "",
     image: defaultValues.avatar,
-    toHome: false
+    toHome: false,
+    article: {
+      slug: "",
+      title: "",
+      description: "",
+      body: "",
+      tagList: [],
+      createdAt: "",
+      updatedAt: "",
+      favorited: false,
+      favoritesCount: 0,
+      author: { username: "", bio: "", following: false, image: "" }
+    }
   };
 
   componentDidMount() {
+    if (this.props.location.state) {
+      this.setState({ article: this.props.location.state.article });
+    } else {
+      getAnArticle(this.props.match.params.slug)
+        .then((res: any) => {
+          if (res.data.article == {}) this.setState({ toHome: true });
+          this.setState({ article: res.data.article });
+        })
+        .catch((err: any) => this.setState({ toHome: true }));
+    }
     getCurrentUser()
       .then((res: any) => {
         if (res.data.user.image) {
@@ -37,6 +60,7 @@ class Article extends React.Component<IProps, IState> {
         });
       })
       .catch();
+    this.getComments(this.props.match.params.slug);
   }
   getComments = (slug: string) => {
     getCommentsByArticles(slug)
@@ -73,8 +97,14 @@ class Article extends React.Component<IProps, IState> {
   };
   render() {
     const { classes } = this.props;
-    const { username, image, commentList, currentComment, toHome } = this.state;
-    const { article } = this.props.location.state;
+    const {
+      username,
+      image,
+      commentList,
+      currentComment,
+      toHome,
+      article
+    } = this.state;
     const { title, body, author, createdAt } = article;
     const { username: authoName, image: autherImage } = author;
 
