@@ -8,16 +8,16 @@ import { SignInIProps } from "./IProps";
 
 const useStyle = makeStyles(style);
 export const SignIn: React.FC<SignInIProps> = ({
-  errors = [],
-  email = "",
-  password = "",
-  popperContent = "",
-  popperOpen = false,
-  onClick = () => {},
-  handleFocusInput = () => {},
-  handleEmailChange = () => {},
-  handlePasswordChange = () => {},
-  handleNoAccount = () => {}
+  errors,
+  email,
+  password,
+  popperContent,
+  popperOpen,
+  onClick,
+  handleFocusInput,
+  handleEmailChange,
+  handlePasswordChange,
+  handleNoAccount
 }) => {
   const classes = useStyle();
   return (
@@ -44,11 +44,27 @@ export const SignIn: React.FC<SignInIProps> = ({
           value={password}
           type="password"
         />
-        <PopperMsg open={popperOpen} id="email" content={popperContent} />
+        <PopperMsg
+          open={!!popperOpen}
+          id="email"
+          content={popperContent || ""}
+        />
       </div>
       <Button onClick={onClick} className={classes.button}>
         Sign in
       </Button>
     </div>
   );
+};
+SignIn.defaultProps = {
+  errors: [],
+  email: "",
+  password: "",
+  popperContent: "",
+  popperOpen: false,
+  onClick: () => {},
+  handleFocusInput: () => {},
+  handleEmailChange: () => {},
+  handlePasswordChange: () => {},
+  handleNoAccount: () => {}
 };

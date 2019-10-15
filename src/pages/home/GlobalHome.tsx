@@ -64,7 +64,7 @@ class Home extends React.Component<{ classes: any }, IState> {
   handleTagClickEvent = (tag: string) => {
     this.setState(
       {
-        loadingArticle: true,
+        loading: true,
         currentTag: tag
       },
       () => this.getGlobalFeed({ limit: 10, tag: tag })
@@ -76,6 +76,8 @@ class Home extends React.Component<{ classes: any }, IState> {
       this.setState(
         {
           currentTag: "",
+          loading: true,
+
           currentPage: 0
         },
         () => this.getGlobalFeed({ limit: 10 })
@@ -137,7 +139,7 @@ class Home extends React.Component<{ classes: any }, IState> {
                 Loading Articles ...
               </Typography>
             )}
-            {pageCount && pageCount > 1 ? (
+            {pageCount && pageCount > 1 && !loading ? (
               <PageIndex
                 onClick={this.handleIndexClickEvent}
                 style={{ marginTop: 20 }}

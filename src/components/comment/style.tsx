@@ -63,19 +63,7 @@ export const style: Style = {
       background: colors.PrimaryDark
     }
   },
-  username: {
-    float: "left",
-    paddingTop: 13,
-    paddingLeft: 2,
-    cursor: "pointer",
-
-    fontSize: fontSize.smaller,
-    color: colors.PrimaryColor,
-    "&:hover": {
-      color: colors.PrimaryDark,
-      textDecoration: "underline"
-    }
-  },
+ 
   createdAt: {
     paddingTop: 13,
     paddingLeft: 2,
