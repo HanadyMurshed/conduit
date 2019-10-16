@@ -16,6 +16,7 @@ import { IState } from "./IState";
 import { defaultValues } from "../../utils/SystemVariables";
 import { CommenShow } from "../../components/comment/CommentShow";
 import { colors } from "../../utils/SystemVariables";
+import SignInMsg from "../../container/SignInMsg";
 
 class Article extends React.Component<IProps, IState> {
   state: IState = {
@@ -108,7 +109,6 @@ class Article extends React.Component<IProps, IState> {
     const { title, body, author, createdAt } = article;
     const { username: authoName, image: autherImage } = author;
 
-    const { isLogged } = this.props;
     if (toHome) return <Redirect to="/" />;
     return (
       <Grid container style={{ paddingBottom: 100 }}>
@@ -129,26 +129,14 @@ class Article extends React.Component<IProps, IState> {
           <Grid className={classes.page} item xs={12}>
             <Typography>{body}</Typography>
             <div className={classes.footer}>
-              {!isLogged ? (
-                <Typography style={{ paddingLeft: 200 }}>
-                  <Link className={classes.link} to="/sign-in">
-                    Sign in
-                  </Link>{" "}
-                  or{" "}
-                  <Link className={classes.link} to="/sign-up">
-                    sign un
-                  </Link>{" "}
-                  to add comments on this article.
-                </Typography>
-              ) : (
-                <CommentWrite
-                  onChange={this.handleCommentChange}
-                  onClick={this.handlePostComment}
-                  comment={currentComment}
-                  image={image}
-                  className={classes.comment}
-                />
-              )}
+              <SignInMsg />
+              <CommentWrite
+                onChange={this.handleCommentChange}
+                onClick={this.handlePostComment}
+                comment={currentComment}
+                image={image}
+                className={classes.comment}
+              />
               {commentList.map(e => {
                 if (e.author.username === username)
                   return (

@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export interface IArticle {
   slug: string;
   title: string;

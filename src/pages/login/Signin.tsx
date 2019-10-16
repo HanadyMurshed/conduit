@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import { SignIn } from "../../components/sign-in-up/SignIn";
-import { login } from "../../api/server";
-import { IUser } from "../../types/conduit.types";
 import { IState } from "./IState";
 import { IProps } from "./IProps";
 import { styles } from "./styles";
 import { Redirect } from "react-router";
+import { loginAction } from "../../actions/login";
+import { connect } from "react-redux";
 
 class SignInPage extends React.Component<IProps, IState> {
   state: IState = {
@@ -27,9 +27,10 @@ class SignInPage extends React.Component<IProps, IState> {
       popperOpen: false
     });
   };
+
   handleLogin = () => {
     const { email, password } = this.state;
-    const { startSession } = this.props;
+
     if (email.charAt(0) === "@")
       this.setState({
         popperOpen: true,
@@ -46,16 +47,7 @@ class SignInPage extends React.Component<IProps, IState> {
         popperContent: `Please include an '@' in the email address. ${email} is missing an '@' `
       });
     else {
-      login({ email: email, password: password })
-        .then((response: any) => {
-          //start session
-          const user: IUser = response.data.user;
-          this.setState({ toHome: true });
-          startSession(user);
-        })
-        .catch(() => {
-          this.setState({ errors: ["email or password is invalid"] });
-        });
+      this.props.loginAction({ email: email, password: password });
     }
   };
 
@@ -78,10 +70,10 @@ class SignInPage extends React.Component<IProps, IState> {
       password,
       popperContent,
       popperOpen,
-      toHome,
       toSignInUp
     } = this.state;
-    if (toHome) return <Redirect to="/" />;
+    console.log(this.props.user);
+    if (this.props.user) return <Redirect to="/" />;
     if (toSignInUp) return <Redirect to="/sign-up" />;
     return (
       <Grid container className={classes.page}>
@@ -101,4 +93,13 @@ class SignInPage extends React.Component<IProps, IState> {
     );
   }
 }
-export default withStyles(styles)(SignInPage);
+const mapState = (state: any) => {
+  return { user: state.user };
+};
+
+export default withStyles(styles)(
+  connect(
+    mapState,
+    { loginAction }
+  )(SignInPage)
+);

@@ -73,30 +73,6 @@ class Profile extends React.Component<IProps, IState> {
     favoriteToggle.then((res: any) => {}).catch();
   };
 
-  // static getDerivedStateFromProps(props: IProps, prevState: IState) {
-  //   const { username } = props;
-  //   console.log(props, prevState);
-  //   if (username === prevState.author.username) return null;
-  //   else if (props.username) {
-  //     getProfile(props.username).then((response: any) => {
-  //       const author = response.data.profile;
-
-  //       listArticles({ author: props.username, limit: 10 }).then(
-  //         (response: any) => {
-  //           const count = Math.ceil(response.data.articlesCount / 10);
-  //           const articles = response.data.articles;
-  //           console.log("halllo");
-  //           return {
-  //             author: author,
-  //             articles: articles,
-  //             pageCount: count
-  //           };
-  //         }
-  //       );
-  //     });
-  //   }
-  //   return null;
-  // }
   componentWillReceiveProps(nextProps: IProps) {
     const { username } = nextProps.match.params;
     if (username !== this.state.username) {

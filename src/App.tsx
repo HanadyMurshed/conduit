@@ -1,7 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { NavBar } from "./components/NavBar";
-import { ButtonNavBar } from "./components/ButtonNavBar";
+import NavBar from "./container/NavBar";
 import { withStyles } from "@material-ui/styles";
 import Home from "./pages/home/Home";
 import SignUpPage from "./pages/signup/SignUp";
@@ -10,12 +9,10 @@ import NewPostPage from "./pages/newArticle/NewArticle";
 import SettingsPage from "./pages/settings/Settings";
 import ArticlePage from "./pages/article/Article";
 import UserPage from "./pages/Profile/Profile";
-import SettingsIcon from "@material-ui/icons/Settings";
-import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { getCurrentUser } from "./api/server";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { PrivateRoute } from "./components/ProtectedRoute";
 import { IUser } from "./types/conduit.types";
 const style = {
@@ -96,56 +93,15 @@ class App extends React.Component<{ classes: any }> {
     );
   };
 
-  getNavBarButtons(classes: any) {
-    if (this.state.token)
-      return (
-        <div>
-          <Link className={classes.link} to="/">
-            <ButtonNavBar title="Home" />
-          </Link>
-          <Link className={classes.link} to="/new-post">
-            <ButtonNavBar
-              title="New Article"
-              icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
-            />
-          </Link>
-          <Link className={classes.link} to="/settings">
-            <ButtonNavBar
-              title="Settings"
-              icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
-            />
-          </Link>
-          <Link className={classes.link} to={`/user/${this.state.username}`}>
-            <ButtonNavBar
-              title={this.state.username ? this.state.username : "My Profile"}
-            />
-          </Link>
-        </div>
-      );
-    else
-      return (
-        <div>
-          <Link className={classes.link} to="/">
-            <ButtonNavBar title="Home" />
-          </Link>
-          <Link className={classes.link} to="/sign-up">
-            <ButtonNavBar title="Sign Up" />
-          </Link>
-          <Link className={classes.link} to="/sign-in">
-            <ButtonNavBar title="Sign In" />
-          </Link>
-        </div>
-      );
-  }
   render() {
     const { classes } = this.props;
-    const { username, image, bio, email } = this.state;
+    const { username } = this.state;
     return (
       <Router>
         <ThemeProvider theme={theme}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <NavBar>{this.getNavBarButtons(classes)}</NavBar>
+              <NavBar />
             </Grid>
             <div className={classes.router}>
               <Switch>
@@ -172,15 +128,9 @@ class App extends React.Component<{ classes: any }> {
                     path="/sign-in"
                   />
                 </PrivateRoute>
-                <Route
-                  path="/Article/:slug"
-                  render={(props: any) => (
-                    <ArticlePage
-                      {...props}
-                      isLogged={Boolean(this.state.token)}
-                    />
-                  )}
-                ></Route>
+                {/* <Route path="/Article/:slug">
+                  <ArticlePage />
+                </Route> */}
                 <PrivateRoute
                   to="/"
                   authentocationRequired={true}
@@ -196,16 +146,10 @@ class App extends React.Component<{ classes: any }> {
                   <SettingsPage
                     endSession={this.endSession}
                     handleUpdate={this.updateUser}
-                    user={{
-                      username: username + "",
-                      image: image + "",
-                      bio: bio + "",
-                      email: email + ""
-                    }}
                   />
                 </PrivateRoute>
                 <Route path="/">
-                  <Home isLogged={Boolean(this.state.token)} />
+                  <Home />
                 </Route>
               </Switch>
               {/* <NotFound default /> */}
