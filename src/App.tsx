@@ -1,7 +1,10 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import NavBar from "./container/NavBar";
 import { withStyles } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+import NavBar from "./container/NavBar";
+import { PrivateRoute } from "./container/ProtectedRoute";
 import Home from "./pages/home/Home";
 import SignUpPage from "./pages/signup/SignUp";
 import SignInPage from "./pages/login/Signin";
@@ -9,11 +12,8 @@ import NewPostPage from "./pages/newArticle/NewArticle";
 import SettingsPage from "./pages/settings/Settings";
 import ArticlePage from "./pages/article/Article";
 import UserPage from "./pages/Profile/Profile";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
 import { getCurrentUser } from "./api/server";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { PrivateRoute } from "./components/ProtectedRoute";
 import { IUser } from "./types/conduit.types";
 const style = {
   router: { width: "100%" },
