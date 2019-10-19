@@ -8,8 +8,8 @@
 //  );
 
 export const colors = {
-  PrimaryColor: "#5cb85c",
-  PrimaryDark: "#458545",
+  PrimaryColor: "orange",
+  PrimaryDark: "black",
   TextPrimaryColor: "#666666",
   TextSecondayColor: "#b2b2b2",
   TagBackgroundColor: "#818a91",
@@ -33,10 +33,12 @@ export const fontSize = {
   small: 16,
   smaller: 12
 };
+
 export const strings = {
   websiteName: "conduit",
   HeaderWelcomeMessage: "A place to share your knowledge"
 };
+
 export const defaultValues = {
   avatar: "https://static.productionready.io/images/smiley-cyrus.jpg"
 };

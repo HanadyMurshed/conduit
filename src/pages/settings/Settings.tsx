@@ -86,7 +86,7 @@ class SettingsPage extends React.Component<IProps, IState> {
     }
   };
   render() {
-    const { classes, endSession } = this.props;
+    const { classes } = this.props;
     const { username, bio, email, url, password, toHome } = this.state;
     if (toHome) return <Redirect to="/" />;
     return (
@@ -98,7 +98,6 @@ class SettingsPage extends React.Component<IProps, IState> {
           handleURLChange={this.handleURLChange}
           handleUsernameChange={this.handleUsernameChange}
           handleOnClickUpdate={this.handleOnClickUpdate}
-          handleOnClickLogOut={endSession}
           userName={username}
           email={email}
           bio={bio}

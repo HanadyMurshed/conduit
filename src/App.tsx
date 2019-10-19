@@ -14,7 +14,8 @@ import ArticlePage from "./pages/article/Article";
 import UserPage from "./pages/Profile/Profile";
 import { getCurrentUser } from "./api/server";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { IUser } from "./types/conduit.types";
+import { setUserInfo } from "./actions/setUserInfo";
+import { connect } from "react-redux";
 const style = {
   router: { width: "100%" },
   link: {
@@ -26,32 +27,17 @@ const theme = createMuiTheme({
     fontFamily: ["Merriweather Sans", "Titillium Web"].join(",")
   }
 });
-class App extends React.Component<{ classes: any }> {
-  state: {
-    token: string | null;
-    username: string | null;
-    image: string | null;
-    bio: string | null;
-    email: string | null;
-  } = {
-    token: null,
-    username: null,
-    image: null,
-    bio: null,
-    email: null
-  };
 
+class App extends React.Component<{
+  classes: any;
+  setUserInfo: any;
+  user: any;
+}> {
   componentDidMount() {
     const jsonData = sessionStorage.getItem("data");
     if (jsonData) {
       const user = JSON.parse(jsonData);
-      this.setState({
-        token: user.token,
-        username: user.username,
-        image: user.image,
-        email: user.email,
-        bio: user.bio
-      });
+      this.props.setUserInfo(user);
     }
   }
 
@@ -59,43 +45,13 @@ class App extends React.Component<{ classes: any }> {
     getCurrentUser()
       .then((res: any) => {
         const { token, username, image, email, bio } = res.data.user;
-        this.setState({
-          token: token,
-          username: username,
-          image: image,
-          email: email,
-          bio: bio
-        });
+        this.props.setUserInfo(res.data.user);
       })
       .catch((err: any) => {});
   };
 
-  startSession = (user: IUser) => {
-    sessionStorage.setItem("data", JSON.stringify(user));
-
-    this.setState({
-      token: user.token,
-      username: user.username,
-      image: user.image,
-      email: user.email,
-      bio: user.bio
-    });
-  };
-  endSession = () => {
-    sessionStorage.clear();
-    this.setState(
-      {
-        username: null,
-        token: null,
-        image: null
-      }
-      // () => navigate("/")
-    );
-  };
-
   render() {
     const { classes } = this.props;
-    const { username } = this.state;
     return (
       <Router>
         <ThemeProvider theme={theme}>
@@ -107,26 +63,21 @@ class App extends React.Component<{ classes: any }> {
               <Switch>
                 <Route
                   path="/user/:username"
-                  render={(props: any) => (
-                    <UserPage {...props} loggedUser={username} />
-                  )}
+                  render={(props: any) => <UserPage {...props} />}
                 />
                 <PrivateRoute
                   to="/"
                   authentocationRequired={false}
                   path="/sign-up"
                 >
-                  <SignUpPage startSession={this.startSession} />
+                  <SignUpPage />
                 </PrivateRoute>
                 <PrivateRoute
                   to="/"
                   authentocationRequired={false}
                   path="/sign-in"
                 >
-                  <SignInPage
-                    startSession={this.startSession}
-                    path="/sign-in"
-                  />
+                  <SignInPage path="/sign-in" />
                 </PrivateRoute>
                 {/* <Route path="/Article/:slug">
                   <ArticlePage />
@@ -143,10 +94,7 @@ class App extends React.Component<{ classes: any }> {
                   authentocationRequired={true}
                   path="/settings"
                 >
-                  <SettingsPage
-                    endSession={this.endSession}
-                    handleUpdate={this.updateUser}
-                  />
+                  <SettingsPage handleUpdate={this.updateUser} />
                 </PrivateRoute>
                 <Route path="/">
                   <Home />
@@ -154,11 +102,19 @@ class App extends React.Component<{ classes: any }> {
               </Switch>
               {/* <NotFound default /> */}
             </div>
-          </Grid>{" "}
+          </Grid>
         </ThemeProvider>
       </Router>
     );
   }
 }
 
-export default withStyles(style)(App);
+const mapState = (state: any) => ({ user: state.user });
+const mapDisptach = { setUserInfo };
+
+export default withStyles(style)(
+  connect(
+    mapState,
+    mapDisptach
+  )(App)
+);

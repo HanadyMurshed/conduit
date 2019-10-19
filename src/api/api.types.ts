@@ -11,5 +11,11 @@ export interface CreatedArticleRequest {
   tagList?: string[];
 }
 
-export type loginRequest = Pick<RegisterUserRequest, "email" | "password">;
+export interface ArticleKistQueryParama {
+  limit?: number;
+  offset?: number;
+  auther?: string;
+  favorited?: string;
+}
 
+export type LoginRequestType = Pick<RegisterUserRequest, "email" | "password">;

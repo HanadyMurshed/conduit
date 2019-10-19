@@ -16,7 +16,6 @@ const styles = {
 class SignUpPage extends React.Component<
   {
     classes: any;
-    startSession: (user: IUser) => void;
   },
   IState
 > {
@@ -38,7 +37,6 @@ class SignUpPage extends React.Component<
   };
   handleRegester = () => {
     const { email, username, password } = this.state;
-    const { startSession } = this.props;
     let error = [];
     if (email === "") error.push("email can't be blank");
     else if (email.charAt(0) === "@") {
@@ -79,7 +77,6 @@ class SignUpPage extends React.Component<
           //start session
           console.log(response);
           const user: IUser = response.data.user;
-          this.setState({ toHome: true }, () => startSession(user));
         })
         .catch((er: any) => {
           console.log(er);

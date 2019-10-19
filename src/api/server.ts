@@ -1,7 +1,8 @@
 import {
   RegisterUserRequest,
   CreatedArticleRequest,
-  loginRequest
+  LoginRequestType,
+  ArticleKistQueryParama
 } from "./api.types";
 
 const baseUrl = "https://conduit.productionready.io/api";
@@ -37,7 +38,7 @@ axios.interceptors.request.use(
   }
 );
 
-export function login(user: loginRequest) {
+export function login(user: LoginRequestType) {
   const url = `${baseUrl}/users/login`;
   const payload = {
     user: user
@@ -137,7 +138,7 @@ export function unFollowUser(username: string) {
  * optional offset/skip default 20
  * Returns most recent articles globally by default
  */
-export function listArticles(paramaeters: { [key: string]: any }) {
+export function listArticles(paramaeters: ArticleKistQueryParama) {
   const url = `${baseUrl}/articles/`;
   const payload = {
     params: paramaeters

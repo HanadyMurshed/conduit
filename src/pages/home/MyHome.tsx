@@ -16,7 +16,6 @@ import {
 import { IArticle } from "../../types/conduit.types";
 import Article from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
-import { TagsPanel } from "../../components/TagPanel";
 import { styles } from "./styles";
 import { IStateLogged } from "./IState";
 
@@ -213,11 +212,11 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <TagsPanel
+            {/* <TagsPanel
               onClick={this.handleTagClickEvent}
               tags={tags}
               active={currentTag}
-            />
+            /> */}
           </Grid>
         </Grid>
       </Grid>

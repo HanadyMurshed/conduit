@@ -1,13 +1,13 @@
-import { loginRequest } from "../api/api.types";
+import { LoginRequestType } from "../api/api.types";
 
-export const LOGGIN_REQ = "loggin";
+export const LOGGIN_REQUEST = "LOGIN_REQUEST";
 
-export const loginAction = (user: loginRequest) => ({
-  type: LOGGIN_REQ,
+export const loginAction = (user: LoginRequestType) => ({
+  type: LOGGIN_REQUEST,
   payload: user
 });
 
 export interface LoginAction {
   type: string;
-  payload: loginRequest;
+  payload: LoginRequestType;
 }

@@ -2,14 +2,14 @@ import * as React from "react";
 import { Grid, withStyles, Typography } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { Header } from "../../components/Header";
-import { listArticles, getTags } from "../../api/server";
+import { listArticles } from "../../api/server";
 import { IArticle } from "../../types/conduit.types";
 import Article from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
-import { TagsPanel } from "../../components/TagPanel";
 import { IState } from "./IState";
 import { styles } from "./styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import TagsPanel from "../../container/TagPanel/TagPanel";
 
 class Home extends React.Component<{ classes: any }, IState> {
   state: IState = {
@@ -26,7 +26,6 @@ class Home extends React.Component<{ classes: any }, IState> {
 
   componentDidMount() {
     this.getGlobalFeed({ limit: 10 });
-    this.getTags();
   }
 
   getGlobalFeed = (queryparams: any) => {
@@ -43,12 +42,6 @@ class Home extends React.Component<{ classes: any }, IState> {
       .catch((err: any) => {
         this.setState({ loading: false });
       });
-  };
-
-  getTags = () => {
-    getTags().then((response: any) => {
-      this.setState({ tags: response.data.tags });
-    });
   };
 
   handleIndexClickEvent = (index: number) => {
@@ -88,7 +81,6 @@ class Home extends React.Component<{ classes: any }, IState> {
     const { classes } = this.props;
     const {
       articles,
-      tags,
       currentPage,
       pageCount,
       tabs,
@@ -150,11 +142,7 @@ class Home extends React.Component<{ classes: any }, IState> {
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <TagsPanel
-              onClick={this.handleTagClickEvent}
-              tags={tags}
-              active={currentTag}
-            />
+            <TagsPanel />
           </Grid>
         </Grid>
       </Grid>

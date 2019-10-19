@@ -11,6 +11,7 @@ class Home extends React.Component<RouteComponentProps & { user: IUser }> {
     return <GlobalHome />;
   }
 }
+
 const mapState = (state: any) => ({
   user: state.user
 });

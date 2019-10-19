@@ -7,10 +7,10 @@ import { styles } from "./styles";
 import { Redirect } from "react-router";
 import { loginAction } from "../../actions/login";
 import { connect } from "react-redux";
+import { AppState } from "../../reducers/rootReducer";
 
 class SignInPage extends React.Component<IProps, IState> {
   state: IState = {
-    toHome: false,
     errors: [],
     email: "",
     password: "",
@@ -18,9 +18,6 @@ class SignInPage extends React.Component<IProps, IState> {
     popperOpen: false,
     toSignInUp: false
   };
-  componentDidMount() {
-    this.setState({ toHome: Boolean(sessionStorage.getItem("token")) });
-  }
 
   handleEmailFocus = () => {
     this.setState({
@@ -63,7 +60,7 @@ class SignInPage extends React.Component<IProps, IState> {
     });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, loggedIn } = this.props;
     const {
       errors,
       email,
@@ -72,8 +69,7 @@ class SignInPage extends React.Component<IProps, IState> {
       popperOpen,
       toSignInUp
     } = this.state;
-    console.log(this.props.user);
-    if (this.props.user) return <Redirect to="/" />;
+    if (loggedIn) return <Redirect to="/" />;
     if (toSignInUp) return <Redirect to="/sign-up" />;
     return (
       <Grid container className={classes.page}>
@@ -93,8 +89,8 @@ class SignInPage extends React.Component<IProps, IState> {
     );
   }
 }
-const mapState = (state: any) => {
-  return { user: state.user };
+const mapState = (state: AppState) => {
+  return { loggedIn: state.system.loggedIn };
 };
 
 export default withStyles(styles)(

@@ -15,13 +15,13 @@ export type IProfile = Pick<IUser, "username" | "bio" | "image"> & {
   following: boolean;
 };
 
-export interface IUser {
+export type IUser = {
   username: string;
   bio: string;
   image?: string;
   email: string;
   token: string;
-}
+};
 
 export interface IComment {
   id: string;
