@@ -5,6 +5,9 @@ import { IState } from "./IState";
 import { register } from "../../api/server";
 import { IUser } from "../../types/conduit.types";
 import { Redirect } from "react-router";
+import { AppState } from "../../reducers/rootReducer";
+import { connect } from "react-redux";
+import { registerAction } from "./duck/actions";
 
 const styles = {
   page: {
@@ -16,12 +19,13 @@ const styles = {
 class SignUpPage extends React.Component<
   {
     classes: any;
+    registerAction: any;
+    loggedIn: boolean;
   },
   IState
 > {
   state: IState = {
     toSignInUp: false,
-    toHome: false,
     errors: [],
     email: "",
     username: "",
@@ -67,24 +71,14 @@ class SignUpPage extends React.Component<
     if (password === "") error.push("password can't be blank");
     else if (password.length < 8)
       error.push("password is too short (minimum is 8 characters");
-
     if (error.length !== 0) {
       this.setState({ errors: error });
     } else {
-      console.log(username, email, password);
-      register({ username: username, email: email, password: password })
-        .then((response: any) => {
-          //start session
-          console.log(response);
-          const user: IUser = response.data.user;
-        })
-        .catch((er: any) => {
-          console.log(er);
-
-          this.setState({
-            errors: ["email, username or password is invalid"]
-          });
-        });
+      this.props.registerAction({
+        username: username,
+        email: email,
+        password: password
+      });
     }
   };
 
@@ -101,9 +95,8 @@ class SignUpPage extends React.Component<
     this.setState({ toSignInUp: true });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, loggedIn } = this.props;
     const {
-      toHome,
       email,
       password,
       username,
@@ -112,7 +105,7 @@ class SignUpPage extends React.Component<
       errors,
       toSignInUp
     } = this.state;
-    if (toHome) return <Redirect to="/" />;
+    if (loggedIn) return <Redirect to="/" />;
     if (toSignInUp) return <Redirect to="/sign-in" />;
     return (
       <Grid container className={classes.page}>
@@ -134,7 +127,18 @@ class SignUpPage extends React.Component<
     );
   }
 }
-export default withStyles(styles)(SignUpPage);
+
+const mapState = (state: AppState) => {
+  return { loggedIn: state.system.loggedIn };
+};
+
+export default withStyles(styles)(
+  connect(
+    mapState,
+    { registerAction }
+  )(SignUpPage)
+);
+
 function validateEmail(email: string) {
   var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(String(email).toLowerCase());

@@ -14,8 +14,9 @@ import ArticlePage from "./pages/article/Article";
 import UserPage from "./pages/Profile/Profile";
 import { getCurrentUser } from "./api/server";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { setUserInfo } from "./actions/setUserInfo";
+import { updateSession } from "./components/auth/duck/actions";
 import { connect } from "react-redux";
+import { IUser } from "./types/conduit.types";
 const style = {
   router: { width: "100%" },
   link: {
@@ -30,22 +31,21 @@ const theme = createMuiTheme({
 
 class App extends React.Component<{
   classes: any;
-  setUserInfo: any;
-  user: any;
+  updateSession: any;
+  user: IUser;
 }> {
   componentDidMount() {
     const jsonData = sessionStorage.getItem("data");
     if (jsonData) {
       const user = JSON.parse(jsonData);
-      this.props.setUserInfo(user);
+      this.props.updateSession({ user: user, loggedIn: true });
     }
   }
 
   updateUser = () => {
     getCurrentUser()
       .then((res: any) => {
-        const { token, username, image, email, bio } = res.data.user;
-        this.props.setUserInfo(res.data.user);
+        this.props.updateSession(res.data.user);
       })
       .catch((err: any) => {});
   };
@@ -106,7 +106,7 @@ class App extends React.Component<{
 }
 
 const mapState = (state: any) => ({ user: state.user });
-const mapDisptach = { setUserInfo };
+const mapDisptach = { updateSession };
 
 export default withStyles(style)(
   connect(

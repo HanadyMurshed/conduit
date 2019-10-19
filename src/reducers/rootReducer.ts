@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { systemReducer } from "../components/auth/duck/reducer";
 import { loginReducer } from "../pages/login/duck/reducer";
-
+import { registerReducer } from "../pages/signup/duck/reducer";
 import { tagReducer } from "../container/TagPanel/duck/reducer";
 
 import articleReducer from "./articleReducer";
@@ -9,6 +9,7 @@ import articleReducer from "./articleReducer";
 const rootReducer = combineReducers({
   system: systemReducer,
   loginReducer,
+  registerReducer,
   articleReducer,
   tags: tagReducer
 });
