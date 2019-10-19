@@ -3,17 +3,19 @@ import { RouteComponentProps } from "@reach/router";
 import GlobalHome from "./GlobalHome";
 import MyHome from "./MyHome";
 import { connect } from "react-redux";
-import { IUser } from "../../types/conduit.types";
+import { AppState } from "../../reducers/rootReducer";
 
-class Home extends React.Component<RouteComponentProps & { user: IUser }> {
+class Home extends React.Component<
+  RouteComponentProps & { loggedIn: boolean }
+> {
   render() {
-    if (this.props.user) return <MyHome />;
+    if (this.props.loggedIn) return <MyHome />;
     return <GlobalHome />;
   }
 }
 
-const mapState = (state: any) => ({
-  user: state.user
+const mapState = (state: AppState) => ({
+  loggedIn: state.system.loggedIn
 });
 
 export default connect(mapState)(Home);

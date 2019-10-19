@@ -18,6 +18,7 @@ import Article from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { styles } from "./styles";
 import { IStateLogged } from "./IState";
+import TagsPanel from "../../container/TagPanel/TagPanel";
 
 class Home extends React.Component<{ classes: any }, IStateLogged> {
   state: IStateLogged = {
@@ -212,11 +213,7 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
           </Grid>
 
           <Grid item xs={12} md={3}>
-            {/* <TagsPanel
-              onClick={this.handleTagClickEvent}
-              tags={tags}
-              active={currentTag}
-            /> */}
+            <TagsPanel />
           </Grid>
         </Grid>
       </Grid>

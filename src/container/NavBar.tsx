@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 import SettingsIcon from "@material-ui/icons/Settings";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { ButtonNavBar } from "../components/ButtonNavBar";
+import { AppState } from "../reducers/rootReducer";
 
-const mapState = (state: any) => {
-  return { user: state.user };
-};
+const mapState = (state: AppState) => ({
+  loggedIn: state.system.loggedIn,
+  user: state.system.user
+});
 
 const useStyle = makeStyles({
   link: {
@@ -18,48 +20,53 @@ const useStyle = makeStyles({
   }
 });
 
-const MyNavBar = (props: any) => {
+const MyNavBar: React.FC<{ loggedIn: boolean; user: IUser }> = ({
+  loggedIn,
+  user
+}) => {
   const classes = useStyle();
-  return <NavBar>{getNavBarButtons(props.user, classes)}</NavBar>;
+  const getNavBarButtons = () => {
+    if (loggedIn)
+      return (
+        <div>
+          <Link className={classes.link} to="/">
+            <ButtonNavBar title="Home" />
+          </Link>
+          <Link className={classes.link} to="/new-post">
+            <ButtonNavBar
+              title="New Article"
+              icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
+            />
+          </Link>
+          <Link className={classes.link} to="/settings">
+            <ButtonNavBar
+              title="Settings"
+              icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
+            />
+          </Link>
+          <Link className={classes.link} to={`/user/${user.username}`}>
+            <ButtonNavBar
+              title={user.username ? user.username : "My Profile"}
+            />
+          </Link>
+        </div>
+      );
+    else
+      return (
+        <div>
+          <Link className={classes.link} to="/">
+            <ButtonNavBar title="Home" />
+          </Link>
+          <Link className={classes.link} to="sign-up">
+            <ButtonNavBar title="Sign Up" />
+          </Link>
+          <Link className={classes.link} to="sign-in">
+            <ButtonNavBar title="Sign In" />
+          </Link>
+        </div>
+      );
+  };
+  return <NavBar>{getNavBarButtons()}</NavBar>;
 };
 
-const getNavBarButtons = (user: IUser, classes: any) => {
-  if (user)
-    return (
-      <div>
-        <Link className={classes.link} to="/">
-          <ButtonNavBar title="Home" />
-        </Link>
-        <Link className={classes.link} to="/new-post">
-          <ButtonNavBar
-            title="New Article"
-            icon={<OpenInNewIcon style={{ fontSize: 15, paddingRight: 4 }} />}
-          />
-        </Link>
-        <Link className={classes.link} to="/settings">
-          <ButtonNavBar
-            title="Settings"
-            icon={<SettingsIcon style={{ fontSize: 15, paddingRight: 4 }} />}
-          />
-        </Link>
-        <Link className={classes.link} to={`/user/${user.username}`}>
-          <ButtonNavBar title={user.username ? user.username : "My Profile"} />
-        </Link>
-      </div>
-    );
-  else
-    return (
-      <div>
-        <Link className={classes.link} to="/">
-          <ButtonNavBar title="Home" />
-        </Link>
-        <Link className={classes.link} to="sign-up">
-          <ButtonNavBar title="Sign Up" />
-        </Link>
-        <Link className={classes.link} to="sign-in">
-          <ButtonNavBar title="Sign In" />
-        </Link>
-      </div>
-    );
-};
 export default connect(mapState)(MyNavBar);
