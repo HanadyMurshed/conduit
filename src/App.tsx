@@ -69,16 +69,14 @@ class App extends React.Component<{
                   to="/"
                   authentocationRequired={false}
                   path="/sign-up"
-                >
-                  <SignUpPage />
-                </PrivateRoute>
+                  component={<SignUpPage />}
+                />
                 <PrivateRoute
                   to="/"
                   authentocationRequired={false}
                   path="/sign-in"
-                >
-                  <SignInPage path="/sign-in" />
-                </PrivateRoute>
+                  component={<SignInPage path="/sign-in" />}
+                />
                 {/* <Route path="/Article/:slug">
                   <ArticlePage />
                 </Route> */}
@@ -86,16 +84,14 @@ class App extends React.Component<{
                   to="/"
                   authentocationRequired={true}
                   path="/new-post"
-                >
-                  <NewPostPage />
-                </PrivateRoute>
+                  component={<NewPostPage />}
+                />
                 <PrivateRoute
                   to="/"
                   authentocationRequired={true}
                   path="/settings"
-                >
-                  <SettingsPage handleUpdate={this.updateUser} />
-                </PrivateRoute>
+                  component={<SettingsPage handleUpdate={this.updateUser} />}
+                />
                 <Route path="/">
                   <Home />
                 </Route>

@@ -1,29 +1,32 @@
 import * as React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { isAuthenticated } from "../utils/Helpers";
+import { AppState } from "../reducers/rootReducer";
 
-export const PrivateRoute: React.FC<{
+export const MyRoute: React.FC<{
   to: string;
   authentocationRequired: boolean;
   path: string;
-}> = ({ to, authentocationRequired, path, children, ...rest }) => {
+  loggedIn: boolean;
+  component: React.ReactNode;
+}> = ({ to, authentocationRequired, path, loggedIn, component, ...rest }) => {
   return (
     <Route
       path={path}
       {...rest}
-      render={
-        () => children
-        // (isAuthenticated() && user) || (!isAuthenticated() && !user) ? (
-        //   children
-        // ) : (
-        //   <Redirect to={to} />
-        // )
+      render={() =>
+        (authentocationRequired && loggedIn) ||
+        (!authentocationRequired && !loggedIn) ? (
+          component
+        ) : (
+          <Redirect to={to} />
+        )
       }
     />
   );
 };
-// const mapState = (state: any) => ({
-//   user: state.user
-// });
-// export const PrivateRoute = connect(mapState)(MyRoute);
+const mapState = (state: AppState) => ({
+  loggedIn: state.system.loggedIn
+});
+
+export const PrivateRoute = connect(mapState)(MyRoute);
