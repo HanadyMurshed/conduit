@@ -12,7 +12,8 @@ const useStyle = makeStyles({
     color: colors.TextSecondayColor,
     maxWidth: dims.pageWidth + 40,
     margin: "auto",
-    width: "100%"
+    width: "100%",
+    overflow: "hidden"
   },
   title: {
     fontFamily: "Titillium Web",

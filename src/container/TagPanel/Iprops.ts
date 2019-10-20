@@ -3,5 +3,7 @@ export type Iprops = {
   active?: string;
   onClick?: (title: string) => void;
   getTags: any;
+  updatePageParamsCurrentTag: any;
+  listGlobalFeedAticles: any;
   tags: string[];
 };

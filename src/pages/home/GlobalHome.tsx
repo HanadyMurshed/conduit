@@ -3,7 +3,6 @@ import { Grid, withStyles, Typography } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { Header } from "../../components/Header";
 import { listArticles } from "../../api/server";
-import { IState } from "./IState";
 import { styles } from "./styles";
 import TagsPanel from "../../container/TagPanel/TagPanel";
 import ListArticles from "../../container/ArticleList/Articles";
@@ -11,22 +10,15 @@ import Pagination from "../../container/Pagination";
 import { connect } from "react-redux";
 import { AppState } from "../../reducers/rootReducer";
 
-class Home extends React.Component<{ classes: any; loading: boolean }, IState> {
-  state: IState = {
-    articles: [],
-    count: 0,
-    tags: [],
-    currentPage: 0,
-    pageCount: 0,
-    tabs: ["Global feed"],
-    currentTag: "",
-    loading: true,
-    loadingArticle: false
-  };
-
+class Home extends React.Component<{
+  classes: any;
+  loading: boolean;
+  currentTag?: string;
+}> {
   componentDidMount() {
     this.getGlobalFeed({ limit: 10 });
   }
+  state: { tabs: string[] } = { tabs: ["Global Feed"] };
 
   getGlobalFeed = (queryparams: any) => {
     listArticles(queryparams)
@@ -47,22 +39,22 @@ class Home extends React.Component<{ classes: any; loading: boolean }, IState> {
   handleIndexClickEvent = (index: number) => {
     this.setState({ loadingArticle: true, currentPage: index }, () =>
       this.getGlobalFeed(
-        this.state.currentTag !== ""
-          ? { limit: 10, offset: index * 10, tag: this.state.currentTag }
+        this.props.currentTag !== ""
+          ? { limit: 10, offset: index * 10, tag: this.props.currentTag }
           : { limit: 10, offset: index * 10 }
       )
     );
   };
 
-  handleTagClickEvent = (tag: string) => {
-    this.setState(
-      {
-        loading: true,
-        currentTag: tag
-      },
-      () => this.getGlobalFeed({ limit: 10, tag: tag })
-    );
-  };
+  // handleTagClickEvent = (tag: string) => {
+  //   this.setState(
+  //     {
+  //       loading: true,
+  //       currentTag: tag
+  //     },
+  //     () => this.getGlobalFeed({ limit: 10, tag: tag })
+  //   );
+  // };
 
   handleTabChangeEvent = (event: React.ChangeEvent<{}>, value: any) => {
     if (value === 0)
@@ -77,8 +69,8 @@ class Home extends React.Component<{ classes: any; loading: boolean }, IState> {
   };
 
   render() {
-    const { classes, loading } = this.props;
-    const { tabs, currentTag } = this.state;
+    const { classes, loading, currentTag } = this.props;
+    const { tabs } = this.state;
 
     return (
       <Grid container style={{ paddingBottom: 100 }}>
@@ -90,8 +82,8 @@ class Home extends React.Component<{ classes: any; loading: boolean }, IState> {
           <Grid item xs={12} md={9}>
             <MyTab
               onChange={this.handleTabChangeEvent}
-              tabs={currentTag !== "" ? [...tabs, `#${currentTag}`] : tabs}
-              value={currentTag !== "" ? 1 : 0}
+              tabs={currentTag ? [...tabs, `#${currentTag}`] : tabs}
+              value={currentTag ? 1 : 0}
             >
               <div>
                 <ListArticles />
@@ -114,7 +106,8 @@ class Home extends React.Component<{ classes: any; loading: boolean }, IState> {
 }
 
 const mapState = (state: AppState) => ({
-  loading: state.articlesState.loading
+  loading: state.articlesState.loading,
+  currentTag: state.pageState.currentTag
 });
 
 export default withStyles(styles)(connect(mapState)(Home));

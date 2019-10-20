@@ -1,11 +1,9 @@
 import * as React from "react";
-import { Typography, CircularProgress } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { AppState } from "../../reducers/rootReducer";
 import { IArticle } from "../../types/conduit.types";
 import Article from "../../components/article/Article";
-import { makeStyles } from "@material-ui/styles";
-import { colors } from "../../utils/SystemVariables";
 import { listGlobalFeedAticles } from "./duck/action";
 
 type IProps = {
@@ -13,14 +11,6 @@ type IProps = {
   loading: boolean;
   listGlobalFeedAticles: any;
 };
-
-const useStyle = makeStyles({
-  progess: {
-    marginTop: 90,
-    width: 30,
-    color: colors.TextPrimaryColor
-  }
-});
 
 export const Articles: React.FC<IProps> = ({
   loading,

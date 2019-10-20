@@ -1,4 +1,9 @@
-import { PageState, UpdatePageParamsAction, UPDATE_PAGE_PARAMS } from "./types";
+import {
+  PageState,
+  UPDATE_PAGE_PARAMS,
+  UPDATE_PAGE_PARAMS_TAG,
+  ActionType
+} from "./types";
 
 const initialState: PageState = {
   currentPage: 0,
@@ -9,10 +14,11 @@ const initialState: PageState = {
 
 export function pageReducer(
   state = initialState,
-  action: UpdatePageParamsAction
+  action: ActionType
 ): PageState {
   switch (action.type) {
-    case UPDATE_PAGE_PARAMS: {
+    case UPDATE_PAGE_PARAMS:
+    case UPDATE_PAGE_PARAMS_TAG: {
       return {
         ...state,
         ...action.payload
