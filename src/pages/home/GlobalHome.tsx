@@ -3,13 +3,11 @@ import { Grid, withStyles, Typography } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { Header } from "../../components/Header";
 import { listArticles } from "../../api/server";
-import { IArticle } from "../../types/conduit.types";
-import Article from "../../components/article/Article";
 import { PageIndex } from "../../components/PageIndex";
 import { IState } from "./IState";
 import { styles } from "./styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import TagsPanel from "../../container/TagPanel/TagPanel";
+import ListArticles from "../../container/ArticleList/Articles";
 
 class Home extends React.Component<{ classes: any }, IState> {
   state: IState = {
@@ -70,7 +68,6 @@ class Home extends React.Component<{ classes: any }, IState> {
         {
           currentTag: "",
           loading: true,
-
           currentPage: 0
         },
         () => this.getGlobalFeed({ limit: 10 })
@@ -80,7 +77,6 @@ class Home extends React.Component<{ classes: any }, IState> {
   render() {
     const { classes } = this.props;
     const {
-      articles,
       currentPage,
       pageCount,
       tabs,
@@ -102,21 +98,7 @@ class Home extends React.Component<{ classes: any }, IState> {
               tabs={currentTag !== "" ? [...tabs, `#${currentTag}`] : tabs}
               value={currentTag !== "" ? 1 : 0}
             >
-              {loading ? (
-                <div style={{ textAlign: "center" }}>
-                  <CircularProgress className={classes.progess} />
-                </div>
-              ) : articles.length !== 0 ? (
-                <div>
-                  {articles.map((e: IArticle) => (
-                    <Article key={e.slug} article={e} />
-                  ))}
-                </div>
-              ) : (
-                <Typography style={{ color: "black", opacity: 0.6 }}>
-                  No article found... yet
-                </Typography>
-              )}
+              <ListArticles />
             </MyTab>
 
             {loadingArticle && (

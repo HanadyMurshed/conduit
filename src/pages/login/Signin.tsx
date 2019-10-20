@@ -5,9 +5,9 @@ import { IState } from "./IState";
 import { IProps } from "./IProps";
 import { styles } from "./styles";
 import { Redirect } from "react-router";
-import { loginAction } from "../../actions/login";
 import { connect } from "react-redux";
 import { AppState } from "../../reducers/rootReducer";
+import { loginAction } from "./duck/actions";
 
 class SignInPage extends React.Component<IProps, IState> {
   state: IState = {
@@ -74,7 +74,7 @@ class SignInPage extends React.Component<IProps, IState> {
     return (
       <Grid container className={classes.page}>
         <SignIn
-          errors={[...errors, errorMsg]}
+          errors={errorMsg !== "" ? [errorMsg] : errors}
           email={email}
           password={password}
           popperContent={popperContent}

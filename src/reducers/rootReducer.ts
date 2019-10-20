@@ -3,15 +3,14 @@ import { systemReducer } from "../components/auth/duck/reducer";
 import { loginReducer } from "../pages/login/duck/reducer";
 import { registerReducer } from "../pages/signup/duck/reducer";
 import { tagReducer } from "../container/TagPanel/duck/reducer";
-
-import articleReducer from "./articleReducer";
+import articleReducer from "../container/ArticleList/duck/reducer";
 
 const rootReducer = combineReducers({
   system: systemReducer,
   loginState: loginReducer,
   registerState: registerReducer,
-  articleReducer,
-  tags: tagReducer
+  tags: tagReducer,
+  articlesState: articleReducer
 });
 
 export default rootReducer;

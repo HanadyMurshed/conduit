@@ -8,7 +8,7 @@
 //  );
 
 export const colors = {
-  PrimaryColor: "orange",
+  PrimaryColor: "purple",
   PrimaryDark: "black",
   TextPrimaryColor: "#666666",
   TextSecondayColor: "#b2b2b2",

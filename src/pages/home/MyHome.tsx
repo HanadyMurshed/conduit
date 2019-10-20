@@ -151,7 +151,6 @@ class Home extends React.Component<{ classes: any }, IStateLogged> {
     const { classes } = this.props;
     const {
       articles,
-      tags,
       currentPage,
       pageCount,
       tabs,

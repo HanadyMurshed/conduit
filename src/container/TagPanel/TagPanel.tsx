@@ -17,9 +17,7 @@ export const Panel: React.FC<Iprops> = ({
   getTags,
   tags
 }) => {
-  React.useEffect(() => {
-    if (tags.length === 0) getTags();
-  });
+  React.useEffect(() => getTags(), []);
 
   const classes = useStyle();
   return (

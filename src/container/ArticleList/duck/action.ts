@@ -1,9 +1,5 @@
-import { ArticleKistQueryParama } from "../api/api.types";
-
-export const GLOBAL_FEED = "GLOABEL_FEED";
-export const YOURE_FEED = "YOURE_FEED";
-export const USER_FEED = "USER_FEED";
-export const USER_FAVORITE = "USER_FAVORITE";
+import { ArticleKistQueryParama } from "../../../api/api.types";
+import { GLOBAL_FEED, YOURE_FEED, USER_FEED, USER_FAVORITE } from "./types";
 
 export const listGlobalFeedAticles = (params: ArticleKistQueryParama) => ({
   type: GLOBAL_FEED,
