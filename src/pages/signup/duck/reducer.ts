@@ -1,12 +1,14 @@
-import { RegisterState, REGISTER_REQUEST, RegisterActionType } from "./types";
+import { RegisterState, REGISTER_REQUEST, ActionType } from "./types";
+import { AUTH_FAILED } from "../../../components/auth/duck/types";
 
 const initialState: RegisterState = {
-  loading: false
+  loading: false,
+  ErrorMsg: ""
 };
 
 export function registerReducer(
   state = initialState,
-  action: RegisterActionType
+  action: ActionType
 ): RegisterState {
   switch (action.type) {
     case REGISTER_REQUEST: {
@@ -15,6 +17,12 @@ export function registerReducer(
         loading: true
       };
     }
+    case AUTH_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false
+      };
     default:
       return state;
   }

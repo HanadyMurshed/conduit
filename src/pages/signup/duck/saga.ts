@@ -1,16 +1,28 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { login } from "../../../api/server";
 import { REGISTER_REQUEST, RegisterActionType } from "./types";
-import { UPDATE_SESSION } from "../../../components/auth/duck/types";
+import {
+  UPDATE_SESSION,
+  AUTH_FAILED
+} from "../../../components/auth/duck/types";
 
 function* performRegister(action: RegisterActionType) {
-  const user = yield login(action.payload)
+  const responseAction = yield login(action.payload)
     .then((response: any) => {
       sessionStorage.setItem("data", JSON.stringify(response.data.user));
-      return response.data.user;
+      const payload = { user: response.data.user, loggedIn: true };
+      return { type: UPDATE_SESSION, payload: payload };
     })
-    .catch();
-  yield put({ type: UPDATE_SESSION, payload: { user: user, loggedIn: true } });
+    .catch((err: any) => {
+      const payload = {
+        ErrorMsg: "Invalid username or email"
+      };
+      return {
+        type: AUTH_FAILED,
+        payload: payload
+      };
+    });
+  yield put(responseAction);
 }
 
 export function* LoginActionWatcher() {

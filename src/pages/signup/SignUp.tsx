@@ -21,6 +21,7 @@ class SignUpPage extends React.Component<
     classes: any;
     registerAction: any;
     loggedIn: boolean;
+    ErrorMsg: string;
   },
   IState
 > {
@@ -95,7 +96,7 @@ class SignUpPage extends React.Component<
     this.setState({ toSignInUp: true });
   };
   render() {
-    const { classes, loggedIn } = this.props;
+    const { classes, loggedIn, ErrorMsg } = this.props;
     const {
       email,
       password,
@@ -110,7 +111,7 @@ class SignUpPage extends React.Component<
     return (
       <Grid container className={classes.page}>
         <SignUp
-          errors={errors}
+          errors={ErrorMsg !== "" ? [ErrorMsg] : errors}
           email={email}
           username={username}
           password={password}
@@ -129,7 +130,10 @@ class SignUpPage extends React.Component<
 }
 
 const mapState = (state: AppState) => {
-  return { loggedIn: state.system.loggedIn };
+  return {
+    loggedIn: state.system.loggedIn,
+    ErrorMsg: state.registerState.ErrorMsg
+  };
 };
 
 export default withStyles(styles)(

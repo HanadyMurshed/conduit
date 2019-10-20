@@ -9,7 +9,7 @@ import articleReducer from "./articleReducer";
 const rootReducer = combineReducers({
   system: systemReducer,
   loginState: loginReducer,
-  registerReducer,
+  registerState: registerReducer,
   articleReducer,
   tags: tagReducer
 });
