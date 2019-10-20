@@ -20,7 +20,9 @@ export const Panel: React.FC<Iprops> = ({
   updatePageParamsCurrentTag,
   listGlobalFeedAticles
 }) => {
-  React.useEffect(() => getTags(), []);
+  React.useEffect(() => {
+    getTags();
+  }, []);
 
   const classes = useStyle();
 

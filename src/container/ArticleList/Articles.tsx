@@ -17,7 +17,9 @@ export const Articles: React.FC<IProps> = ({
   articles,
   listGlobalFeedAticles
 }) => {
-  React.useEffect(() => listGlobalFeedAticles(), []);
+  React.useEffect(() => {
+    listGlobalFeedAticles();
+  }, []);
   if (articles.length === 0 && !loading)
     return (
       <Typography style={{ color: "black", opacity: 0.6 }}>

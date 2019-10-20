@@ -9,35 +9,27 @@ import { PageIndex } from "../components/PageIndex";
 type IProps = {
   currentPage: number;
   pageCount: number;
+  currentTag: string;
   articlesNumber: number;
   listGlobalFeedAticles: any;
   updatePageParams: any;
 };
 
-const useStyle = makeStyles({
-  loadingMsg: {
-    color: "black",
-    opacity: 0.8,
-    fontSize: 14,
-    marginTop: 40
-  }
-});
-
 const Indexer: React.FC<IProps> = ({
   pageCount,
   currentPage,
+  currentTag,
   articlesNumber,
   listGlobalFeedAticles,
   updatePageParams
 }) => {
-  console.log(
-    pageCount,
-    currentPage,
-    articlesNumber,
-    pageCount && pageCount > 1
-  );
   const handleIndexClickEvent = (index: number) => {
-    listGlobalFeedAticles({ offset: index * articlesNumber });
+    if (currentTag)
+      listGlobalFeedAticles({
+        offset: index * articlesNumber,
+        tag: currentTag
+      });
+    else listGlobalFeedAticles({ offset: index * articlesNumber });
     updatePageParams({ currentPage: index });
   };
 
@@ -57,6 +49,7 @@ const mapState = (state: AppState) => {
   return {
     pageCount: state.articlesState.count,
     currentPage: state.pageState.currentPage,
+    currentTag: state.pageState.currentTag,
     articlesNumber: state.pageState.articlesNumber
   };
 };
