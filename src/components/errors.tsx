@@ -15,11 +15,13 @@ export const ErrorList: React.FC<{
   const classes = useStyle();
   return (
     <ul>
-      {errors.map(e => (
-        <li key={e} className={classes.listItem}>
-          {e}
-        </li>
-      ))}
+      {errors
+        .filter(e => e !== "")
+        .map(e => (
+          <li key={e} className={classes.listItem}>
+            {e}
+          </li>
+        ))}
     </ul>
   );
 };

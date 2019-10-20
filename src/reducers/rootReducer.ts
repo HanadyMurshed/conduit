@@ -8,7 +8,7 @@ import articleReducer from "./articleReducer";
 
 const rootReducer = combineReducers({
   system: systemReducer,
-  loginReducer,
+  loginState: loginReducer,
   registerReducer,
   articleReducer,
   tags: tagReducer

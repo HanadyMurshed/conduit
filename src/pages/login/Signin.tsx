@@ -60,7 +60,7 @@ class SignInPage extends React.Component<IProps, IState> {
     });
   };
   render() {
-    const { classes, loggedIn } = this.props;
+    const { classes, loggedIn, errorMsg } = this.props;
     const {
       errors,
       email,
@@ -74,7 +74,7 @@ class SignInPage extends React.Component<IProps, IState> {
     return (
       <Grid container className={classes.page}>
         <SignIn
-          errors={errors}
+          errors={[...errors, errorMsg]}
           email={email}
           password={password}
           popperContent={popperContent}
@@ -90,7 +90,10 @@ class SignInPage extends React.Component<IProps, IState> {
   }
 }
 const mapState = (state: AppState) => {
-  return { loggedIn: state.system.loggedIn };
+  return {
+    loggedIn: state.system.loggedIn,
+    errorMsg: state.loginState.ErrorMsg
+  };
 };
 
 export default withStyles(styles)(

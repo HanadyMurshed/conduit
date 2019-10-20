@@ -1,4 +1,3 @@
-import { ReferenceObject } from "popper.js";
 export interface SignInIProps {
   errors?: string[];
   email?: string;

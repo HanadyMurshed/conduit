@@ -1,12 +1,13 @@
-import { LoginState, LOGGIN_REQUEST, LoginActionType } from "./types";
+import { LoginState, LOGGIN_REQUEST, LOGIN_FAILED, ActionType } from "./types";
 
 const initialState: LoginState = {
-  loading: false
+  loading: false,
+  ErrorMsg: ""
 };
 
 export function loginReducer(
   state = initialState,
-  action: LoginActionType
+  action: ActionType
 ): LoginState {
   switch (action.type) {
     case LOGGIN_REQUEST: {
@@ -15,6 +16,12 @@ export function loginReducer(
         loading: true
       };
     }
+    case LOGIN_FAILED:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false
+      };
     default:
       return state;
   }

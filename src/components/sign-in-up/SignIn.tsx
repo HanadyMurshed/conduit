@@ -27,7 +27,9 @@ export const SignIn: React.FC<SignInIProps> = ({
         <Typography onClick={handleNoAccount} className={classes.a}>
           Need an account?
         </Typography>
-        {errors && errors !== [] ? <ErrorList errors={errors} /> : null}
+        {errors && errors !== [] && errors[0] !== "" ? (
+          <ErrorList errors={errors} />
+        ) : null}
 
         <MyInput
           onfocus={handleFocusInput}
