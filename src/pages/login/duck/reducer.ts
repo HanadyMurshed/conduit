@@ -1,4 +1,5 @@
-import { LoginState, LOGGIN_REQUEST, LOGIN_FAILED, ActionType } from "./types";
+import { LoginState, LOGGIN_REQUEST, ActionType } from "./types";
+import { AUTH_FAILED } from "../../../components/auth/duck/types";
 
 const initialState: LoginState = {
   loading: false,
@@ -16,7 +17,7 @@ export function loginReducer(
         loading: true
       };
     }
-    case LOGIN_FAILED:
+    case AUTH_FAILED:
       return {
         ...state,
         ...action.payload,

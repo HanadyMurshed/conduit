@@ -1,6 +1,7 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { login } from "../../../api/server";
-import { LOGGIN_REQUEST, LoginActionType, LOGIN_FAILED } from "./types";
+import { LOGGIN_REQUEST, LoginActionType } from "./types";
+import { AUTH_FAILED } from "../../../components/auth/duck/types";
 import { UPDATE_SESSION } from "../../../components/auth/duck/types";
 
 function* performeLogin(action: LoginActionType) {
@@ -16,7 +17,7 @@ function* performeLogin(action: LoginActionType) {
         ErrorMsg: "Invalid username and password"
       };
       return {
-        type: LOGIN_FAILED,
+        type: AUTH_FAILED,
         payload: payload
       };
     });
