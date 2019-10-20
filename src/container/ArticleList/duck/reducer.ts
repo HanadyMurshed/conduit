@@ -6,7 +6,10 @@ import {
   ArticleState,
   ARTICLES_RECIEVED
 } from "./types";
-import { UPDATE_PAGE_PARAMS_TAG } from "../../../components/pageParams/duck/types";
+import {
+  UPDATE_PAGE_PARAMS_TAG,
+  UPDATE_PAGE_PARAMS_TAP
+} from "../../../components/pageParams/duck/types";
 
 const instialState: ArticleState = { articles: [], count: 0, loading: true };
 
@@ -20,6 +23,7 @@ const articleReducer = (state = instialState, action: Action): ArticleState => {
     case ARTICLES_RECIEVED:
       return { ...state, loading: false, ...action.payload };
     case UPDATE_PAGE_PARAMS_TAG:
+    case UPDATE_PAGE_PARAMS_TAP:
       return { ...state, articles: [], count: 0 };
     default:
       return state;

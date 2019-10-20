@@ -9,11 +9,15 @@ import ListArticles from "../../container/ArticleList/Articles";
 import Pagination from "../../container/Pagination";
 import { connect } from "react-redux";
 import { AppState } from "../../reducers/rootReducer";
+import { updatePageParamsCurrentTaP } from "../../components/pageParams/duck/actions";
+import { listGlobalFeedAticles } from "../../container/ArticleList/duck/action";
 
 class Home extends React.Component<{
   classes: any;
   loading: boolean;
   currentTag?: string;
+  updatePageParamsCurrentTaP: any;
+  listGlobalFeedAticles: any;
 }> {
   componentDidMount() {
     this.getGlobalFeed({ limit: 10 });
@@ -46,26 +50,11 @@ class Home extends React.Component<{
     );
   };
 
-  // handleTagClickEvent = (tag: string) => {
-  //   this.setState(
-  //     {
-  //       loading: true,
-  //       currentTag: tag
-  //     },
-  //     () => this.getGlobalFeed({ limit: 10, tag: tag })
-  //   );
-  // };
-
   handleTabChangeEvent = (event: React.ChangeEvent<{}>, value: any) => {
-    if (value === 0)
-      this.setState(
-        {
-          currentTag: "",
-          loading: true,
-          currentPage: 0
-        },
-        () => this.getGlobalFeed({ limit: 10 })
-      );
+    if (value === 0) {
+      this.props.updatePageParamsCurrentTaP({ currentTap: value });
+      this.props.listGlobalFeedAticles();
+    }
   };
 
   render() {
@@ -107,7 +96,13 @@ class Home extends React.Component<{
 
 const mapState = (state: AppState) => ({
   loading: state.articlesState.loading,
-  currentTag: state.pageState.currentTag
+  currentTag: state.pageState.currentTag,
+  currentTap: state.pageState.currentTab
 });
 
-export default withStyles(styles)(connect(mapState)(Home));
+export default withStyles(styles)(
+  connect(
+    mapState,
+    { updatePageParamsCurrentTaP, listGlobalFeedAticles }
+  )(Home)
+);

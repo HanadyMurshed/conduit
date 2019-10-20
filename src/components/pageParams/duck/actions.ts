@@ -3,7 +3,9 @@ import {
   UPDATE_PAGE_PARAMS,
   UPDATE_PAGE_PARAMS_TAG,
   UpdatePageParamsAction,
-  UpdatePageParamsTagAction
+  UpdatePageParamsTagAction,
+  UpdatePageParamsTapAction,
+  UPDATE_PAGE_PARAMS_TAP
 } from "./types";
 
 export function updatePageParams(newParams: PageState): UpdatePageParamsAction {
@@ -17,6 +19,14 @@ export function updatePageParamsCurrentTag(
 ): UpdatePageParamsTagAction {
   return {
     type: UPDATE_PAGE_PARAMS_TAG,
+    payload: newParams
+  };
+}
+export function updatePageParamsCurrentTaP(
+  newParams: Pick<PageState, "currentTab">
+): UpdatePageParamsTapAction {
+  return {
+    type: UPDATE_PAGE_PARAMS_TAP,
     payload: newParams
   };
 }
