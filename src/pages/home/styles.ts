@@ -16,5 +16,12 @@ export const styles = {
       fontSize: 14,
       padding: 0
     }
+  },
+  loadingMsg: {
+    color: "black",
+    opacity: 0.8,
+    fontSize: 14,
+    marginTop: 20,
+    marginBottom: 20
   }
 };

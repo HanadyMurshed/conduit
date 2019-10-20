@@ -8,8 +8,8 @@
 //  );
 
 export const colors = {
-  PrimaryColor: "purple",
-  PrimaryDark: "black",
+  PrimaryColor: "#FF6F61",
+  PrimaryDark: "#4A4843",
   TextPrimaryColor: "#666666",
   TextSecondayColor: "#b2b2b2",
   TagBackgroundColor: "#818a91",

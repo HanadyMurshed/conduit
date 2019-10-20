@@ -15,7 +15,7 @@ function* getGlobalFeed(action: any) {
       console.log(response.data.articles);
       return {
         articles: response.data.articles,
-        COUNT: response.data.count
+        count: response.data.articlesCount
       };
     })
     .catch((err: any) => []);

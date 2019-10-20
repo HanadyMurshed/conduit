@@ -3,13 +3,15 @@ import { Grid, withStyles, Typography } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { Header } from "../../components/Header";
 import { listArticles } from "../../api/server";
-import { PageIndex } from "../../components/PageIndex";
 import { IState } from "./IState";
 import { styles } from "./styles";
 import TagsPanel from "../../container/TagPanel/TagPanel";
 import ListArticles from "../../container/ArticleList/Articles";
+import Pagination from "../../container/Pagination";
+import { connect } from "react-redux";
+import { AppState } from "../../reducers/rootReducer";
 
-class Home extends React.Component<{ classes: any }, IState> {
+class Home extends React.Component<{ classes: any; loading: boolean }, IState> {
   state: IState = {
     articles: [],
     count: 0,
@@ -75,15 +77,8 @@ class Home extends React.Component<{ classes: any }, IState> {
   };
 
   render() {
-    const { classes } = this.props;
-    const {
-      currentPage,
-      pageCount,
-      tabs,
-      currentTag,
-      loading,
-      loadingArticle
-    } = this.state;
+    const { classes, loading } = this.props;
+    const { tabs, currentTag } = this.state;
 
     return (
       <Grid container style={{ paddingBottom: 100 }}>
@@ -98,31 +93,17 @@ class Home extends React.Component<{ classes: any }, IState> {
               tabs={currentTag !== "" ? [...tabs, `#${currentTag}`] : tabs}
               value={currentTag !== "" ? 1 : 0}
             >
-              <ListArticles />
+              <div>
+                <ListArticles />
+                {loading && (
+                  <Typography className={classes.loadingMsg}>
+                    Loading Articles ...
+                  </Typography>
+                )}
+                <Pagination />
+              </div>
             </MyTab>
-
-            {loadingArticle && (
-              <Typography
-                style={{
-                  color: "black",
-                  opacity: 0.8,
-                  fontSize: 14,
-                  marginTop: 40
-                }}
-              >
-                Loading Articles ...
-              </Typography>
-            )}
-            {pageCount && pageCount > 1 && !loading ? (
-              <PageIndex
-                onClick={this.handleIndexClickEvent}
-                style={{ marginTop: 20 }}
-                active={currentPage}
-                PageCount={pageCount}
-              />
-            ) : null}
           </Grid>
-
           <Grid item xs={12} md={3}>
             <TagsPanel />
           </Grid>
@@ -132,4 +113,8 @@ class Home extends React.Component<{ classes: any }, IState> {
   }
 }
 
-export default withStyles(styles)(Home);
+const mapState = (state: AppState) => ({
+  loading: state.articlesState.loading
+});
+
+export default withStyles(styles)(connect(mapState)(Home));

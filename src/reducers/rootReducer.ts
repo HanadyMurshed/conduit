@@ -4,11 +4,13 @@ import { loginReducer } from "../pages/login/duck/reducer";
 import { registerReducer } from "../pages/signup/duck/reducer";
 import { tagReducer } from "../container/TagPanel/duck/reducer";
 import articleReducer from "../container/ArticleList/duck/reducer";
+import { pageReducer } from "../components/pageParams/duck/reducer";
 
 const rootReducer = combineReducers({
   system: systemReducer,
   loginState: loginReducer,
   registerState: registerReducer,
+  pageState: pageReducer,
   tags: tagReducer,
   articlesState: articleReducer
 });

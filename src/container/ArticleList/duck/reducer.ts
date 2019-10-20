@@ -9,7 +9,7 @@ import {
 
 const instialState: ArticleState = { articles: [], count: 0, loading: true };
 
-const articleReducer = (state = instialState, action: Action) => {
+const articleReducer = (state = instialState, action: Action): ArticleState => {
   switch (action.type) {
     case GLOBAL_FEED:
     case USER_FAVORITE:

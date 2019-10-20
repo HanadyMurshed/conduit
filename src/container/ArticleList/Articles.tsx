@@ -27,26 +27,19 @@ export const Articles: React.FC<IProps> = ({
   articles,
   listGlobalFeedAticles
 }) => {
-  const classes = useStyle();
   React.useEffect(() => listGlobalFeedAticles(), []);
-  if (loading)
-    return (
-      <div style={{ textAlign: "center" }}>
-        <CircularProgress className={classes.progess} />
-      </div>
-    );
-  if (articles.length === 0)
+  if (articles.length === 0 && !loading)
     return (
       <Typography style={{ color: "black", opacity: 0.6 }}>
         No article found... yet
       </Typography>
     );
   return (
-    <div>
+    <React.Fragment>
       {articles.map((e: IArticle) => (
         <Article key={e.slug} article={e} />
       ))}
-    </div>
+    </React.Fragment>
   );
 };
 
