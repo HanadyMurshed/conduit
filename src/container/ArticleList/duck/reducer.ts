@@ -8,7 +8,8 @@ import {
 } from "./types";
 import {
   UPDATE_PAGE_PARAMS_TAG,
-  UPDATE_PAGE_PARAMS_TAP
+  UPDATE_PAGE_PARAMS_TAP,
+  UPDATE_PAGE_PARAMS
 } from "../../../components/pageParams/duck/types";
 
 const instialState: ArticleState = { articles: [], count: 0, loading: true };
@@ -24,6 +25,7 @@ const articleReducer = (state = instialState, action: Action): ArticleState => {
       return { ...state, loading: false, ...action.payload };
     case UPDATE_PAGE_PARAMS_TAG:
     case UPDATE_PAGE_PARAMS_TAP:
+    case UPDATE_PAGE_PARAMS:
       return { ...state, articles: [], count: 0 };
     default:
       return state;

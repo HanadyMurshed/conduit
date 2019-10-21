@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, withStyles } from "@material-ui/core";
 import { MyTab } from "../../components/Tab";
 import { Header } from "../../components/Header";
 import TagsPanel from "../../container/TagPanel/TagPanel";
 import ListArticles from "../../container/ArticleList/Articles";
 import Pagination from "../../container/Pagination";
 import { connect } from "react-redux";
+import { styles } from "./style";
 import { AppState } from "../../reducers/rootReducer";
 import {
   updatePageParamsCurrentTaP,
@@ -35,7 +36,7 @@ type IProps = {
 
 class Home extends React.Component<IProps> {
   componentDidMount() {
-    if (this.props.loggedIn)
+    if (!this.props.loggedIn)
       this.props.updatePageParams({ tabs: [GLOBAL_FEED] });
     else {
       this.props.updatePageParams({
@@ -101,12 +102,14 @@ const mapState = (state: AppState) => ({
   tabs: state.pageState.tabs
 });
 
-export default connect(
-  mapState,
-  {
-    updatePageParamsCurrentTaP,
-    updatePageParams,
-    listGlobalFeedAticles,
-    lisYouretFeedAticles
-  }
-)(Home);
+export default withStyles(styles)(
+  connect(
+    mapState,
+    {
+      updatePageParamsCurrentTaP,
+      updatePageParams,
+      listGlobalFeedAticles,
+      lisYouretFeedAticles
+    }
+  )(Home)
+);
