@@ -17,18 +17,18 @@ export const lisYouretFeedAticles = (
   params: ArticleKistQueryParama
 ): ListArticlActionType => ({
   type: YOURE_FEED,
-  payload: params
+  payload: { ...params, limit: 10 }
 });
 export const listArticleByAuthor = (
   params: ArticleKistQueryParama
 ): ListArticlActionType => ({
   type: USER_FEED,
-  payload: params
+  payload: { ...params, limit: 10 }
 });
 
 export const listUserFavorite = (
   params: ArticleKistQueryParama
 ): ListArticlActionType => ({
   type: USER_FAVORITE,
-  payload: params
+  payload: { ...params, limit: 10 }
 });

@@ -8,7 +8,7 @@ import {
 
 const initialState: PageState = {
   currentPage: 0,
-  currentTab: 0,
+  currentTap: 0,
   tabs: [],
   currentTag: "",
   articlesNumber: 10
@@ -25,11 +25,20 @@ export function pageReducer(
         ...action.payload
       };
     case UPDATE_PAGE_PARAMS_TAG: {
-      return {
-        ...state,
-        ...action.payload,
-        currentTab: state.tabs.length + 1
-      };
+      if (action.payload.currentTag === "")
+        return {
+          ...state,
+          ...action.payload,
+          currentPage: 0
+        };
+      else
+        return {
+          ...state,
+          ...action.payload,
+          currentTap: state.tabs.length,
+          currentPage: 0,
+          tabs: [...state.tabs, action.payload.currentTag]
+        };
     }
     case UPDATE_PAGE_PARAMS_TAP: {
       return {

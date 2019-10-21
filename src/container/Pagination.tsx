@@ -2,9 +2,12 @@ import * as React from "react";
 import { updatePageParams } from "../components/pageParams/duck/actions";
 import { connect } from "react-redux";
 import { AppState } from "../reducers/rootReducer";
-import { makeStyles } from "@material-ui/styles";
-import { listGlobalFeedAticles } from "./ArticleList/duck/action";
+import {
+  listGlobalFeedAticles,
+  lisYouretFeedAticles
+} from "./ArticleList/duck/action";
 import { PageIndex } from "../components/PageIndex";
+import { GLOBAL_FEED, YOURE_FEED } from "../components/pageParams/duck/types";
 
 type IProps = {
   currentPage: number;
@@ -12,7 +15,10 @@ type IProps = {
   currentTag: string;
   articlesNumber: number;
   listGlobalFeedAticles: any;
+  lisYouretFeedAticles: any;
   updatePageParams: any;
+  currentTap: number;
+  tabs: string[];
 };
 
 const Indexer: React.FC<IProps> = ({
@@ -21,15 +27,27 @@ const Indexer: React.FC<IProps> = ({
   currentTag,
   articlesNumber,
   listGlobalFeedAticles,
-  updatePageParams
+  lisYouretFeedAticles,
+  updatePageParams,
+  tabs,
+  currentTap
 }) => {
   const handleIndexClickEvent = (index: number) => {
-    if (currentTag)
-      listGlobalFeedAticles({
-        offset: index * articlesNumber,
-        tag: currentTag
-      });
-    else listGlobalFeedAticles({ offset: index * articlesNumber });
+    switch (tabs[currentTap]) {
+      case currentTag:
+        listGlobalFeedAticles({
+          offset: index * articlesNumber,
+          tag: currentTag
+        });
+        break;
+
+      case GLOBAL_FEED:
+        listGlobalFeedAticles({ offset: index * articlesNumber });
+        break;
+      case YOURE_FEED:
+        lisYouretFeedAticles({ offset: index * articlesNumber });
+        break;
+    }
     updatePageParams({ currentPage: index });
   };
 
@@ -50,13 +68,15 @@ const mapState = (state: AppState) => {
     pageCount: state.articlesState.count,
     currentPage: state.pageState.currentPage,
     currentTag: state.pageState.currentTag,
-    articlesNumber: state.pageState.articlesNumber
+    currentTap: state.pageState.currentTap,
+    articlesNumber: state.pageState.articlesNumber,
+    tabs: state.pageState.tabs
   };
 };
 
 const Pagination = connect(
   mapState,
-  { listGlobalFeedAticles, updatePageParams }
+  { listGlobalFeedAticles, updatePageParams, lisYouretFeedAticles }
 )(Indexer);
 
 export default Pagination;
