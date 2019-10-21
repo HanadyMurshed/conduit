@@ -25,13 +25,7 @@ export function pageReducer(
         ...action.payload
       };
     case UPDATE_PAGE_PARAMS_TAG: {
-      if (action.payload.currentTag === "")
-        return {
-          ...state,
-          ...action.payload,
-          currentPage: 0
-        };
-      else
+      if (state.currentTag === "")
         return {
           ...state,
           ...action.payload,
@@ -39,6 +33,14 @@ export function pageReducer(
           currentPage: 0,
           tabs: [...state.tabs, action.payload.currentTag]
         };
+      else {
+        return {
+          ...state,
+          ...action.payload,
+          currentPage: 0,
+          tabs: [...state.tabs.slice(0, -1), action.payload.currentTag]
+        };
+      }
     }
     case UPDATE_PAGE_PARAMS_TAP: {
       return {

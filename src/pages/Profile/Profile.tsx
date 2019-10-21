@@ -235,7 +235,11 @@ class Profile extends React.Component<IProps, IState> {
               ) : articles.length !== 0 ? (
                 <div>
                   {articles.map((e: IArticle) => (
-                    <Article key={e.slug} article={e} />
+                    <Article
+                      key={e.slug}
+                      article={e}
+                      handleFavoritEvent={() => {}}
+                    />
                   ))}
                 </div>
               ) : (

@@ -17,13 +17,6 @@ class Article extends React.Component<IProps, IState> {
     const count: number = this.props.article.favoritesCount;
     this.setState({ favorited: fav, favoritesCount: count });
   }
-  reversFavorite() {
-    const favorited = this.state.favorited;
-    const favoritesCount = favorited
-      ? this.state.favoritesCount - 1
-      : this.state.favoritesCount + 1;
-    this.setState({ favorited: !favorited, favoritesCount: favoritesCount });
-  }
 
   private handleFavoriteClick = (slug: string) => {
     const handler = this.props.handleFavoritEvent;
@@ -35,7 +28,7 @@ class Article extends React.Component<IProps, IState> {
     if (handler)
       this.setState(
         { favorited: !favorited, favoritesCount: favoritesCount },
-        () => handler(favorited, slug, this.reversFavorite)
+        () => handler(favorited, slug)
       );
   };
 

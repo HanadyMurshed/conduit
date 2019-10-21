@@ -4,22 +4,35 @@ import { connect } from "react-redux";
 import { AppState } from "../../reducers/rootReducer";
 import { IArticle } from "../../types/conduit.types";
 import Article from "../../components/article/Article";
-import { listGlobalFeedAticles } from "./duck/action";
+import {
+  listGlobalFeedAticles,
+  favoriteANnArticle,
+  unFavoriteANnArticle
+} from "./duck/action";
 
 type IProps = {
   articles: IArticle[];
   loading: boolean;
   listGlobalFeedAticles: any;
+  unFavoriteANnArticle: any;
+  favoriteANnArticle: any;
 };
 
 export const Articles: React.FC<IProps> = ({
   loading,
   articles,
+  unFavoriteANnArticle,
+  favoriteANnArticle,
   listGlobalFeedAticles
 }) => {
   React.useEffect(() => {
     listGlobalFeedAticles();
   }, []);
+  const handleFavoritEvent = (favorited: Boolean, slug: string) => {
+    console.log("hey");
+    favorited ? unFavoriteANnArticle(slug) : favoriteANnArticle(slug);
+  };
+
   if (articles.length === 0 && !loading)
     return (
       <Typography style={{ color: "black", opacity: 0.6 }}>
@@ -29,7 +42,11 @@ export const Articles: React.FC<IProps> = ({
   return (
     <React.Fragment>
       {articles.map((e: IArticle) => (
-        <Article key={e.slug} article={e} />
+        <Article
+          handleFavoritEvent={handleFavoritEvent}
+          key={e.slug}
+          article={e}
+        />
       ))}
     </React.Fragment>
   );
@@ -42,7 +59,11 @@ const mapState = (state: AppState) => {
     loading: state.articlesState.loading
   };
 };
-const mapDispaatch = { listGlobalFeedAticles };
+const mapDispaatch = {
+  listGlobalFeedAticles,
+  favoriteANnArticle,
+  unFavoriteANnArticle
+};
 
 const ListArticles = connect(
   mapState,
